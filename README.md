@@ -35,10 +35,12 @@ Sistema desenvolvido como parte de um projeto extensionista com o objetivo de ot
 1. Compile o programa:
 ```bash
 gcc main.c -o sistema
+```
 
 2. Execute:
 ```bash
 ./sistema
+```
 
 ---
 
