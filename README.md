@@ -44,13 +44,6 @@ gcc main.c -o sistema
 
 ---
 
-## Dados
-
-Os dados reais não estão incluídos por motivos de privacidade.
-Utilize o arquivo `dados_exemplo.csv` como base.
-
----
-
 ## Sobre o projeto
 
 Este sistema foi desenvolvido com foco em desempenho e simplicidade, considerando a realidade da instituição parceira. Como evolução, está prevista a implementação de uma interface gráfica para melhorar a usabilidade.
