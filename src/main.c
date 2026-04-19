@@ -18,7 +18,7 @@ int main() {
     scanf("%d", &perfil);
 
     printf("\n============= MENU =============\n"); // obs.: MENU completo
-    printf("1 - Buscar pelo nome da loja\n"); // Funcionando
+    printf("1 - Buscar pelo nome da loja\n"); // Funcionando - RF02
     printf("2 - Buscar pelo Colégio Militar\n"); // ainda nao funcionando corretamente - RF03
     printf("3 - Buscar loja pela cidade ou Estado\n"); // ainda nao funcionando corretamente - RF05
     printf("4 - Listar todas as lojas\n"); // feito - RF04
@@ -32,7 +32,7 @@ int main() {
     printf("Opcao: ");
     scanf("%d", &opcao); // do menu
 
-    // busca pelo nome da loja --> criar func e mover para funcoes.c depois
+    // busca pelo nome da loja - RF02 --> criar func e mover para funcoes.c depois
     // funcionando
     if (opcao == 1) {
         printf("Digite o nome da loja:\n");
@@ -83,11 +83,11 @@ int main() {
     }
 
     // perfil admin
-    else if (perfil == 2 && opcao == 3) {
+    else if (perfil == 2 && opcao == 5) {
         // adicionarLoja(); // funcao ainda nao criada - RF06
     }
 
-    else if (perfil == 2 && opcao == 4) {
+    else if (perfil == 2 && opcao == 6) {
         // removerLoja(); // funcao ainda nao criada - RF06
     }
 
