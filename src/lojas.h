@@ -20,5 +20,9 @@ extern int totalLojas;
 void carregarLojas(const char *arquivo);
 void salvarLojas(const char *arquivo);
 void paraMinusculo(char *str);
+void buscarPorNome(const char *nomeBusca); // RF02
+void buscarPorCEPMG(const char *cepmgBusca); // RF03
+void listarLojas(); // RF04
+void buscarPorLocal(const char *localBusca); // RF05
 
 #endif

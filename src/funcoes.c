@@ -8,6 +8,118 @@
 Loja lojas[MAX_LOJAS];
 int totalLojas = 0;
 
+void buscarPorNome(const char *nomeBusca) { // RF02
+    char busca[100];
+    strcpy(busca, nomeBusca);
+    paraMinusculo(busca);
+
+    int encontrada = 0;
+
+    for (int i = 0; i < totalLojas; i++) {
+        char nomeTemp[100];
+        strcpy(nomeTemp, lojas[i].nome);
+        paraMinusculo(nomeTemp);
+
+        if (strstr(nomeTemp, busca) != NULL) {
+            printf("\n=== LOJA ENCONTRADA ===\n");
+            printf("Nome: %s\n", lojas[i].nome);
+            printf("Vendedora: %s\n", lojas[i].vendedora);
+            printf("Contato: %s\n", lojas[i].contato);
+            printf("Endereço: %s\n", lojas[i].endereco);
+            printf("Cidade: %s\n", lojas[i].cidade);
+            printf("Estado: %s\n", lojas[i].estado);
+            printf("CEPMG: %s\n", lojas[i].cepmg);
+            printf("CEP: %s\n\n", lojas[i].cep);
+
+            encontrada = 1;
+        }
+    }
+
+    if (!encontrada) {
+        printf("Nenhuma loja encontrada.\n");
+    }
+}
+
+void buscarPorCEPMG(const char *cepmgBusca) { //RF03
+    char busca[100];
+    strcpy(busca, cepmgBusca);
+    paraMinusculo(busca);
+
+    int encontrada = 0;
+
+    for (int i = 0; i < totalLojas; i++) {
+        char cepmgTemp[100];
+        strcpy(cepmgTemp, lojas[i].cepmg);
+        paraMinusculo(cepmgTemp);
+
+        if (strstr(cepmgTemp, busca) != NULL) {
+            printf("\n=== COLÉGIO ENCONTRADO ===\n");
+            printf("CEPMG: %s\n", lojas[i].cepmg);
+            printf("Loja mais próxima: %s\n", lojas[i].nome);
+            printf("Vendedora: %s\n", lojas[i].vendedora);
+            printf("Contato: %s\n", lojas[i].contato);
+            printf("Endereço: %s\n", lojas[i].endereco);
+            printf("Cidade: %s\n", lojas[i].cidade);
+            printf("Estado: %s\n", lojas[i].estado);
+            printf("CEP: %s\n\n", lojas[i].cep);
+
+            encontrada = 1;
+        }
+    }
+
+    if (!encontrada) {
+        printf("Nenhum colégio encontrado.\n");
+    }
+}
+
+void buscarPorLocal(const char *localBusca) { // RF05
+    char busca[100];
+    strcpy(busca, localBusca);
+    paraMinusculo(busca);
+
+    int encontrada = 0;
+
+    for (int i = 0; i < totalLojas; i++) {
+        char cidadeTemp[100];
+        char estadoTemp[10];
+
+        strcpy(cidadeTemp, lojas[i].cidade);
+        strcpy(estadoTemp, lojas[i].estado);
+
+        paraMinusculo(cidadeTemp);
+        paraMinusculo(estadoTemp);
+
+        // corrigir
+        if (strstr(cidadeTemp, busca) != NULL || strstr(estadoTemp, busca) != NULL) { // mostrar todas as lojas por cidade e não cada uma separadamente
+            printf("\n=== CIDADE/ESTADO ENCONTRADA ===\n");
+            printf("Cidade: %s\n", lojas[i].cidade);
+            printf("Estado: %s\n", lojas[i].estado);
+            printf("Nome da loja: %s\n", lojas[i].nome);
+            printf("Vendedora: %s\n", lojas[i].vendedora);
+            printf("Contato: %s\n", lojas[i].contato);
+            printf("Endereço: %s\n", lojas[i].endereco);
+            printf("CEPMG: %s\n", lojas[i].cepmg);
+            printf("CEP: %s\n\n", lojas[i].cep);
+
+            encontrada = 1;
+        }
+    }
+
+    if (!encontrada) {
+        printf("Nenhuma loja encontrada.\n");
+    }
+}
+
+void listarLojas() { // RF04
+    for (int i = 0; i < totalLojas; i++) {
+        printf("\nLoja %d:\n", i + 1);
+        printf("Nome: %s\n", lojas[i].nome);
+        printf("Vendedora: %s\n", lojas[i].vendedora);
+        printf("Cidade: %s\n", lojas[i].cidade);
+        printf("Estado: %s\n", lojas[i].estado);
+    }
+}
+
 void paraMinusculo(char *str) {
     for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
