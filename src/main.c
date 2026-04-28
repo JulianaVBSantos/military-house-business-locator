@@ -18,10 +18,10 @@ int main() {
     scanf("%d", &perfil);
 
     printf("\n============= MENU =============\n"); // obs.: MENU completo
-    printf("1 - Buscar pelo nome da loja\n"); // Funcionando - RF02
-    printf("2 - Buscar pelo Colégio Militar\n"); // Funcionando - RF03
-    printf("3 - Buscar loja pela cidade ou Estado\n"); // Ainda não implementado - RF05
-    printf("4 - Listar todas as lojas\n"); // feito - RF04
+    printf("1 - Buscar pelo nome da loja\n"); // RF02 - OK
+    printf("2 - Buscar pelo Colégio Militar\n"); // RF03 - OK
+    printf("3 - Buscar loja pela cidade ou Estado\n"); // RF05 - OK
+    printf("4 - Listar todas as lojas\n"); // RF04 - OK - Falta implementar mapa
 
     if (perfil == 2) {
         printf("5 - Adicionar loja\n");
@@ -55,7 +55,6 @@ int main() {
     }
 
     // busca por cidade ou estado - RF05
-    // ainda não funcionando
     else if (opcao == 3) {
         char local[100];
 

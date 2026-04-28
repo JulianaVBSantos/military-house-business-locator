@@ -12,6 +12,7 @@ void buscarPorNome(const char *nomeBusca) { // RF02
     char busca[100];
     strcpy(busca, nomeBusca);
     paraMinusculo(busca);
+    removerAcentos(busca);
 
     int encontrada = 0;
 
@@ -19,6 +20,7 @@ void buscarPorNome(const char *nomeBusca) { // RF02
         char nomeTemp[100];
         strcpy(nomeTemp, lojas[i].nome);
         paraMinusculo(nomeTemp);
+        removerAcentos(nomeTemp);
 
         if (strstr(nomeTemp, busca) != NULL) {
             printf("\n=== LOJA ENCONTRADA ===\n");
@@ -44,6 +46,7 @@ void buscarPorCEPMG(const char *cepmgBusca) { //RF03
     char busca[100];
     strcpy(busca, cepmgBusca);
     paraMinusculo(busca);
+    removerAcentos(busca);
 
     int encontrada = 0;
 
@@ -51,6 +54,7 @@ void buscarPorCEPMG(const char *cepmgBusca) { //RF03
         char cepmgTemp[100];
         strcpy(cepmgTemp, lojas[i].cepmg);
         paraMinusculo(cepmgTemp);
+        removerAcentos(cepmgTemp);
 
         if (strstr(cepmgTemp, busca) != NULL) {
             printf("\n=== COLÉGIO ENCONTRADO ===\n");
@@ -76,8 +80,10 @@ void buscarPorLocal(const char *localBusca) { // RF05
     char busca[100];
     strcpy(busca, localBusca);
     paraMinusculo(busca);
+    removerAcentos(busca);
 
     int encontrada = 0;
+    int cabecalhoImpresso = 0; // controle do cabeçalho
 
     for (int i = 0; i < totalLojas; i++) {
         char cidadeTemp[100];
@@ -89,20 +95,34 @@ void buscarPorLocal(const char *localBusca) { // RF05
         paraMinusculo(cidadeTemp);
         paraMinusculo(estadoTemp);
 
-        // corrigir
-        if (strstr(cidadeTemp, busca) != NULL || strstr(estadoTemp, busca) != NULL) { // mostrar todas as lojas por cidade e não cada uma separadamente
-            printf("\n=== CIDADE/ESTADO ENCONTRADA ===\n");
-            printf("Cidade: %s\n", lojas[i].cidade);
-            printf("Estado: %s\n", lojas[i].estado);
-            printf("Nome da loja: %s\n", lojas[i].nome);
-            printf("Vendedora: %s\n", lojas[i].vendedora);
-            printf("Contato: %s\n", lojas[i].contato);
-            printf("Endereço: %s\n", lojas[i].endereco);
-            printf("CEPMG: %s\n", lojas[i].cepmg);
-            printf("CEP: %s\n\n", lojas[i].cep);
+        removerAcentos(cidadeTemp);
+        removerAcentos(estadoTemp);
 
-            encontrada = 1;
+        if (strstr(cidadeTemp, busca) != NULL || strstr(estadoTemp, busca) != NULL) {
+
+        // CASO ESPECÍFICO: evitar "goianapolis" quando busca "anapolis"
+        if (strcmp(busca, "anapolis") == 0 && strstr(cidadeTemp, "goianapolis") != NULL) {
+            continue; // pula essa loja
         }
+
+        if (!cabecalhoImpresso) {
+            printf("\n=== LOJAS ENCONTRADAS NA LOCALIZAÇÃO ===\n");
+            cabecalhoImpresso = 1;
+        }
+
+        printf("\nNome da loja: %s\n", lojas[i].nome);
+        printf("Vendedora: %s\n", lojas[i].vendedora);
+        printf("Cidade: %s\n", lojas[i].cidade);
+        printf("Estado: %s\n", lojas[i].estado);
+        printf("Contato: %s\n", lojas[i].contato);
+        printf("Endereço: %s\n", lojas[i].endereco);
+        printf("CEPMG: %s\n", lojas[i].cepmg);
+        printf("CEP: %s\n", lojas[i].cep);
+
+        printf("----------------------------------------\n");
+
+        encontrada = 1;
+    }
     }
 
     if (!encontrada) {
@@ -120,10 +140,56 @@ void listarLojas() { // RF04
     }
 }
 
-void paraMinusculo(char *str) {
+void paraMinusculo(char *str) { // case-insensitive (maiúscula/minúscula)
     for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
     }
+}
+
+void removerAcentos(char *str) {
+    char *p = str;
+    char *q = str;
+
+    while (*p) {
+        // UTF-8 para letras acentuadas comuns
+        if ((unsigned char)p[0] == 0xC3) {
+            switch ((unsigned char)p[1]) {
+
+                // a
+                case 0xA1: case 0xA0: case 0xA3: case 0xA2: *q = 'a'; break;
+                case 0x81: case 0x80: case 0x83: case 0x82: *q = 'a'; break;
+
+                // e
+                case 0xA9: case 0xAA: *q = 'e'; break;
+                case 0x89: case 0x8A: *q = 'e'; break;
+
+                // i
+                case 0xAD: *q = 'i'; break;
+                case 0x8D: *q = 'i'; break;
+
+                // o
+                case 0xB3: case 0xB4: case 0xB5: *q = 'o'; break;
+                case 0x93: case 0x94: case 0x95: *q = 'o'; break;
+
+                // u
+                case 0xBA: *q = 'u'; break;
+                case 0x9A: *q = 'u'; break;
+
+                // ç
+                case 0xA7: case 0x87: *q = 'c'; break;
+
+                default:
+                    *q = *p;
+            }
+            p += 2; // pula os 2 bytes do UTF-8
+        } else {
+            *q = *p;
+            p++;
+        }
+        q++;
+    }
+
+    *q = '\0';
 }
 
 static void copiarStringSeguro(char *destino, const char *origem, size_t tamanho) { // funcao interna para copiar os dados e evitar crash
