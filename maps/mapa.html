@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<link rel='stylesheet' href='https://unpkg.com/leaflet/dist/leaflet.css'/>
+<script src='https://unpkg.com/leaflet/dist/leaflet.js'></script>
+<style>#map{height:100vh;}</style>
+</head>
+<body>
+<button onclick='carregar()'>Atualizar mapa</button>
+<div id='map'></div>
+<script>
+var map = L.map('map').setView([-16.5, -49.3], 7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+ attribution: '© OpenStreetMap'
+}).addTo(map);
+var markers = [];
+function limparMapa() {
+  markers.forEach(m => map.removeLayer(m));
+  markers = [];
+}
+function carregar() {
+ limparMapa();
+ fetch('lojas_com_coord.json')
+ .then(res => res.json())
+ .then(lojas => {
+   lojas.forEach(loja => {
+     if (!loja.lat || !loja.lng) return;
+     let marker = L.marker([loja.lat, loja.lng])
+       .addTo(map)
+       .bindPopup(`
+         <b>${loja.nome}</b><br>
+         ${loja.endereco || ''}<br>
+         ${loja.cidade || ''} - ${loja.estado || ''}<br>
+         ${loja.contato || ''}<br>
+         ${loja.vendedora || ''}<br>
+         ${loja.cepmg || ''}
+       `);
+     markers.push(marker);
+   });
+ });
+}
+carregar();
+</script>
+</body>
+</html>

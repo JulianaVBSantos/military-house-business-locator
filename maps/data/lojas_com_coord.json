@@ -1,0 +1,14 @@
+[
+  {
+    "nome":	"NOME LOJA",
+		"contato":	"00 0000-0000",
+		"vendedora":	"NOME VENDEDORA",
+		"endereco":	"RUA XXX",
+		"cidade":	"NOME CIDADE",
+		"estado":	"XX",
+		"cepmg":	"NOME COLEGIO MILITAR",
+		"cep":	"00000-000",
+    "lat": "-00.0000000",
+    "lng": "-00.0000000"
+  } 
+]
