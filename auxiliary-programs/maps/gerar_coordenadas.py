@@ -1,8 +1,4 @@
-# Integração com mapa interativo (Leaflet + OpenStreetMap) foi iniciada,
-# porém temporariamente descontinuada nesta etapa do projeto.
-# A abordagem baseada em geocodificação apresentou baixa precisão devido
-# à falta de padronização dos endereços e dependência de serviços externos.
-# Os arquivos foram mantidos na pasta "maps" para possível retomada futura.
+# Código útil funcionando perfeitamente mas não será utilizado para o presente projeto
 
 import json
 import time

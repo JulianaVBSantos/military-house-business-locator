@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Mapa das Lojas</title>
+    <link rel='stylesheet' href='https://unpkg.com/leaflet/dist/leaflet.css'/>
+    <script src='https://unpkg.com/leaflet/dist/leaflet.js'></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #topo {
+            background: #1f2937;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #pesquisa {
+            padding: 8px;
+            width: 250px;
+            border-radius: 6px;
+            border: none;
+        }
+        button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        #map {
+            width: 100%;
+            height: calc(100vh - 60px);
+        }
+    </style>
+</head>
+<body>
+<div id='topo'>
+    <input type='text' id='pesquisa' placeholder='Pesquisar loja...'>
+    <button onclick='buscarLoja()'>Pesquisar</button>
+    <button onclick='location.reload()'>Atualizar mapa</button>
+</div>
+<div id='map'></div>
+<script>
+var map = L.map('map').setView([-16.5, -49.3], 7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+}).addTo(map);
+var marcadores = [];
+var marker0 = L.marker([-15.755926, -48.264845]).addTo(map)
+.bindPopup(`<b>Águas Lindas</b><br>Vendedora: Jéssica<br>Cidade: Águas Lindas - GO<br>Contato: 62 9508-0037<br>CEPMG: CEPMG Águas Lindas`);
+marcadores.push({
+    nome: 'Águas Lindas',
+    marker: marker0
+});
+var marker1 = L.marker([-16.081361, -48.509590]).addTo(map)
+.bindPopup(`<b>Alexânia</b><br>Vendedora: Thalita<br>Cidade: Alexânia - GO<br>Contato: 62 9800-7946<br>CEPMG: CEPMG 13 de Maio`);
+marcadores.push({
+    nome: 'Alexânia',
+    marker: marker1
+});
+var marker2 = L.marker([-16.463416, -49.953666]).addTo(map)
+.bindPopup(`<b>Anicuns</b><br>Vendedora: —<br>Cidade: Anicuns - GO<br>Contato: —<br>CEPMG: CEPMG Rosa Turisco de Araújo`);
+marcadores.push({
+    nome: 'Anicuns',
+    marker: marker2
+});
+var marker3 = L.marker([-16.304258, -48.946029]).addTo(map)
+.bindPopup(`<b>Arlindo Costa</b><br>Vendedora: Jackeline<br>Cidade: Anápolis - GO<br>Contato: 62 9270-0807<br>CEPMG: CEPMG Arlindo Costa`);
+marcadores.push({
+    nome: 'Arlindo Costa',
+    marker: marker3
+});
+var marker4 = L.marker([-16.606944, -49.334424]).addTo(map)
+.bindPopup(`<b>Ayrton Senna</b><br>Vendedora: Edilayne<br>Cidade: Goiânia - GO<br>Contato: 62 9318-0005<br>CEPMG: CEPMG Ayrton Senna`);
+marcadores.push({
+    nome: 'Ayrton Senna',
+    marker: marker4
+});
+var marker5 = L.marker([-16.348011, -48.920111]).addTo(map)
+.bindPopup(`<b>Bairro de Lourdes</b><br>Vendedora: —<br>Cidade: Anápolis - GO<br>Contato: —<br>CEPMG: CEPMG Onofre Quinan`);
+marcadores.push({
+    nome: 'Bairro de Lourdes',
+    marker: marker5
+});
+var marker6 = L.marker([-16.968751, -48.952085]).addTo(map)
+.bindPopup(`<b>Bela Vista</b><br>Vendedora: Luana Priscila<br>Cidade: Bela Vista - GO<br>Contato: 62 9394-9828<br>CEPMG: CEPMG Doutor Belém`);
+marcadores.push({
+    nome: 'Bela Vista',
+    marker: marker6
+});
+var marker7 = L.marker([-18.164853, -47.941490]).addTo(map)
+.bindPopup(`<b>Catalão</b><br>Vendedora: Viviane<br>Cidade: Catalão - GO<br>Contato: 64 9814-3325<br>CEPMG: CEPMG Iris Rezende Machado`);
+marcadores.push({
+    nome: 'Catalão',
+    marker: marker7
+});
+var marker8 = L.marker([-15.309142, -49.601284]).addTo(map)
+.bindPopup(`<b>Ceres</b><br>Vendedora: Thaynara<br>Cidade: Ceres - GO<br>Contato: 62 9902-6047<br>CEPMG: CEPMG Hélio Veloso`);
+marcadores.push({
+    nome: 'Ceres',
+    marker: marker8
+});
+var marker9 = L.marker([-16.293893, -48.960930]).addTo(map)
+.bindPopup(`<b>Cesar Toledo</b><br>Vendedora: Helena<br>Cidade: Anápolis - GO<br>Contato: 62 9390-6130<br>CEPMG: CEPMG Cesar Toledo`);
+marcadores.push({
+    nome: 'Cesar Toledo',
+    marker: marker9
+});
+var marker10 = L.marker([-16.107435, -47.928345]).addTo(map)
+.bindPopup(`<b>Cidade Ocidental</b><br>Vendedora: Paula<br>Cidade: Cidade Ocidental - GO<br>Contato: 62 9330-4965<br>CEPMG: CEPMG Cidade Ocidental`);
+marcadores.push({
+    nome: 'Cidade Ocidental',
+    marker: marker10
+});
+var marker11 = L.marker([-15.777246, -48.766508]).addTo(map)
+.bindPopup(`<b>Cocalzinho</b><br>Vendedora: Jennifer<br>Cidade: Cocalzinho - GO<br>Contato: 62 9191-9710<br>CEPMG: CEPMG José Ermírio de Moraes`);
+marcadores.push({
+    nome: 'Cocalzinho',
+    marker: marker11
+});
+var marker12 = L.marker([-16.827108, -49.292737]).addTo(map)
+.bindPopup(`<b>Colina Azul</b><br>Vendedora: Rosy<br>Cidade: Aparecida de Goiânia - GO<br>Contato: 62 9557-0032<br>CEPMG: CEPMG Colina Azul`);
+marcadores.push({
+    nome: 'Colina Azul',
+    marker: marker12
+});
+var marker13 = L.marker([-16.769144, -47.611969]).addTo(map)
+.bindPopup(`<b>Cristalina</b><br>Vendedora: Emanuely<br>Cidade: Cristalina - GO<br>Contato: 62 9184-7642<br>CEPMG: CEPMG Olga Aguiar Mohn`);
+marcadores.push({
+    nome: 'Cristalina',
+    marker: marker13
+});
+var marker14 = L.marker([-14.546939, -49.968963]).addTo(map)
+.bindPopup(`<b>Crixás</b><br>Vendedora: Camylla<br>Cidade: Crixás - GO<br>Contato: 62 8129-3785<br>CEPMG: CEPMG Prudêncio Ferreira`);
+marcadores.push({
+    nome: 'Crixás',
+    marker: marker14
+});
+var marker15 = L.marker([-16.724611, -49.229682]).addTo(map)
+.bindPopup(`<b>Deusdará</b><br>Vendedora: Maria do Socorro<br>Cidade: Goiânia - GO<br>Contato: 62 9285-0533<br>CEPMG: CEPMG Naly Deusdará`);
+marcadores.push({
+    nome: 'Deusdará',
+    marker: marker15
+});
+var marker16 = L.marker([-15.544546, -47.355160]).addTo(map)
+.bindPopup(`<b>Formosa</b><br>Vendedora: Santilha<br>Cidade: Formosa - GO<br>Contato: 62 9800-5892<br>CEPMG: CEPMG Domingos de Oliveira`);
+marcadores.push({
+    nome: 'Formosa',
+    marker: marker16
+});
+var marker17 = L.marker([-16.346444, -48.958380]).addTo(map)
+.bindPopup(`<b>Gabriel Issa</b><br>Vendedora: Francielly<br>Cidade: Anápolis - GO<br>Contato: 62 9241-2947<br>CEPMG: CEPMG Gabriel Issa`);
+marcadores.push({
+    nome: 'Gabriel Issa',
+    marker: marker17
+});
+var marker18 = L.marker([-16.505489, -49.020396]).addTo(map)
+.bindPopup(`<b>Goianápolis</b><br>Vendedora: Maria Laura<br>Cidade: Goianápolis - GO<br>Contato: 62 9295-0830<br>CEPMG: CEPMG Benedita Brito de Andrade`);
+marcadores.push({
+    nome: 'Goianápolis',
+    marker: marker18
+});
+var marker20 = L.marker([-16.577180, -49.383034]).addTo(map)
+.bindPopup(`<b>Goianira 1</b><br>Vendedora: Lucia<br>Cidade: Goianira - GO<br>Contato: 62 9405-7710<br>CEPMG: CEPMG José Silva`);
+marcadores.push({
+    nome: 'Goianira 1',
+    marker: marker20
+});
+var marker21 = L.marker([-16.519281, -49.421290]).addTo(map)
+.bindPopup(`<b>Goianira 2</b><br>Vendedora: Franciele Costa<br>Cidade: Goianira - GO<br>Contato: 62 9411-1801<br>CEPMG: CEPMG Padre Pelágio`);
+marcadores.push({
+    nome: 'Goianira 2',
+    marker: marker21
+});
+var marker22 = L.marker([-15.941994, -50.144079]).addTo(map)
+.bindPopup(`<b>Goiás</b><br>Vendedora: Selma<br>Cidade: Goiás - GO<br>Contato: 62 9318-0354<br>CEPMG: CEPMG Francisco Antônio`);
+marcadores.push({
+    nome: 'Goiás',
+    marker: marker22
+});
+var marker23 = L.marker([-16.617246, -49.217179]).addTo(map)
+.bindPopup(`<b>Jardim Guanabara</b><br>Vendedora: Anodilha<br>Cidade: — - GO<br>Contato: 62 9140-6331<br>CEPMG: CEPMG Jardim Guanabara`);
+marcadores.push({
+    nome: 'Jardim Guanabara',
+    marker: marker23
+});
+var marker24 = L.marker([-16.358967, -49.506803]).addTo(map)
+.bindPopup(`<b>Inhumas</b><br>Vendedora: Daryany<br>Cidade: Inhumas - GO<br>Contato: 62 8117-2901<br>CEPMG: CEPMG Manoel Vilaverde`);
+marcadores.push({
+    nome: 'Inhumas',
+    marker: marker24
+});
+var marker25 = L.marker([-16.441446, -51.115258]).addTo(map)
+.bindPopup(`<b>Iporá</b><br>Vendedora: Vitória<br>Cidade: Iporá - GO<br>Contato: 62 9402-2903<br>CEPMG: CEPMG Aristo Gomes da Silva`);
+marcadores.push({
+    nome: 'Iporá',
+    marker: marker25
+});
+var marker26 = L.marker([-14.954841, -49.553194]).addTo(map)
+.bindPopup(`<b>Itapaci</b><br>Vendedora: Edileia<br>Cidade: Itapaci - GO<br>Contato: 62 9701-1762<br>CEPMG: CEPMG Geraldo Andrade Martins`);
+marcadores.push({
+    nome: 'Itapaci',
+    marker: marker26
+});
+var marker27 = L.marker([-16.603123, -49.254904]).addTo(map)
+.bindPopup(`<b>Itatiaia</b><br>Vendedora: Patrícia<br>Cidade: Goiânia - GO<br>Contato: 62 9202-5893<br>CEPMG: CEPMG Valdemar Mundim`);
+marcadores.push({
+    nome: 'Itatiaia',
+    marker: marker27
+});
+var marker28 = L.marker([-15.753854, -49.333923]).addTo(map)
+.bindPopup(`<b>Jaraguá</b><br>Vendedora: Geissy<br>Cidade: Jaraguá - GO<br>Contato: 62 9561-7224<br>CEPMG: CEPMG Silvio de Castro Ribeiro`);
+marcadores.push({
+    nome: 'Jaraguá',
+    marker: marker28
+});
+var marker29 = L.marker([-15.881725, -50.876411]).addTo(map)
+.bindPopup(`<b>Jussara</b><br>Vendedora: Maria Marnia<br>Cidade: Jussara - GO<br>Contato: 62 8119-1737<br>CEPMG: CEPMG Maria Tereza Garcia`);
+marcadores.push({
+    nome: 'Jussara',
+    marker: marker29
+});
+var marker30 = L.marker([-16.645297, -49.189168]).addTo(map)
+.bindPopup(`<b>Lajeado</b><br>Vendedora: Maria Francisca<br>Cidade: Goiânia - GO<br>Contato: 62 9570-3340<br>CEPMG: CEPMG Mirian Bechimol Ferreira`);
+marcadores.push({
+    nome: 'Lajeado',
+    marker: marker30
+});
+var marker31 = L.marker([-16.249242, -47.895360]).addTo(map)
+.bindPopup(`<b>Luziânia</b><br>Vendedora: Dalila<br>Cidade: Luziânia - GO<br>Contato: 62 9541-6751<br>CEPMG: CEPMG Eli da Silva Braz`);
+marcadores.push({
+    nome: 'Luziânia',
+    marker: marker31
+});
+var marker32 = L.marker([-16.141839, -47.930673]).addTo(map)
+.bindPopup(`<b>Luziânia Ingá</b><br>Vendedora: Ana Karoline<br>Cidade: Luziânia - GO<br>Contato: 62 9350-8492<br>CEPMG: CEPMG CEP Shinohara`);
+marcadores.push({
+    nome: 'Luziânia Ingá',
+    marker: marker32
+});
+var marker33 = L.marker([-16.822095, -49.373313]).addTo(map)
+.bindPopup(`<b>Madre Germana</b><br>Vendedora: Marilza<br>Cidade: Goiânia - GO<br>Contato: 62 9289-8488<br>CEPMG: CEPMG Madre Germana`);
+marcadores.push({
+    nome: 'Madre Germana',
+    marker: marker33
+});
+var marker34 = L.marker([-16.777154, -49.281191]).addTo(map)
+.bindPopup(`<b>Mansões Paraíso</b><br>Vendedora: Juliana<br>Cidade: Aparecida de Goiânia - GO<br>Contato: 62 9335-2211<br>CEPMG: CEPMG Mansões Paraíso`);
+marcadores.push({
+    nome: 'Mansões Paraíso',
+    marker: marker34
+});
+var marker35 = L.marker([-17.734769, -49.115465]).addTo(map)
+.bindPopup(`<b>Morrinhos</b><br>Vendedora: Shirley<br>Cidade: Morrinhos - GO<br>Contato: 64 9540-7148<br>CEPMG: CEPMG Xavier de Almeida`);
+marcadores.push({
+    nome: 'Morrinhos',
+    marker: marker35
+});
+var marker36 = L.marker([-16.407281, -49.220764]).addTo(map)
+.bindPopup(`<b>Nerópolis</b><br>Vendedora: Gisele<br>Cidade: Nerópolis - GO<br>Contato: 62 9119-0825<br>CEPMG: CEPMG Doutor Negreiro`);
+marcadores.push({
+    nome: 'Nerópolis',
+    marker: marker36
+});
+var marker37 = L.marker([-14.466640, -48.455001]).addTo(map)
+.bindPopup(`<b>Niquelândia</b><br>Vendedora: Vanessa<br>Cidade: Niquelândia - GO<br>Contato: 62 9702-3843<br>CEPMG: CEPMG Paulo Francisco da Silva`);
+marcadores.push({
+    nome: 'Niquelândia',
+    marker: marker37
+});
+var marker39 = L.marker([-15.166434, -48.284862]).addTo(map)
+.bindPopup(`<b>Padre Bernardo</b><br>Vendedora: Yany<br>Cidade: Padre Bernardo - GO<br>Contato: 62 9811-6270<br>CEPMG: CEPMG José Monteiro de Lima`);
+marcadores.push({
+    nome: 'Padre Bernardo',
+    marker: marker39
+});
+var marker40 = L.marker([-15.857629, -48.958117]).addTo(map)
+.bindPopup(`<b>Pirenópolis</b><br>Vendedora: Raqueline<br>Cidade: Pirenópolis - GO<br>Contato: 62 9358-9663<br>CEPMG: CEPMG Comendador Christovam de Oliveira`);
+marcadores.push({
+    nome: 'Pirenópolis',
+    marker: marker40
+});
+var marker41 = L.marker([-17.303180, -48.281996]).addTo(map)
+.bindPopup(`<b>Pires do Rio</b><br>Vendedora: Tatiane<br>Cidade: Pires do Rio - GO<br>Contato: 62 9468-4565<br>CEPMG: CEPMG Profº Ivan Ferreira`);
+marcadores.push({
+    nome: 'Pires do Rio',
+    marker: marker41
+});
+var marker42 = L.marker([-15.475425, -47.602565]).addTo(map)
+.bindPopup(`<b>Planaltina</b><br>Vendedora: Nubia<br>Cidade: Planaltina - GO<br>Contato: 62 9313-0857<br>CEPMG: CEPMG Profª Lourdete de Fátima de Paiva Sutir`);
+marcadores.push({
+    nome: 'Planaltina',
+    marker: marker42
+});
+var marker44 = L.marker([-16.321473, -48.954491]).addTo(map)
+.bindPopup(`<b>Praça Oeste</b><br>Vendedora: Isabella<br>Cidade: Anápolis - GO<br>Contato: 62 9137-2082<br>CEPMG: CEPMG de Anápolis`);
+marcadores.push({
+    nome: 'Praça Oeste',
+    marker: marker44
+});
+var marker45 = L.marker([-15.946602, -48.312251]).addTo(map)
+.bindPopup(`<b>Santo Antônio</b><br>Vendedora: Sandy<br>Cidade: Santo Antônio do Descoberto - GO<br>Contato: 62 9874-7739<br>CEPMG: CEPMG José Elias de Azevedo`);
+marcadores.push({
+    nome: 'Santo Antônio',
+    marker: marker45
+});
+var marker46 = L.marker([-16.705536, -49.091849]).addTo(map)
+.bindPopup(`<b>Senador Canedo</b><br>Vendedora: Patrícia<br>Cidade: Senador Canedo - GO<br>Contato: 62 99513-6068<br>CEPMG: CEPMG Pedro Xavier`);
+marcadores.push({
+    nome: 'Senador Canedo',
+    marker: marker46
+});
+var marker47 = L.marker([-16.662500, -48.608616]).addTo(map)
+.bindPopup(`<b>Silvânia</b><br>Vendedora: Jessiane<br>Cidade: Silvânia - GO<br>Contato: 62 9537-4091<br>CEPMG: CEPMG Moisés Santana`);
+marcadores.push({
+    nome: 'Silvânia',
+    marker: marker47
+});
+var marker48 = L.marker([-16.649830, -49.492085]).addTo(map)
+.bindPopup(`<b>Trindade 1</b><br>Vendedora: Luciana<br>Cidade: Trindade - GO<br>Contato: 62 99407-5967<br>CEPMG: CEPMG Divino Pai Eterno`);
+marcadores.push({
+    nome: 'Trindade 1',
+    marker: marker48
+});
+var marker49 = L.marker([-16.631655, -49.403032]).addTo(map)
+.bindPopup(`<b>Trindade 2</b><br>Vendedora: Auliane<br>Cidade: Trindade - GO<br>Contato: 62 99402-6330<br>CEPMG: CEPMG José dos Reis`);
+marcadores.push({
+    nome: 'Trindade 2',
+    marker: marker49
+});
+var marker51 = L.marker([-16.054657, -48.015398]).addTo(map)
+.bindPopup(`<b>Valparaíso 2</b><br>Vendedora: Marcia Maria<br>Cidade: Valparaíso - GO<br>Contato: 62 99361-1496<br>CEPMG: CEPMG Céu Azul`);
+marcadores.push({
+    nome: 'Valparaíso 2',
+    marker: marker51
+});
+var marker52 = L.marker([-16.744930, -48.518636]).addTo(map)
+.bindPopup(`<b>Vianópolis</b><br>Vendedora: Luiz Eduardo<br>Cidade: Vianópolis - GO<br>Contato: 62 99318-1492<br>CEPMG: CEPMG Americano do Brasil`);
+marcadores.push({
+    nome: 'Vianópolis',
+    marker: marker52
+});
+function buscarLoja() {
+    var texto = document.getElementById('pesquisa').value.toLowerCase();
+    for (let i = 0; i < marcadores.length; i++) {
+        if (marcadores[i].nome.toLowerCase().includes(texto)) {
+            map.setView(marcadores[i].marker.getLatLng(), 15);
+            marcadores[i].marker.openPopup();
+            return;
+        }
+    }
+    alert('Loja não encontrada!');
+}
+</script>
+</body>
+</html>
