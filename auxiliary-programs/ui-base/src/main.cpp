@@ -1,12 +1,14 @@
 #include <QApplication>
-#include "ui/MainWindow.h"
+#include <QMainWindow>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    MainWindow window;
-    window.show();
+    QMainWindow janela;
+
+    janela.resize(800, 600);
+    janela.show();
 
     return app.exec();
 }

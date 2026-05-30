@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "lojas.h"
+#include "backend/lojas.h"
 
 #define SENHA_ADMIN "Senha_Fake"
 
 int main()
 {
-    carregarLojas("dados.json");
+    carregarLojas("src/data/dados.json");
+    printf("Total lojas: %d\n", totalLojas);
 
     int perfil; // RF01
     int opcao;
@@ -164,7 +165,7 @@ int main()
     }
     }
 
-    salvarLojas("dados.json"); // salvar alterações realizadas no struct para o .json
+    salvarLojas("src/data/dados.json"); // salvar alterações realizadas no struct para o .json
 
     return 0;
 }
