@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(MeuSistema LANGUAGES C CXX)
+project(LocalizadorComercialCasaDoMilitar LANGUAGES C CXX)
 
 # Padrão C++
 set(CMAKE_CXX_STANDARD 17)
@@ -12,11 +12,15 @@ set(CMAKE_AUTOMOC ON)
 # Encontrar Qt
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-# Criar executável
-add_executable(MeuSistema
+# Recursos (.qrc)
+qt6_add_resources(RESOURCES
+    src/resources/resources.qrc
+)
 
-    # Main
-    src/main.cpp
+# Criar executável
+add_executable(LocalizadorComercialCasaDoMilitar
+    
+    src/main.cpp # Main
 
     # UI
     src/ui/MainWindow.cpp
@@ -28,7 +32,14 @@ add_executable(MeuSistema
     src/backend/mapa.c
     src/backend/utils.c
     src/backend/cJSON.c
+
+    # Recursos
+    ${RESOURCES}
+)
+
+target_sources(LocalizadorComercialCasaDoMilitar PRIVATE
+    src/resources/version.rc
 )
 
 # Linkar Qt
-target_link_libraries(MeuSistema PRIVATE Qt6::Widgets)
+target_link_libraries(LocalizadorComercialCasaDoMilitar PRIVATE Qt6::Widgets)

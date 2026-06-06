@@ -23,8 +23,6 @@ void carregarLojas(const char *arquivo)
 {
     FILE *fp = fopen(arquivo, "r");
 
-    printf("Tentando abrir: %s\n", arquivo);
-
     if (fp == NULL)
     {
         printf("ERRO AO ABRIR ARQUIVO\n");

@@ -1,27 +1,89 @@
 #include "MainWindow.h"
+#include <QPainter>
+#include <QPixmap>
+#include <QDialog>
+#include <QRadioButton>
+#include <QDialogButtonBox>
+#include <QDesktopServices>
+#include <QUrl>
 #include <QAbstractItemView>
 #include <QComboBox>
-#include <cstring>
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-
 #include <QPushButton>
 #include <QLabel>
 #include <QFrame>
-
 #include <QTableWidget>
 #include <QHeaderView>
-
 #include <QLineEdit>
-
 #include <QInputDialog>
-
 #include <QMessageBox>
+#include <cstring>
+#include <QGraphicsOpacityEffect>
+#include <QDir>
 
 extern "C"
 {
 #include "../backend/lojas.h"
+}
+
+QString normalizarTexto(QString texto)
+{ // tratativa de acento
+    texto = texto.toLower();
+
+    texto.replace("á", "a");
+    texto.replace("à", "a");
+    texto.replace("â", "a");
+    texto.replace("ã", "a");
+
+    texto.replace("é", "e");
+    texto.replace("ê", "e");
+
+    texto.replace("í", "i");
+
+    texto.replace("ó", "o");
+    texto.replace("ô", "o");
+    texto.replace("õ", "o");
+
+    texto.replace("ú", "u");
+
+    texto.replace("ç", "c");
+
+    return texto;
+}
+
+void MainWindow::restaurarDados()
+{
+    int resposta =
+        QMessageBox::question(
+            this,
+            "Restaurar Dados",
+            "Deseja restaurar todos os dados originais?\n\n"
+            "Todas as alterações serão perdidas.",
+            QMessageBox::Yes | QMessageBox::No);
+
+    if (resposta != QMessageBox::Yes)
+        return;
+
+    carregarLojas("src/data/dados_backup.json");
+
+    salvarLojas("src/data/dados.json");
+
+    atualizarTabela();
+
+    QMessageBox::information(
+        this,
+        "Sucesso",
+        "Dados restaurados com sucesso.");
+}
+
+void MainWindow::abrirMapa()
+{
+    gerarMapa();
+
+    QDesktopServices::openUrl(
+        QUrl::fromLocalFile("mapa.html"));
 }
 
 void MainWindow::atualizarTabela()
@@ -51,14 +113,25 @@ void MainWindow::atualizarTabela()
         tabela->setItem(i, 6,
                         new QTableWidgetItem(lojas[i].cep));
 
+        QTableWidgetItem *itemEndereco =
+            new QTableWidgetItem(lojas[i].endereco);
+
+        itemEndereco->setToolTip(
+            lojas[i].endereco);
+
         tabela->setItem(i, 7,
-                        new QTableWidgetItem(lojas[i].endereco));
+                        itemEndereco);
     }
+
+    tabela->clearSelection();
+    tabela->setCurrentCell(-1, -1);
 }
 
 void MainWindow::buscarLoja()
 {
-    QString texto = campoBusca->text();
+    QString texto =
+        normalizarTexto(
+            campoBusca->text());
 
     if (texto.isEmpty())
     {
@@ -70,24 +143,21 @@ void MainWindow::buscarLoja()
 
     int encontrados = 0;
 
-    QString tipo =
-        tipoBusca->currentText();
-
-    if (tipo == "Nome")
+    if (tipoSelecionado == "Nome")
     {
         encontrados =
             buscarLojasPorNome(
                 texto.toStdString().c_str(),
                 resultados);
     }
-    else if (tipo == "Colégio Militar")
+    else if (tipoSelecionado == "Colégio")
     {
         encontrados =
             buscarLojasPorCEPMG(
                 texto.toStdString().c_str(),
                 resultados);
     }
-    else if (tipo == "Local")
+    else if (tipoSelecionado == "Local")
     {
         encontrados =
             buscarLojasPorLocal(
@@ -120,8 +190,17 @@ void MainWindow::buscarLoja()
         tabela->setItem(i, 6,
                         new QTableWidgetItem(resultados[i].cep));
 
+        QTableWidgetItem *itemEndereco =
+            new QTableWidgetItem(resultados[i].endereco);
+
+        itemEndereco->setToolTip(
+            resultados[i].endereco);
+
         tabela->setItem(i, 7,
-                        new QTableWidgetItem(resultados[i].endereco));
+                        itemEndereco);
+
+        tabela->clearSelection();
+        tabela->setCurrentCell(-1, -1);
     }
 }
 
@@ -278,9 +357,10 @@ void MainWindow::adicionarLojaQt()
 
 void MainWindow::removerLojaQt()
 {
-    int linha = tabela->currentRow();
+    QList<QTableWidgetSelectionRange> selecao =
+        tabela->selectedRanges();
 
-    if (linha < 0)
+    if (selecao.isEmpty())
     {
         QMessageBox::warning(
             this,
@@ -289,6 +369,8 @@ void MainWindow::removerLojaQt()
 
         return;
     }
+
+    int linha = selecao.first().topRow();
 
     int resposta =
         QMessageBox::question(
@@ -309,13 +391,22 @@ void MainWindow::removerLojaQt()
     salvarLojas("src/data/dados.json");
 
     atualizarTabela();
+
+    tabela->clearSelection();
+    tabela->setCurrentCell(-1, -1);
+
+    QMessageBox::information(
+        this,
+        "Sucesso",
+        "Loja removida com sucesso.");
 }
 
 void MainWindow::editarLojaQt()
 {
-    int linha = tabela->currentRow();
+    QList<QTableWidgetSelectionRange> selecao =
+        tabela->selectedRanges();
 
-    if (linha < 0)
+    if (selecao.isEmpty())
     {
         QMessageBox::warning(
             this,
@@ -325,33 +416,336 @@ void MainWindow::editarLojaQt()
         return;
     }
 
-    QString novoNome =
-        QInputDialog::getText(
-            this,
-            "Editar Loja",
-            "Novo nome:",
-            QLineEdit::Normal,
-            lojas[linha].nome);
+    int linhaTabela =
+        selecao.first().topRow();
 
-    if (novoNome.isEmpty())
+    QString nomeSelecionado =
+        tabela->item(linhaTabela, 0)->text();
+
+    int linha = -1;
+
+    for (int i = 0; i < totalLojas; i++)
+    {
+        if (nomeSelecionado ==
+            lojas[i].nome)
+        {
+            linha = i;
+            break;
+        }
+    }
+
+    if (linha == -1)
+    {
+        QMessageBox::warning(
+            this,
+            "Erro",
+            "Loja não encontrada.");
+
+        return;
+    }
+
+    QStringList opcoes;
+
+    opcoes << "Nome"
+           << "Contato"
+           << "Vendedora"
+           << "Cidade"
+           << "Estado"
+           << "CEPMG"
+           << "CEP"
+           << "Endereço"
+           << "Latitude"
+           << "Longitude";
+
+    bool ok;
+
+    QString campo =
+        QInputDialog::getItem(
+            this,
+            "Editar Campo",
+            "Selecione o campo:",
+            opcoes,
+            0,
+            false,
+            &ok);
+
+    if (!ok || campo.isEmpty())
         return;
 
-    strncpy(
-        lojas[linha].nome,
-        novoNome.toStdString().c_str(),
-        sizeof(lojas[linha].nome));
+    QString valorAtual;
+
+    if (campo == "Nome")
+        valorAtual = lojas[linha].nome;
+
+    else if (campo == "Contato")
+        valorAtual = lojas[linha].contato;
+
+    else if (campo == "Vendedora")
+        valorAtual = lojas[linha].vendedora;
+
+    else if (campo == "Cidade")
+        valorAtual = lojas[linha].cidade;
+
+    else if (campo == "Estado")
+        valorAtual = lojas[linha].estado;
+
+    else if (campo == "CEPMG")
+        valorAtual = lojas[linha].cepmg;
+
+    else if (campo == "CEP")
+        valorAtual = lojas[linha].cep;
+
+    else if (campo == "Endereço")
+        valorAtual = lojas[linha].endereco;
+
+    QString novoValor;
+
+    if (campo == "Latitude")
+    {
+        double valor =
+            QInputDialog::getDouble(
+                this,
+                "Editar Latitude",
+                "Nova latitude:",
+                lojas[linha].lat,
+                -999999,
+                999999,
+                6,
+                &ok);
+
+        if (!ok)
+            return;
+
+        int confirmar =
+            QMessageBox::question(
+                this,
+                "Confirmar",
+                "Deseja alterar a latitude?");
+
+        if (confirmar != QMessageBox::Yes)
+            return;
+
+        lojas[linha].lat = valor;
+    }
+    else if (campo == "Longitude")
+    {
+        double valor =
+            QInputDialog::getDouble(
+                this,
+                "Editar Longitude",
+                "Nova longitude:",
+                lojas[linha].lng,
+                -999999,
+                999999,
+                6,
+                &ok);
+
+        if (!ok)
+            return;
+
+        int confirmar =
+            QMessageBox::question(
+                this,
+                "Confirmar",
+                "Deseja alterar a longitude?");
+
+        if (confirmar != QMessageBox::Yes)
+            return;
+
+        lojas[linha].lng = valor;
+    }
+    else
+    {
+        novoValor =
+            QInputDialog::getText(
+                this,
+                "Editar Campo",
+                "Novo valor:",
+                QLineEdit::Normal,
+                valorAtual,
+                &ok);
+
+        if (!ok || novoValor.isEmpty())
+            return;
+
+        int confirmar =
+            QMessageBox::question(
+                this,
+                "Confirmar",
+                "Deseja salvar a alteração?");
+
+        if (confirmar != QMessageBox::Yes)
+            return;
+
+        if (campo == "Nome")
+            strncpy(lojas[linha].nome,
+                    novoValor.toStdString().c_str(),
+                    sizeof(lojas[linha].nome));
+
+        else if (campo == "Contato")
+            strncpy(lojas[linha].contato,
+                    novoValor.toStdString().c_str(),
+                    sizeof(lojas[linha].contato));
+
+        else if (campo == "Vendedora")
+            strncpy(lojas[linha].vendedora,
+                    novoValor.toStdString().c_str(),
+                    sizeof(lojas[linha].vendedora));
+
+        else if (campo == "Cidade")
+            strncpy(lojas[linha].cidade,
+                    novoValor.toStdString().c_str(),
+                    sizeof(lojas[linha].cidade));
+
+        else if (campo == "Estado")
+            strncpy(lojas[linha].estado,
+                    novoValor.toStdString().c_str(),
+                    sizeof(lojas[linha].estado));
+
+        else if (campo == "CEPMG")
+            strncpy(lojas[linha].cepmg,
+                    novoValor.toStdString().c_str(),
+                    sizeof(lojas[linha].cepmg));
+
+        else if (campo == "CEP")
+            strncpy(lojas[linha].cep,
+                    novoValor.toStdString().c_str(),
+                    sizeof(lojas[linha].cep));
+
+        else if (campo == "Endereço")
+            strncpy(lojas[linha].endereco,
+                    novoValor.toStdString().c_str(),
+                    sizeof(lojas[linha].endereco));
+    }
 
     salvarLojas("src/data/dados.json");
 
     atualizarTabela();
+
+    tabela->clearSelection();
+    tabela->setCurrentCell(-1, -1);
+
+    QMessageBox::information(
+        this,
+        "Sucesso",
+        "Dados atualizados.");
 }
 
-MainWindow::MainWindow()
+MainWindow::MainWindow() // construtor
 {
-    resize(1200, 700);
+
+    bool administrador = false;
+
+    while (true)
+    {
+        QDialog perfilDialog(this);
+
+        perfilDialog.setWindowTitle("Selecionar Perfil");
+        perfilDialog.resize(350, 220);
+
+        QVBoxLayout *perfilLayout =
+            new QVBoxLayout(&perfilDialog);
+
+        QLabel *tituloPerfil =
+            new QLabel("Selecione o perfil de acesso");
+
+        tituloPerfil->setAlignment(Qt::AlignCenter);
+
+        tituloPerfil->setStyleSheet(
+            "font-size: 18px;"
+            "font-weight: bold;"
+            "color: #7f1d1d;"
+            "margin-bottom: 15px;");
+
+        QRadioButton *radioAdmin =
+            new QRadioButton("Perfil Gestor");
+
+        QRadioButton *radioUsuario =
+            new QRadioButton("Perfil Consulta");
+
+        radioUsuario->setChecked(true);
+
+        perfilLayout->addStretch();
+
+        perfilLayout->addWidget(
+            tituloPerfil,
+            0,
+            Qt::AlignCenter);
+
+        perfilLayout->addSpacing(20);
+
+        perfilLayout->addWidget(
+            radioAdmin,
+            0,
+            Qt::AlignCenter);
+
+        perfilLayout->addWidget(
+            radioUsuario,
+            0,
+            Qt::AlignCenter);
+
+        perfilLayout->addStretch();
+
+        QDialogButtonBox *botoes =
+            new QDialogButtonBox(
+                QDialogButtonBox::Ok |
+                QDialogButtonBox::Cancel);
+
+        perfilLayout->addWidget(botoes);
+
+        connect(botoes,
+                &QDialogButtonBox::accepted,
+                &perfilDialog,
+                &QDialog::accept);
+
+        connect(botoes,
+                &QDialogButtonBox::rejected,
+                &perfilDialog,
+                &QDialog::reject);
+
+        if (perfilDialog.exec() != QDialog::Accepted)
+        {
+            exit(0);
+        }
+
+        if (radioUsuario->isChecked())
+        {
+            administrador = false;
+            break;
+        }
+
+        bool ok;
+
+        QString senha =
+            QInputDialog::getText(
+                this,
+                "Senha Administrador",
+                "Digite a senha:",
+                QLineEdit::Password,
+                "",
+                &ok);
+
+        if (!ok)
+        {
+            continue;
+        }
+
+        if (senha == "admin123")
+        {
+            administrador = true;
+            break;
+        }
+
+        QMessageBox::warning(
+            this,
+            "Acesso negado",
+            "Senha incorreta.");
+    }
+
+    resize(1450, 800);
 
     setWindowTitle(
-        "Military House Business Locator");
+        "Localizador Comercial Casa Do Militar");
 
     QWidget *central =
         new QWidget();
@@ -361,52 +755,148 @@ MainWindow::MainWindow()
     QHBoxLayout *mainLayout =
         new QHBoxLayout();
 
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+
     central->setLayout(mainLayout);
 
-    // =========================
-    // Menu lateral
-    // =========================
+    setStyleSheet(
+
+        "QMainWindow {"
+        "background-color: #e4e1e1;"
+        "}"
+
+        "QFrame#menu {"
+        "background-color: #e4e1e1;"
+        "}"
+
+        "QPushButton {"
+        "background-color: #B30000;"
+        "color: #FFFFFF;"
+        "border: none;"
+        "border-radius: 10px;"
+        "padding: 12px;"
+        "font-size: 14px;"
+        "font-weight: bold;"
+        "}"
+
+        "QPushButton:hover {"
+        "background-color: #CC0000;"
+        "}"
+
+        "QPushButton:pressed {"
+        "background-color: #800020;"
+        "}"
+
+        "QPushButton:disabled {"
+        "background-color: #555555;"
+        "color: #AAAAAA;"
+        "}"
+
+        "QLabel {"
+        "font-size: 15px;"
+        "font-weight: bold;"
+        "color: #111827;"
+        "}"
+
+        "QMessageBox QLabel {"
+        "color: #111827;"
+        "}"
+
+        "QInputDialog QLabel {"
+        "color: #111827;"
+        "}"
+
+        "#tituloEmpresa {"
+        "color: #800020;"
+        "font-size: 18px;"
+        "font-weight: bold;"
+        "padding-bottom: 10px;"
+        "}");
 
     QFrame *menuLateral =
         new QFrame();
 
-    menuLateral->setFixedWidth(220);
+    menuLateral->setObjectName("menu");
+
+    menuLateral->setFixedWidth(260);
 
     QVBoxLayout *menuLayout =
         new QVBoxLayout();
 
+    menuLayout->setSpacing(10);
+
     menuLateral->setLayout(menuLayout);
 
-    QPushButton *btnBuscar =
-        new QPushButton("Buscar Loja");
+    QLabel *logoImagem = new QLabel();
+
+    logoImagem->setPixmap(
+        QPixmap(":/images/imagens/logo.png") // caminho correto no Qt Resource System
+            .scaled(
+                140,
+                140,
+                Qt::KeepAspectRatio,
+                Qt::SmoothTransformation));
+
+    logoImagem->setAlignment(Qt::AlignCenter);
+
+    menuLayout->addWidget(logoImagem);
+
+    QLabel *tituloEmpresa =
+        new QLabel("CASA DO MILITAR");
+
+    tituloEmpresa->setAlignment(Qt::AlignCenter);
+
+    tituloEmpresa->setObjectName("tituloEmpresa");
+
+    menuLayout->addWidget(tituloEmpresa);
 
     QPushButton *btnAdicionar =
-        new QPushButton("Adicionar Loja");
+        new QPushButton("➕ Adicionar Loja");
 
     QPushButton *btnEditar =
-        new QPushButton("Editar Loja");
+        new QPushButton("✏️ Editar Loja");
 
     QPushButton *btnRemover =
-        new QPushButton("Remover Loja");
+        new QPushButton("🗑️ Remover Loja");
 
     QPushButton *btnMapa =
-        new QPushButton("Abrir Mapa");
+        new QPushButton("🗺️ Abrir Mapa");
 
-    menuLayout->addWidget(btnBuscar);
+    QPushButton *btnRestaurar =
+        new QPushButton("⟳ Restaurar Dados");
+
+    if (!administrador)
+    {
+        btnAdicionar->setEnabled(false);
+        btnEditar->setEnabled(false);
+        btnRemover->setEnabled(false);
+        btnRestaurar->setEnabled(false);
+    }
 
     menuLayout->addWidget(btnAdicionar);
-
     menuLayout->addWidget(btnEditar);
-
     menuLayout->addWidget(btnRemover);
-
     menuLayout->addWidget(btnMapa);
+    menuLayout->addWidget(btnRestaurar);
 
     menuLayout->addStretch();
 
-    // =========================
-    // Área conteúdo
-    // =========================
+    QLabel *perfilAtual =
+        new QLabel(
+            administrador
+                ? "Perfil: Gestor"
+                : "Perfil: Consulta");
+
+    perfilAtual->setStyleSheet(
+        "color: #800020;"
+        "padding: 15px;"
+        "font-size: 15px;"
+        "font-weight: bold;");
+
+    menuLayout->addWidget(
+        perfilAtual,
+        0,
+        Qt::AlignCenter);
 
     QFrame *areaConteudo =
         new QFrame();
@@ -414,52 +904,150 @@ MainWindow::MainWindow()
     QVBoxLayout *conteudoLayout =
         new QVBoxLayout();
 
+    conteudoLayout->setContentsMargins(
+        20, 20, 20, 20);
+
+    conteudoLayout->setSpacing(15);
+
     areaConteudo->setLayout(
         conteudoLayout);
 
     QLabel *titulo =
         new QLabel(
-            "Lojas cadastradas");
+            "LOJAS CADASTRADAS");
+
+    QLabel *assinatura =
+        new QLabel(
+            "Developed by Juliana V. B. Santos\n     All rights reserved © 2026");
+
+    perfilAtual->setAlignment(Qt::AlignCenter);
+
+    assinatura->setAlignment(Qt::AlignCenter);
+
+    assinatura->setStyleSheet(
+        "color: #800020;"
+        "padding-bottom: 5px;"
+        "font-size: 11px;");
+
+    menuLayout->addWidget(assinatura);
+
+    titulo->setStyleSheet(
+        "font-size: 26px;"
+        "font-weight: bold;"
+        "color: #7f1d1d;");
 
     conteudoLayout->addWidget(
         titulo);
 
-    // =========================
-    // Busca
-    // =========================
+    QHBoxLayout *layoutBuscaTipo =
+        new QHBoxLayout();
 
-    tipoBusca = new QComboBox();
+    auto makeButton = [](const QString &text, const QString &iconPath)
+    {
+        QPushButton *btn = new QPushButton(text);
 
-    tipoBusca->addItem("Nome");
-    tipoBusca->addItem("Colégio Militar");
-    tipoBusca->addItem("Local");
+        QIcon icon(iconPath);
 
-    conteudoLayout->addWidget(
-        tipoBusca);
+        btn->setIcon(icon);
+        btn->setIconSize(QSize(32, 32));
+        btn->setMinimumHeight(55);
+        btn->setCheckable(true);
+
+        return btn;
+    };
+
+    QPushButton *btnNome =
+        makeButton("Nome da Loja",
+                   ":/icons/icons/search.png");
+
+    QPushButton *btnColegio =
+        makeButton("Colégio Militar",
+                   ":/icons/icons/school.png");
+
+    QPushButton *btnLocal =
+        makeButton("Local",
+                   ":/icons/icons/pin.png");
+
+    btnNome->setChecked(true);
+
+    QString estiloBusca =
+
+        "QPushButton {"
+        "background-color: white;"
+        "color: #7f1d1d;"
+        "border: 2px solid #991b1b;"
+        "border-radius: 14px;"
+        "font-size: 17px;"
+        "font-weight: bold;"
+        "padding: 14px;"
+        "}"
+
+        "QPushButton:hover {"
+        "background-color: #fef2f2;"
+        "}"
+
+        "QPushButton:checked {"
+        "background-color: #991b1b;"
+        "color: white;"
+        "}";
+
+    btnNome->setStyleSheet(estiloBusca);
+    btnColegio->setStyleSheet(estiloBusca);
+    btnLocal->setStyleSheet(estiloBusca);
+
+    layoutBuscaTipo->addWidget(btnNome);
+    layoutBuscaTipo->addWidget(btnColegio);
+    layoutBuscaTipo->addWidget(btnLocal);
+
+    conteudoLayout->addLayout(
+        layoutBuscaTipo);
 
     campoBusca =
         new QLineEdit();
 
     campoBusca->setPlaceholderText(
-        "Digite sua busca...");
+        "Digite sua pesquisa...");
+
+    campoBusca->setMinimumHeight(45);
+
+    campoBusca->setStyleSheet(
+
+        "QLineEdit {"
+        "background-color: white;"
+        "border: 2px solid #991b1b;"
+        "border-radius: 12px;"
+        "padding-left: 15px;"
+        "font-size: 15px;"
+        "color: #111827;"
+        "}"
+
+        "QLineEdit:focus {"
+        "border: 2px solid #dc2626;"
+        "}");
 
     conteudoLayout->addWidget(
         campoBusca);
 
-    // =========================
-    // Tabela
-    // =========================
-
-    // =========================
-    // Tabela
-    // =========================
-
     tabela =
         new QTableWidget();
 
-    // impedir edição direta
     tabela->setEditTriggers(
         QAbstractItemView::NoEditTriggers);
+
+    tabela->setAlternatingRowColors(true);
+
+    tabela->setShowGrid(false);
+
+    tabela->setWordWrap(true);
+
+    tabela->setSelectionBehavior(
+        QAbstractItemView::SelectRows);
+
+    tabela->verticalHeader()
+        ->setVisible(false);
+
+    tabela->verticalHeader()
+        ->setDefaultSectionSize(38);
 
     tabela->setColumnCount(8);
 
@@ -477,30 +1065,32 @@ MainWindow::MainWindow()
     tabela->setHorizontalHeaderLabels(
         colunas);
 
+    tabela->horizontalHeader()->setStyleSheet(
+        "QHeaderView::section {"
+        "background-color: #800020;"
+        "color: white;"
+        "font-weight: 900;"
+        "font-size: 15px;"
+        "padding: 10px;"
+        "border: 1px solid #991b1b;"
+        "}");
+
     tabela->horizontalHeader()
         ->setSectionResizeMode(
             QHeaderView::Stretch);
 
+    tabela->horizontalHeader()
+        ->setSectionResizeMode(
+            7,
+            QHeaderView::ResizeToContents);
+
     conteudoLayout->addWidget(
         tabela);
-
-    // =========================
-    // Carregar dados
-    // =========================
 
     carregarLojas(
         "src/data/dados.json");
 
     atualizarTabela();
-
-    // =========================
-    // Conexões
-    // =========================
-
-    connect(btnBuscar,
-            &QPushButton::clicked,
-            this,
-            &MainWindow::buscarLoja);
 
     connect(campoBusca,
             &QLineEdit::textChanged,
@@ -512,19 +1102,67 @@ MainWindow::MainWindow()
             this,
             &MainWindow::adicionarLojaQt);
 
-    connect(btnRemover,
-            &QPushButton::clicked,
-            this,
-            &MainWindow::removerLojaQt);
-
     connect(btnEditar,
             &QPushButton::clicked,
             this,
             &MainWindow::editarLojaQt);
 
-    // =========================
-    // Layout principal
-    // =========================
+    connect(btnRemover,
+            &QPushButton::clicked,
+            this,
+            &MainWindow::removerLojaQt);
+
+    connect(btnMapa,
+            &QPushButton::clicked,
+            this,
+            &MainWindow::abrirMapa);
+
+    connect(btnRestaurar,
+            &QPushButton::clicked,
+            this,
+            &MainWindow::restaurarDados);
+
+    connect(btnNome,
+            &QPushButton::clicked,
+            this,
+            [this, btnNome, btnColegio, btnLocal]()
+            {
+                tipoSelecionado = "Nome";
+
+                btnNome->setChecked(true);
+                btnColegio->setChecked(false);
+                btnLocal->setChecked(false);
+
+                buscarLoja();
+            });
+
+    connect(btnColegio,
+            &QPushButton::clicked,
+            this,
+            [this, btnNome, btnColegio, btnLocal]()
+            {
+                tipoSelecionado = "Colégio";
+
+                btnNome->setChecked(false);
+                btnColegio->setChecked(true);
+                btnLocal->setChecked(false);
+
+                buscarLoja();
+            });
+
+    connect(btnLocal,
+            &QPushButton::clicked,
+            this,
+            [this, btnNome, btnColegio, btnLocal]()
+            {
+                tipoSelecionado = "Local";
+
+                btnNome->setChecked(false);
+                btnColegio->setChecked(false);
+                btnLocal->setChecked(true);
+
+                buscarLoja();
+            });
 
     mainLayout->addWidget(
         menuLateral);

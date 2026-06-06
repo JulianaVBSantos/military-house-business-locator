@@ -116,74 +116,98 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named MeuSistema
+# Target rules for targets named LocalizadorComercialCasaDoMilitar
 
 # Build rule for target.
-MeuSistema: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 MeuSistema
-.PHONY : MeuSistema
+LocalizadorComercialCasaDoMilitar: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 LocalizadorComercialCasaDoMilitar
+.PHONY : LocalizadorComercialCasaDoMilitar
 
 # fast build rule for target.
-MeuSistema/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/build
-.PHONY : MeuSistema/fast
+LocalizadorComercialCasaDoMilitar/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/build
+.PHONY : LocalizadorComercialCasaDoMilitar/fast
 
 #=============================================================================
-# Target rules for targets named MeuSistema_autogen_timestamp_deps
+# Target rules for targets named LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps
 
 # Build rule for target.
-MeuSistema_autogen_timestamp_deps: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 MeuSistema_autogen_timestamp_deps
-.PHONY : MeuSistema_autogen_timestamp_deps
+LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps
 
 # fast build rule for target.
-MeuSistema_autogen_timestamp_deps/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema_autogen_timestamp_deps.dir\build.make CMakeFiles/MeuSistema_autogen_timestamp_deps.dir/build
-.PHONY : MeuSistema_autogen_timestamp_deps/fast
+LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps.dir/build
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps/fast
 
 #=============================================================================
-# Target rules for targets named MeuSistema_autogen
+# Target rules for targets named LocalizadorComercialCasaDoMilitar_autogen
 
 # Build rule for target.
-MeuSistema_autogen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 MeuSistema_autogen
-.PHONY : MeuSistema_autogen
+LocalizadorComercialCasaDoMilitar_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 LocalizadorComercialCasaDoMilitar_autogen
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen
 
 # fast build rule for target.
-MeuSistema_autogen/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema_autogen.dir\build.make CMakeFiles/MeuSistema_autogen.dir/build
-.PHONY : MeuSistema_autogen/fast
+LocalizadorComercialCasaDoMilitar_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar_autogen.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar_autogen.dir/build
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen/fast
 
-MeuSistema_autogen/mocs_compilation.obj: MeuSistema_autogen/mocs_compilation.cpp.obj
-.PHONY : MeuSistema_autogen/mocs_compilation.obj
+LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.obj: LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.obj
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.obj
 
 # target to build an object file
-MeuSistema_autogen/mocs_compilation.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/MeuSistema_autogen/mocs_compilation.cpp.obj
-.PHONY : MeuSistema_autogen/mocs_compilation.cpp.obj
+LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.obj
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.obj
 
-MeuSistema_autogen/mocs_compilation.i: MeuSistema_autogen/mocs_compilation.cpp.i
-.PHONY : MeuSistema_autogen/mocs_compilation.i
+LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.i: LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.i
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.i
 
 # target to preprocess a source file
-MeuSistema_autogen/mocs_compilation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/MeuSistema_autogen/mocs_compilation.cpp.i
-.PHONY : MeuSistema_autogen/mocs_compilation.cpp.i
+LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.i
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.i
 
-MeuSistema_autogen/mocs_compilation.s: MeuSistema_autogen/mocs_compilation.cpp.s
-.PHONY : MeuSistema_autogen/mocs_compilation.s
+LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.s: LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.s
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.s
 
 # target to generate assembly for a file
-MeuSistema_autogen/mocs_compilation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/MeuSistema_autogen/mocs_compilation.cpp.s
-.PHONY : MeuSistema_autogen/mocs_compilation.cpp.s
+LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.s
+.PHONY : LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.cpp.s
+
+qrc_resources.obj: qrc_resources.cpp.obj
+.PHONY : qrc_resources.obj
+
+# target to build an object file
+qrc_resources.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/qrc_resources.cpp.obj
+.PHONY : qrc_resources.cpp.obj
+
+qrc_resources.i: qrc_resources.cpp.i
+.PHONY : qrc_resources.i
+
+# target to preprocess a source file
+qrc_resources.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/qrc_resources.cpp.i
+.PHONY : qrc_resources.cpp.i
+
+qrc_resources.s: qrc_resources.cpp.s
+.PHONY : qrc_resources.s
+
+# target to generate assembly for a file
+qrc_resources.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/qrc_resources.cpp.s
+.PHONY : qrc_resources.cpp.s
 
 src/backend/cJSON.obj: src/backend/cJSON.c.obj
 .PHONY : src/backend/cJSON.obj
 
 # target to build an object file
 src/backend/cJSON.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/cJSON.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/cJSON.c.obj
 .PHONY : src/backend/cJSON.c.obj
 
 src/backend/cJSON.i: src/backend/cJSON.c.i
@@ -191,7 +215,7 @@ src/backend/cJSON.i: src/backend/cJSON.c.i
 
 # target to preprocess a source file
 src/backend/cJSON.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/cJSON.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/cJSON.c.i
 .PHONY : src/backend/cJSON.c.i
 
 src/backend/cJSON.s: src/backend/cJSON.c.s
@@ -199,7 +223,7 @@ src/backend/cJSON.s: src/backend/cJSON.c.s
 
 # target to generate assembly for a file
 src/backend/cJSON.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/cJSON.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/cJSON.c.s
 .PHONY : src/backend/cJSON.c.s
 
 src/backend/json.obj: src/backend/json.c.obj
@@ -207,7 +231,7 @@ src/backend/json.obj: src/backend/json.c.obj
 
 # target to build an object file
 src/backend/json.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/json.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/json.c.obj
 .PHONY : src/backend/json.c.obj
 
 src/backend/json.i: src/backend/json.c.i
@@ -215,7 +239,7 @@ src/backend/json.i: src/backend/json.c.i
 
 # target to preprocess a source file
 src/backend/json.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/json.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/json.c.i
 .PHONY : src/backend/json.c.i
 
 src/backend/json.s: src/backend/json.c.s
@@ -223,7 +247,7 @@ src/backend/json.s: src/backend/json.c.s
 
 # target to generate assembly for a file
 src/backend/json.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/json.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/json.c.s
 .PHONY : src/backend/json.c.s
 
 src/backend/lojas.obj: src/backend/lojas.c.obj
@@ -231,7 +255,7 @@ src/backend/lojas.obj: src/backend/lojas.c.obj
 
 # target to build an object file
 src/backend/lojas.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/lojas.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/lojas.c.obj
 .PHONY : src/backend/lojas.c.obj
 
 src/backend/lojas.i: src/backend/lojas.c.i
@@ -239,7 +263,7 @@ src/backend/lojas.i: src/backend/lojas.c.i
 
 # target to preprocess a source file
 src/backend/lojas.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/lojas.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/lojas.c.i
 .PHONY : src/backend/lojas.c.i
 
 src/backend/lojas.s: src/backend/lojas.c.s
@@ -247,7 +271,7 @@ src/backend/lojas.s: src/backend/lojas.c.s
 
 # target to generate assembly for a file
 src/backend/lojas.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/lojas.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/lojas.c.s
 .PHONY : src/backend/lojas.c.s
 
 src/backend/mapa.obj: src/backend/mapa.c.obj
@@ -255,7 +279,7 @@ src/backend/mapa.obj: src/backend/mapa.c.obj
 
 # target to build an object file
 src/backend/mapa.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/mapa.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/mapa.c.obj
 .PHONY : src/backend/mapa.c.obj
 
 src/backend/mapa.i: src/backend/mapa.c.i
@@ -263,7 +287,7 @@ src/backend/mapa.i: src/backend/mapa.c.i
 
 # target to preprocess a source file
 src/backend/mapa.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/mapa.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/mapa.c.i
 .PHONY : src/backend/mapa.c.i
 
 src/backend/mapa.s: src/backend/mapa.c.s
@@ -271,7 +295,7 @@ src/backend/mapa.s: src/backend/mapa.c.s
 
 # target to generate assembly for a file
 src/backend/mapa.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/mapa.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/mapa.c.s
 .PHONY : src/backend/mapa.c.s
 
 src/backend/utils.obj: src/backend/utils.c.obj
@@ -279,7 +303,7 @@ src/backend/utils.obj: src/backend/utils.c.obj
 
 # target to build an object file
 src/backend/utils.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/utils.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/utils.c.obj
 .PHONY : src/backend/utils.c.obj
 
 src/backend/utils.i: src/backend/utils.c.i
@@ -287,7 +311,7 @@ src/backend/utils.i: src/backend/utils.c.i
 
 # target to preprocess a source file
 src/backend/utils.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/utils.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/utils.c.i
 .PHONY : src/backend/utils.c.i
 
 src/backend/utils.s: src/backend/utils.c.s
@@ -295,7 +319,7 @@ src/backend/utils.s: src/backend/utils.c.s
 
 # target to generate assembly for a file
 src/backend/utils.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/backend/utils.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/backend/utils.c.s
 .PHONY : src/backend/utils.c.s
 
 src/main.obj: src/main.cpp.obj
@@ -303,7 +327,7 @@ src/main.obj: src/main.cpp.obj
 
 # target to build an object file
 src/main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/main.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/main.cpp.obj
 .PHONY : src/main.cpp.obj
 
 src/main.i: src/main.cpp.i
@@ -311,7 +335,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -319,15 +343,23 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
+
+src/resources/version.obj: src/resources/version.rc.obj
+.PHONY : src/resources/version.obj
+
+# target to build an object file
+src/resources/version.rc.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/resources/version.rc.obj
+.PHONY : src/resources/version.rc.obj
 
 src/ui/MainWindow.obj: src/ui/MainWindow.cpp.obj
 .PHONY : src/ui/MainWindow.obj
 
 # target to build an object file
 src/ui/MainWindow.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/ui/MainWindow.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/ui/MainWindow.cpp.obj
 .PHONY : src/ui/MainWindow.cpp.obj
 
 src/ui/MainWindow.i: src/ui/MainWindow.cpp.i
@@ -335,7 +367,7 @@ src/ui/MainWindow.i: src/ui/MainWindow.cpp.i
 
 # target to preprocess a source file
 src/ui/MainWindow.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/ui/MainWindow.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/ui/MainWindow.cpp.i
 .PHONY : src/ui/MainWindow.cpp.i
 
 src/ui/MainWindow.s: src/ui/MainWindow.cpp.s
@@ -343,7 +375,7 @@ src/ui/MainWindow.s: src/ui/MainWindow.cpp.s
 
 # target to generate assembly for a file
 src/ui/MainWindow.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MeuSistema.dir\build.make CMakeFiles/MeuSistema.dir/src/ui/MainWindow.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LocalizadorComercialCasaDoMilitar.dir\build.make CMakeFiles/LocalizadorComercialCasaDoMilitar.dir/src/ui/MainWindow.cpp.s
 .PHONY : src/ui/MainWindow.cpp.s
 
 # Help Target
@@ -354,12 +386,15 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... MeuSistema_autogen
-	@echo ... MeuSistema_autogen_timestamp_deps
-	@echo ... MeuSistema
-	@echo ... MeuSistema_autogen/mocs_compilation.obj
-	@echo ... MeuSistema_autogen/mocs_compilation.i
-	@echo ... MeuSistema_autogen/mocs_compilation.s
+	@echo ... LocalizadorComercialCasaDoMilitar_autogen
+	@echo ... LocalizadorComercialCasaDoMilitar_autogen_timestamp_deps
+	@echo ... LocalizadorComercialCasaDoMilitar
+	@echo ... LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.obj
+	@echo ... LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.i
+	@echo ... LocalizadorComercialCasaDoMilitar_autogen/mocs_compilation.s
+	@echo ... qrc_resources.obj
+	@echo ... qrc_resources.i
+	@echo ... qrc_resources.s
 	@echo ... src/backend/cJSON.obj
 	@echo ... src/backend/cJSON.i
 	@echo ... src/backend/cJSON.s
@@ -378,6 +413,7 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
+	@echo ... src/resources/version.obj
 	@echo ... src/ui/MainWindow.obj
 	@echo ... src/ui/MainWindow.i
 	@echo ... src/ui/MainWindow.s

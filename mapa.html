@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Mapa das Lojas</title>
+    <link rel='stylesheet' href='https://unpkg.com/leaflet/dist/leaflet.css'/>
+    <script src='https://unpkg.com/leaflet/dist/leaflet.js'></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        #topo {
+            background: #7f1d1d;
+            padding: 12px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        #caixaPesquisa {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+#pesquisa {
+ padding: 10px 10px 10px 40px;
+ width: 320px;
+ border-radius: 8px;
+ border: none;
+ font-size: 14px;
+ background-color: white;
+background: #fff url("https://cdn-icons-png.flaticon.com/512/622/622669.png") no-repeat 12px center;
+background-size: 18px;
+ background-repeat: no-repeat;
+  background-position: 12px center;
+}
+        .tipoBusca {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #991b1b;
+            color: white;
+            font-weight: bold;
+        }
+        .tipoBusca.ativo {
+            background: #dc2626;
+        }
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #991b1b;
+            color: white;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #b91c1c;
+        }
+        #map {
+            width: 100%;
+            height: calc(100vh - 70px);
+        }
+        #painel {
+            position: absolute;
+            top: 90px;
+            right: 15px;
+            z-index: 999;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            width: 280px;
+            max-height: 350px;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        #painel h3 {
+            margin-top: 0;
+            color: #7f1d1d;
+        }
+        #painel ul {
+            padding-left: 18px;
+        }
+        #resultadoBusca {
+            position: absolute;
+            top: 130px;
+            left: 15px;
+            z-index: 999;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            width: 300px;
+            max-height: 350px;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none;
+        }
+        #resultadoBusca h3 {
+            margin-top: 0;
+            color: #7f1d1d;
+        }
+        #resultadoBusca ul {
+            padding-left: 18px;
+        }
+        #fecharPainel {
+            float: right;
+            background: #dc2626;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+    </style>
+</head>
+<body>
+<div id='topo'>
+    <div id='caixaPesquisa'>
+        <input type='text' id='pesquisa' placeholder='Pesquisar loja, cidade ou CEPMG...'>
+    </div>
+    <button class='tipoBusca ativo' onclick="alterarTipo('nome', this)">Nome</button>
+    <button class='tipoBusca' onclick="alterarTipo('cidade', this)">Cidade</button>
+    <button class='tipoBusca' onclick="alterarTipo('cepmg', this)">CEPMG</button>
+    <button onclick='location.reload()'>Atualizar mapa</button>
+</div>
+<div id='map'></div>
+<div id='painel' style='display:none;'>
+    <h3>Lojas sem coordenadas</h3>
+    <ul id='listaSemCoordenadas'></ul>
+</div>
+<div id='resultadoBusca'>
+    <button id='fecharPainel' onclick='fecharResultados()'>X</button>
+    <h3>Resultados encontrados</h3>
+    <ul id='listaResultados'></ul>
+</div>
+<script>
+var tipoBuscaAtual = 'nome';
+function alterarTipo(tipo, botao) {
+    tipoBuscaAtual = tipo;
+    let botoes = document.getElementsByClassName('tipoBusca');
+    for (let i = 0; i < botoes.length; i++) {
+        botoes[i].classList.remove('ativo');
+    }
+    botao.classList.add('ativo');
+}
+var map = L.map('map').setView([-16.5, -49.3], 7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+}).addTo(map);
+var marcadorAzul = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+var marcadorVermelho = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+var marcadores = [];
+var lojasSemCoordenadas = [];
+var marker0 = L.marker([-15.755926, -48.264845], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Águas Lindas</h3><hr><b>Vendedora:</b> Jéssica<br><b>Cidade:</b> Águas Lindas - GO<br><b>Contato:</b> 62 9508-0037<br><b>CEPMG:</b> CEPMG Águas Lindas<br><b>Endereço:</b><br>Avenida 02 Qd 31 Lt 1B Conjunto A Sala 2 Setor 2 Parque da Barragem</div>`);
+marcadores.push({
+    nome: 'Águas Lindas',
+    cidade: 'Águas Lindas',
+    estado: 'GO',
+    cepmg: 'CEPMG Águas Lindas',
+    marker: marker0
+});
+var marker1 = L.marker([-16.081361, -48.509590], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Alexânia</h3><hr><b>Vendedora:</b> Thalita<br><b>Cidade:</b> Alexânia - GO<br><b>Contato:</b> 62 9800-7946<br><b>CEPMG:</b> CEPMG 13 de Maio<br><b>Endereço:</b><br>Rua 103 Qd 133 Lt 01 Centro</div>`);
+marcadores.push({
+    nome: 'Alexânia',
+    cidade: 'Alexânia',
+    estado: 'GO',
+    cepmg: 'CEPMG 13 de Maio',
+    marker: marker1
+});
+var marker2 = L.marker([-16.463416, -49.953666], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Anicuns</h3><hr><b>Vendedora:</b> Rafaela<br><b>Cidade:</b> Anicuns - GO<br><b>Contato:</b> 62 9282-7220<br><b>CEPMG:</b> CEPMG Rosa Turisco de Araújo<br><b>Endereço:</b><br>Av. Bandeirantes Nº 2041 Setor Leste</div>`);
+marcadores.push({
+    nome: 'Anicuns',
+    cidade: 'Anicuns',
+    estado: 'GO',
+    cepmg: 'CEPMG Rosa Turisco de Araújo',
+    marker: marker2
+});
+var marker3 = L.marker([-16.304258, -48.946029], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Arlindo Costa</h3><hr><b>Vendedora:</b> Jackeline<br><b>Cidade:</b> Anápolis - GO<br><b>Contato:</b> 62 9270-0807<br><b>CEPMG:</b> CEPMG Arlindo Costa<br><b>Endereço:</b><br>Rua Argentina Qd 53 Lt 04 Casa 1 Vila Santa Isabel</div>`);
+marcadores.push({
+    nome: 'Arlindo Costa',
+    cidade: 'Anápolis',
+    estado: 'GO',
+    cepmg: 'CEPMG Arlindo Costa',
+    marker: marker3
+});
+var marker4 = L.marker([-16.606944, -49.334424], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Ayrton Senna</h3><hr><b>Vendedora:</b> Edilayne<br><b>Cidade:</b> Goiânia - GO<br><b>Contato:</b> 62 9318-0005<br><b>CEPMG:</b> CEPMG Ayrton Senna<br><b>Endereço:</b><br>Rua JC 37 Qd 73 Lt 21 Casa 02 Jardim Curitiba I</div>`);
+marcadores.push({
+    nome: 'Ayrton Senna',
+    cidade: 'Goiânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Ayrton Senna',
+    marker: marker4
+});
+var marker5 = L.marker([-16.348011, -48.920111], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Bairro de Lourdes</h3><hr><b>Vendedora:</b> Francielly<br><b>Cidade:</b> Anápolis - GO<br><b>Contato:</b> 62 9455-6106<br><b>CEPMG:</b> CEPMG Onofre Quinan<br><b>Endereço:</b><br>Avenida Bandeirante Qd 70 Lt 1A Bairro de Lourdes</div>`);
+marcadores.push({
+    nome: 'Bairro de Lourdes',
+    cidade: 'Anápolis',
+    estado: 'GO',
+    cepmg: 'CEPMG Onofre Quinan',
+    marker: marker5
+});
+var marker6 = L.marker([-16.968751, -48.952085], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Bela Vista</h3><hr><b>Vendedora:</b> Luana Priscila<br><b>Cidade:</b> Bela Vista - GO<br><b>Contato:</b> 62 9394-9828<br><b>CEPMG:</b> CEPMG Doutor Belém<br><b>Endereço:</b><br>Rua Domingos Arantes Qd 571 Lt 571 Setor Central</div>`);
+marcadores.push({
+    nome: 'Bela Vista',
+    cidade: 'Bela Vista',
+    estado: 'GO',
+    cepmg: 'CEPMG Doutor Belém',
+    marker: marker6
+});
+var marker7 = L.marker([-18.164853, -47.941490], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Catalão 1</h3><hr><b>Vendedora:</b> Maria Cecília<br><b>Cidade:</b> Catalão - GO<br><b>Contato:</b> 64 9814-3325<br><b>CEPMG:</b> CEPMG Iris Rezende Machado<br><b>Endereço:</b><br>Rua João Baventura Nº 205 Qd 26 Lt 19</div>`);
+marcadores.push({
+    nome: 'Catalão 1',
+    cidade: 'Catalão',
+    estado: 'GO',
+    cepmg: 'CEPMG Iris Rezende Machado',
+    marker: marker7
+});
+var marker8 = L.marker([-18.175760, -47.942669], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Catalão 2</h3><hr><b>Vendedora:</b> Viviane<br><b>Cidade:</b> Catalão - GO<br><b>Contato:</b> 62 9257-8459<br><b>CEPMG:</b> CEPMG Tharsis Campos<br><b>Endereço:</b><br>Av. José Marcelino, 722 - Nossa Senhora de Fátima, Catalão - GO</div>`);
+marcadores.push({
+    nome: 'Catalão 2',
+    cidade: 'Catalão',
+    estado: 'GO',
+    cepmg: 'CEPMG Tharsis Campos',
+    marker: marker8
+});
+var marker9 = L.marker([-15.309142, -49.601284], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Ceres</h3><hr><b>Vendedora:</b> Thaynara<br><b>Cidade:</b> Ceres - GO<br><b>Contato:</b> 62 9902-6047<br><b>CEPMG:</b> CEPMG Hélio Veloso<br><b>Endereço:</b><br>Praça Cívica Nº 1306 Qd O Lt 03 Centro</div>`);
+marcadores.push({
+    nome: 'Ceres',
+    cidade: 'Ceres',
+    estado: 'GO',
+    cepmg: 'CEPMG Hélio Veloso',
+    marker: marker9
+});
+var marker10 = L.marker([-16.293893, -48.960930], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Cesar Toledo</h3><hr><b>Vendedora:</b> Helena<br><b>Cidade:</b> Anápolis - GO<br><b>Contato:</b> 62 9390-6130<br><b>CEPMG:</b> CEPMG Cesar Toledo<br><b>Endereço:</b><br>Avenida Nossa Senhora da Conceição Qd 31 Lt 37 Jardim Alexandrino</div>`);
+marcadores.push({
+    nome: 'Cesar Toledo',
+    cidade: 'Anápolis',
+    estado: 'GO',
+    cepmg: 'CEPMG Cesar Toledo',
+    marker: marker10
+});
+var marker11 = L.marker([-16.107435, -47.928345], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Cidade Ocidental</h3><hr><b>Vendedora:</b> Paula<br><b>Cidade:</b> Cidade Ocidental - GO<br><b>Contato:</b> 62 9330-4965<br><b>CEPMG:</b> CEPMG Cidade Ocidental<br><b>Endereço:</b><br>Rua Sem Nome Quadra 6 Lote s/n Loja 16 Super Quadra 15</div>`);
+marcadores.push({
+    nome: 'Cidade Ocidental',
+    cidade: 'Cidade Ocidental',
+    estado: 'GO',
+    cepmg: 'CEPMG Cidade Ocidental',
+    marker: marker11
+});
+var marker12 = L.marker([-15.777246, -48.766508], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Cocalzinho</h3><hr><b>Vendedora:</b> Jennifer<br><b>Cidade:</b> Cocalzinho - GO<br><b>Contato:</b> 62 9191-9710<br><b>CEPMG:</b> CEPMG José Ermírio de Moraes<br><b>Endereço:</b><br>Avenida 3 de Julho Qd 26 Lt 06 Sala 2 Cidade dos Pirineus</div>`);
+marcadores.push({
+    nome: 'Cocalzinho',
+    cidade: 'Cocalzinho',
+    estado: 'GO',
+    cepmg: 'CEPMG José Ermírio de Moraes',
+    marker: marker12
+});
+var marker13 = L.marker([-16.827108, -49.292737], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Colina Azul</h3><hr><b>Vendedora:</b> Rosy<br><b>Cidade:</b> Aparecida de Goiânia - GO<br><b>Contato:</b> 62 9557-0032<br><b>CEPMG:</b> CEPMG Colina Azul<br><b>Endereço:</b><br>Rua das Gaivotas Qd 22 Lt 03 Sala 2 AP Colina Azul</div>`);
+marcadores.push({
+    nome: 'Colina Azul',
+    cidade: 'Aparecida de Goiânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Colina Azul',
+    marker: marker13
+});
+var marker14 = L.marker([-16.769144, -47.611969], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Cristalina</h3><hr><b>Vendedora:</b> Emanuely<br><b>Cidade:</b> Cristalina - GO<br><b>Contato:</b> 62 9184-7642<br><b>CEPMG:</b> CEPMG Olga Aguiar Mohn<br><b>Endereço:</b><br>Rua 7 De Setembro Qd M Lt 09 Centro</div>`);
+marcadores.push({
+    nome: 'Cristalina',
+    cidade: 'Cristalina',
+    estado: 'GO',
+    cepmg: 'CEPMG Olga Aguiar Mohn',
+    marker: marker14
+});
+var marker15 = L.marker([-14.546939, -49.968963], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Crixás</h3><hr><b>Vendedora:</b> Camylla<br><b>Cidade:</b> Crixás - GO<br><b>Contato:</b> 62 8129-3785<br><b>CEPMG:</b> CEPMG Prudêncio Ferreira<br><b>Endereço:</b><br>Rua André Machado Azevedo Qd 12 Lt 13 Centro</div>`);
+marcadores.push({
+    nome: 'Crixás',
+    cidade: 'Crixás',
+    estado: 'GO',
+    cepmg: 'CEPMG Prudêncio Ferreira',
+    marker: marker15
+});
+var marker16 = L.marker([-16.724611, -49.229682], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Deusdará</h3><hr><b>Vendedora:</b> Maria do Socorro<br><b>Cidade:</b> Goiânia - GO<br><b>Contato:</b> 62 9285-0533<br><b>CEPMG:</b> CEPMG Naly Deusdará<br><b>Endereço:</b><br>Rua C5 Qd. 9 Lt. 03 Parque das Laranjeiras</div>`);
+marcadores.push({
+    nome: 'Deusdará',
+    cidade: 'Goiânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Naly Deusdará',
+    marker: marker16
+});
+var marker17 = L.marker([-15.544546, -47.355160], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Formosa</h3><hr><b>Vendedora:</b> Santilha<br><b>Cidade:</b> Formosa - GO<br><b>Contato:</b> 62 9800-5892<br><b>CEPMG:</b> CEPMG Domingos de Oliveira<br><b>Endereço:</b><br>Av. Santa Barbara, Lt 08 - Jardim Oliveira</div>`);
+marcadores.push({
+    nome: 'Formosa',
+    cidade: 'Formosa',
+    estado: 'GO',
+    cepmg: 'CEPMG Domingos de Oliveira',
+    marker: marker17
+});
+var marker18 = L.marker([-16.346444, -48.958380], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Gabriel Issa</h3><hr><b>Vendedora:</b> Francielly<br><b>Cidade:</b> Anápolis - GO<br><b>Contato:</b> 62 9241-2947<br><b>CEPMG:</b> CEPMG Gabriel Issa<br><b>Endereço:</b><br>Rua Belém Qd J Lt 03 Nº 15 Casa 02 Jardim Gonçalves</div>`);
+marcadores.push({
+    nome: 'Gabriel Issa',
+    cidade: 'Anápolis',
+    estado: 'GO',
+    cepmg: 'CEPMG Gabriel Issa',
+    marker: marker18
+});
+var marker19 = L.marker([-16.505489, -49.020396], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goianápolis</h3><hr><b>Vendedora:</b> Maria Laura<br><b>Cidade:</b> Goianápolis - GO<br><b>Contato:</b> 62 9295-0830<br><b>CEPMG:</b> CEPMG Benedita Brito de Andrade<br><b>Endereço:</b><br>Rua Modesto C. da Silva Qd R NR. 182 Sala 03 Vila Nossa Senhora de Fátima</div>`);
+marcadores.push({
+    nome: 'Goianápolis',
+    cidade: 'Goianápolis',
+    estado: 'GO',
+    cepmg: 'CEPMG Benedita Brito de Andrade',
+    marker: marker19
+});
+var marker20 = L.marker([-15.319004, -49.119446], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goianésia</h3><hr><b>Vendedora:</b> Rosemary<br><b>Cidade:</b> Goianésia - GO<br><b>Contato:</b> 62 8129-3873<br><b>CEPMG:</b> CEPMG José Carrilho<br><b>Endereço:</b><br>Rua 27 Norte Nº 831 Qd 107 Lt 25 Carrilho</div>`);
+marcadores.push({
+    nome: 'Goianésia',
+    cidade: 'Goianésia',
+    estado: 'GO',
+    cepmg: 'CEPMG José Carrilho',
+    marker: marker20
+});
+var marker21 = L.marker([-16.577180, -49.383034], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goianira 1</h3><hr><b>Vendedora:</b> Lucia<br><b>Cidade:</b> Goianira - GO<br><b>Contato:</b> 62 9405-7710<br><b>CEPMG:</b> CEPMG José Silva<br><b>Endereço:</b><br>Rua 20 Qd 69 Lt 12 Residencial Triunfo</div>`);
+marcadores.push({
+    nome: 'Goianira 1',
+    cidade: 'Goianira',
+    estado: 'GO',
+    cepmg: 'CEPMG José Silva',
+    marker: marker21
+});
+var marker22 = L.marker([-16.519281, -49.421290], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goianira 2</h3><hr><b>Vendedora:</b> Franciele Costa<br><b>Cidade:</b> Goianira - GO<br><b>Contato:</b> 62 9411-1801<br><b>CEPMG:</b> CEPMG Padre Pelágio<br><b>Endereço:</b><br>Avenida Conceição Maria Gonçalves Qd 22 Lt 36 Jardim Imperial</div>`);
+marcadores.push({
+    nome: 'Goianira 2',
+    cidade: 'Goianira',
+    estado: 'GO',
+    cepmg: 'CEPMG Padre Pelágio',
+    marker: marker22
+});
+var marker23 = L.marker([-15.941994, -50.144079], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goiás</h3><hr><b>Vendedora:</b> Selma<br><b>Cidade:</b> Goiás - GO<br><b>Contato:</b> 62 9318-0354<br><b>CEPMG:</b> CEPMG Francisco Antônio<br><b>Endereço:</b><br>Rua Santos Dumont Nº 1 A PC 2412 Bairro São Francisco</div>`);
+marcadores.push({
+    nome: 'Goiás',
+    cidade: 'Goiás',
+    estado: 'GO',
+    cepmg: 'CEPMG Francisco Antônio',
+    marker: marker23
+});
+var marker24 = L.marker([-16.617246, -49.217179], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Jardim Guanabara</h3><hr><b>Vendedora:</b> Anodilha<br><b>Cidade:</b> — - GO<br><b>Contato:</b> 62 9140-6331<br><b>CEPMG:</b> CEPMG Jardim Guanabara<br><b>Endereço:</b><br>Rua Minas Gerais Qd 152 Lt 05 Jardim Guanabara (Revisar endereço!)</div>`);
+marcadores.push({
+    nome: 'Jardim Guanabara',
+    cidade: '—',
+    estado: 'GO',
+    cepmg: 'CEPMG Jardim Guanabara',
+    marker: marker24
+});
+var marker25 = L.marker([-16.358967, -49.506803], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Inhumas</h3><hr><b>Vendedora:</b> Daryany<br><b>Cidade:</b> Inhumas - GO<br><b>Contato:</b> 62 8117-2901<br><b>CEPMG:</b> CEPMG Manoel Vilaverde<br><b>Endereço:</b><br>Pça. João Heitor de Paula Qd. 2 Lt. 13 Comércio Residencial Ana Luiza</div>`);
+marcadores.push({
+    nome: 'Inhumas',
+    cidade: 'Inhumas',
+    estado: 'GO',
+    cepmg: 'CEPMG Manoel Vilaverde',
+    marker: marker25
+});
+var marker26 = L.marker([-16.441446, -51.115258], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Iporá</h3><hr><b>Vendedora:</b> Vitória<br><b>Cidade:</b> Iporá - GO<br><b>Contato:</b> 62 9402-2903<br><b>CEPMG:</b> CEPMG Aristo Gomes da Silva<br><b>Endereço:</b><br>Rua Inhumas Qd PC 318 C/ Rua Pernambuco Qd 52 Lt 705 Centro</div>`);
+marcadores.push({
+    nome: 'Iporá',
+    cidade: 'Iporá',
+    estado: 'GO',
+    cepmg: 'CEPMG Aristo Gomes da Silva',
+    marker: marker26
+});
+var marker27 = L.marker([-14.954841, -49.553194], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Itapaci</h3><hr><b>Vendedora:</b> Edileia<br><b>Cidade:</b> Itapaci - GO<br><b>Contato:</b> 62 9701-1762<br><b>CEPMG:</b> CEPMG Geraldo Andrade Martins<br><b>Endereço:</b><br>Rua Dona Lúcia Lourençoni Nº 38B Qd 76 Lt 886 Sala 2 Setor Centro</div>`);
+marcadores.push({
+    nome: 'Itapaci',
+    cidade: 'Itapaci',
+    estado: 'GO',
+    cepmg: 'CEPMG Geraldo Andrade Martins',
+    marker: marker27
+});
+var marker28 = L.marker([-16.603123, -49.254904], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Itatiaia</h3><hr><b>Vendedora:</b> Patrícia<br><b>Cidade:</b> Goiânia - GO<br><b>Contato:</b> 62 9202-5893<br><b>CEPMG:</b> CEPMG Valdemar Mundim<br><b>Endereço:</b><br>Rua 12 Qd 53 Lt 12 Nº 233 Sala 3 / R. R-12, 221 - Vila Itatiaia</div>`);
+marcadores.push({
+    nome: 'Itatiaia',
+    cidade: 'Goiânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Valdemar Mundim',
+    marker: marker28
+});
+var marker29 = L.marker([-15.753854, -49.333923], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Jaraguá</h3><hr><b>Vendedora:</b> Geissy<br><b>Cidade:</b> Jaraguá - GO<br><b>Contato:</b> 62 9561-7224<br><b>CEPMG:</b> CEPMG Silvio de Castro Ribeiro<br><b>Endereço:</b><br>Avenida Paulo Alves Qd 13 Lt 14 Nº 389 Setor Centro</div>`);
+marcadores.push({
+    nome: 'Jaraguá',
+    cidade: 'Jaraguá',
+    estado: 'GO',
+    cepmg: 'CEPMG Silvio de Castro Ribeiro',
+    marker: marker29
+});
+var marker30 = L.marker([-15.881725, -50.876411], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Jussara</h3><hr><b>Vendedora:</b> Maria Marnia<br><b>Cidade:</b> Jussara - GO<br><b>Contato:</b> 62 8119-1737<br><b>CEPMG:</b> CEPMG Maria Tereza Garcia<br><b>Endereço:</b><br>Rua Altamiro da Silveira Qd 05 Lt 01 Setor Morada Nova</div>`);
+marcadores.push({
+    nome: 'Jussara',
+    cidade: 'Jussara',
+    estado: 'GO',
+    cepmg: 'CEPMG Maria Tereza Garcia',
+    marker: marker30
+});
+var marker31 = L.marker([-16.645297, -49.189168], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Lajeado</h3><hr><b>Vendedora:</b> Maria Francisca<br><b>Cidade:</b> Goiânia - GO<br><b>Contato:</b> 62 9570-3340<br><b>CEPMG:</b> CEPMG Mirian Bechimol Ferreira<br><b>Endereço:</b><br>Rua JL 4 Qd 08 Lt 30 Jardim Lajeado</div>`);
+marcadores.push({
+    nome: 'Lajeado',
+    cidade: 'Goiânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Mirian Bechimol Ferreira',
+    marker: marker31
+});
+var marker32 = L.marker([-16.249242, -47.895360], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Luziânia</h3><hr><b>Vendedora:</b> Dalila<br><b>Cidade:</b> Luziânia - GO<br><b>Contato:</b> 62 9541-6751<br><b>CEPMG:</b> CEPMG Eli da Silva Braz<br><b>Endereço:</b><br>Rua 15 Qd 34 Lt 32 Jardim Brasília Sul</div>`);
+marcadores.push({
+    nome: 'Luziânia',
+    cidade: 'Luziânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Eli da Silva Braz',
+    marker: marker32
+});
+var marker33 = L.marker([-16.141839, -47.930673], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Luziânia Ingá</h3><hr><b>Vendedora:</b> Ana Karoline<br><b>Cidade:</b> Luziânia - GO<br><b>Contato:</b> 62 9350-8492<br><b>CEPMG:</b> CEPMG CEP Shinohara<br><b>Endereço:</b><br>Rua 1 Quadra 1 Lote 28 Jardim Marília CEP 72855-001</div>`);
+marcadores.push({
+    nome: 'Luziânia Ingá',
+    cidade: 'Luziânia',
+    estado: 'GO',
+    cepmg: 'CEPMG CEP Shinohara',
+    marker: marker33
+});
+var marker34 = L.marker([-16.822095, -49.373313], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Madre Germana</h3><hr><b>Vendedora:</b> Marilza<br><b>Cidade:</b> Goiânia - GO<br><b>Contato:</b> 62 9289-8488<br><b>CEPMG:</b> CEPMG Madre Germana<br><b>Endereço:</b><br>Rua São Mateus Qd 24 Lt 04 Casa 02 Conjunto Habitacional Madre Germana II</div>`);
+marcadores.push({
+    nome: 'Madre Germana',
+    cidade: 'Goiânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Madre Germana',
+    marker: marker34
+});
+var marker35 = L.marker([-16.777154, -49.281191], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Mansões Paraíso</h3><hr><b>Vendedora:</b> Juliana<br><b>Cidade:</b> Aparecida de Goiânia - GO<br><b>Contato:</b> 62 9335-2211<br><b>CEPMG:</b> CEPMG Mansões Paraíso<br><b>Endereço:</b><br>Avenida W2 Quadra 68 Lote 21 Aparecida de Goiânia</div>`);
+marcadores.push({
+    nome: 'Mansões Paraíso',
+    cidade: 'Aparecida de Goiânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Mansões Paraíso',
+    marker: marker35
+});
+var marker36 = L.marker([-17.734769, -49.115465], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Morrinhos</h3><hr><b>Vendedora:</b> Shirley<br><b>Cidade:</b> Morrinhos - GO<br><b>Contato:</b> 64 9540-7148<br><b>CEPMG:</b> CEPMG Xavier de Almeida<br><b>Endereço:</b><br>Avenida Profº José Nascimento Qd 07 Lt 01 Setor Oeste</div>`);
+marcadores.push({
+    nome: 'Morrinhos',
+    cidade: 'Morrinhos',
+    estado: 'GO',
+    cepmg: 'CEPMG Xavier de Almeida',
+    marker: marker36
+});
+var marker37 = L.marker([-16.407281, -49.220764], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Nerópolis</h3><hr><b>Vendedora:</b> Gisele<br><b>Cidade:</b> Nerópolis - GO<br><b>Contato:</b> 62 9119-0825<br><b>CEPMG:</b> CEPMG Doutor Negreiro<br><b>Endereço:</b><br>Avenida Amélia Lopes de Oliveira Nº 445 Sala 01 Parque das Américas</div>`);
+marcadores.push({
+    nome: 'Nerópolis',
+    cidade: 'Nerópolis',
+    estado: 'GO',
+    cepmg: 'CEPMG Doutor Negreiro',
+    marker: marker37
+});
+var marker38 = L.marker([-14.466640, -48.455001], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Niquelândia</h3><hr><b>Vendedora:</b> Vanessa<br><b>Cidade:</b> Niquelândia - GO<br><b>Contato:</b> 62 9702-3843<br><b>CEPMG:</b> CEPMG Paulo Francisco da Silva<br><b>Endereço:</b><br>Rua Castro Alves Qd 0 Lt 07 Agrupamento VC</div>`);
+marcadores.push({
+    nome: 'Niquelândia',
+    cidade: 'Niquelândia',
+    estado: 'GO',
+    cepmg: 'CEPMG Paulo Francisco da Silva',
+    marker: marker38
+});
+var marker39 = L.marker([-16.081059, -48.063626], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Novo Gama</h3><hr><b>Vendedora:</b> Ana Beatriz<br><b>Cidade:</b> Novo Gama - GO<br><b>Contato:</b> 61 9425-8428<br><b>CEPMG:</b> CEPMG José de Alencar<br><b>Endereço:</b><br>Rua Sem Nome QD 23 LT 43 Lunabel 3-A  / R. Vovo Primo - Jardim Paiva</div>`);
+marcadores.push({
+    nome: 'Novo Gama',
+    cidade: 'Novo Gama',
+    estado: 'GO',
+    cepmg: 'CEPMG José de Alencar',
+    marker: marker39
+});
+var marker40 = L.marker([-15.166434, -48.284862], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Padre Bernardo</h3><hr><b>Vendedora:</b> Yany<br><b>Cidade:</b> Padre Bernardo - GO<br><b>Contato:</b> 62 9811-6270<br><b>CEPMG:</b> CEPMG José Monteiro de Lima<br><b>Endereço:</b><br>Rua dos Anjos Qd 16 Lt 01 Sala 2 Setor Central</div>`);
+marcadores.push({
+    nome: 'Padre Bernardo',
+    cidade: 'Padre Bernardo',
+    estado: 'GO',
+    cepmg: 'CEPMG José Monteiro de Lima',
+    marker: marker40
+});
+var marker41 = L.marker([-15.857629, -48.958117], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Pirenópolis</h3><hr><b>Vendedora:</b> Raqueline<br><b>Cidade:</b> Pirenópolis - GO<br><b>Contato:</b> 62 9358-9663<br><b>CEPMG:</b> CEPMG Comendador Christovam de Oliveira<br><b>Endereço:</b><br>Avenida Benjamin Constant Qd 33 Lt 02 Nº 62 Casa 01 Setor Centro</div>`);
+marcadores.push({
+    nome: 'Pirenópolis',
+    cidade: 'Pirenópolis',
+    estado: 'GO',
+    cepmg: 'CEPMG Comendador Christovam de Oliveira',
+    marker: marker41
+});
+var marker42 = L.marker([-17.303180, -48.281996], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Pires do Rio</h3><hr><b>Vendedora:</b> Tatiane<br><b>Cidade:</b> Pires do Rio - GO<br><b>Contato:</b> 62 9468-4565<br><b>CEPMG:</b> CEPMG Profº Ivan Ferreira<br><b>Endereço:</b><br>Avenida Egídio Francisco Rodrigues Nº 57 Qd 97 Lt 358 Centro</div>`);
+marcadores.push({
+    nome: 'Pires do Rio',
+    cidade: 'Pires do Rio',
+    estado: 'GO',
+    cepmg: 'CEPMG Profº Ivan Ferreira',
+    marker: marker42
+});
+var marker43 = L.marker([-15.475425, -47.602565], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Planaltina</h3><hr><b>Vendedora:</b> Nubia<br><b>Cidade:</b> Planaltina - GO<br><b>Contato:</b> 62 9313-0857<br><b>CEPMG:</b> CEPMG Profª Lourdete de Fátima de Paiva Sutir<br><b>Endereço:</b><br>JD Paquetá Qd 132 Lt 08</div>`);
+marcadores.push({
+    nome: 'Planaltina',
+    cidade: 'Planaltina',
+    estado: 'GO',
+    cepmg: 'CEPMG Profª Lourdete de Fátima de Paiva Sutir',
+    marker: marker43
+});
+var marker44 = L.marker([-16.804174, -49.295344], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Pontal Sul</h3><hr><b>Vendedora:</b> Gilvanete<br><b>Cidade:</b> Pontal Sul - GO<br><b>Contato:</b> 62 9433-0352<br><b>CEPMG:</b> CEPMG Nader Alves dos Santos<br><b>Endereço:</b><br>Rua Hematita Qd 13 Lt 13 Casa 01 Setor Pontal Sul</div>`);
+marcadores.push({
+    nome: 'Pontal Sul',
+    cidade: 'Pontal Sul',
+    estado: 'GO',
+    cepmg: 'CEPMG Nader Alves dos Santos',
+    marker: marker44
+});
+var marker45 = L.marker([-16.321473, -48.954491], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Praça Oeste</h3><hr><b>Vendedora:</b> Isabella<br><b>Cidade:</b> Anápolis - GO<br><b>Contato:</b> 62 9137-2082<br><b>CEPMG:</b> CEPMG de Anápolis<br><b>Endereço:</b><br>Praça Oeste Nº 101 Centro</div>`);
+marcadores.push({
+    nome: 'Praça Oeste',
+    cidade: 'Anápolis',
+    estado: 'GO',
+    cepmg: 'CEPMG de Anápolis',
+    marker: marker45
+});
+var marker46 = L.marker([-15.946602, -48.312251], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Santo Antônio</h3><hr><b>Vendedora:</b> Sandy<br><b>Cidade:</b> Santo Antônio do Descoberto - GO<br><b>Contato:</b> 62 9874-7739<br><b>CEPMG:</b> CEPMG José Elias de Azevedo<br><b>Endereço:</b><br>Qd 218 Lt 8A Parque Estrela Dalva 16 Santo Antônio do Descoberto</div>`);
+marcadores.push({
+    nome: 'Santo Antônio',
+    cidade: 'Santo Antônio do Descoberto',
+    estado: 'GO',
+    cepmg: 'CEPMG José Elias de Azevedo',
+    marker: marker46
+});
+var marker47 = L.marker([-16.705536, -49.091849], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Senador Canedo</h3><hr><b>Vendedora:</b> Patrícia<br><b>Cidade:</b> Senador Canedo - GO<br><b>Contato:</b> 62 99513-6068<br><b>CEPMG:</b> CEPMG Pedro Xavier<br><b>Endereço:</b><br>Rua Benjamin Santos Qd 10 Lt 01 Casa 04 Jardim Todos os Santos</div>`);
+marcadores.push({
+    nome: 'Senador Canedo',
+    cidade: 'Senador Canedo',
+    estado: 'GO',
+    cepmg: 'CEPMG Pedro Xavier',
+    marker: marker47
+});
+var marker48 = L.marker([-16.662500, -48.608616], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Silvânia</h3><hr><b>Vendedora:</b> Jessiane<br><b>Cidade:</b> Silvânia - GO<br><b>Contato:</b> 62 9537-4091<br><b>CEPMG:</b> CEPMG Moisés Santana<br><b>Endereço:</b><br>Praça Rui Barbosa Nº 434 Qd 10 Lt 288 Sala Comercial Unidade 2 Centro</div>`);
+marcadores.push({
+    nome: 'Silvânia',
+    cidade: 'Silvânia',
+    estado: 'GO',
+    cepmg: 'CEPMG Moisés Santana',
+    marker: marker48
+});
+var marker49 = L.marker([-16.649830, -49.492085], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Trindade 1</h3><hr><b>Vendedora:</b> Luciana<br><b>Cidade:</b> Trindade - GO<br><b>Contato:</b> 62 99407-5967<br><b>CEPMG:</b> CEPMG Divino Pai Eterno<br><b>Endereço:</b><br>Avenida Manoel Monteiro Qd 08 Lt 11 Nº 436 Sala 4</div>`);
+marcadores.push({
+    nome: 'Trindade 1',
+    cidade: 'Trindade',
+    estado: 'GO',
+    cepmg: 'CEPMG Divino Pai Eterno',
+    marker: marker49
+});
+var marker50 = L.marker([-16.631655, -49.403032], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Trindade 2</h3><hr><b>Vendedora:</b> Auliane<br><b>Cidade:</b> Trindade - GO<br><b>Contato:</b> 62 99402-6330<br><b>CEPMG:</b> CEPMG José dos Reis<br><b>Endereço:</b><br>Rua Gardênia Qd 06 Lt 30 Casa 2</div>`);
+marcadores.push({
+    nome: 'Trindade 2',
+    cidade: 'Trindade',
+    estado: 'GO',
+    cepmg: 'CEPMG José dos Reis',
+    marker: marker50
+});
+var marker51 = L.marker([-16.058573, -48.001386], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Valparaíso 1</h3><hr><b>Vendedora:</b> Cristiane<br><b>Cidade:</b> Valparaíso - GO<br><b>Contato:</b> 61 9429-6784<br><b>CEPMG:</b> CEPMG Fernando Pessoa<br><b>Endereço:</b><br>Rua 59 Qd 63 Lt 18 Loja 2 Jardim Céu Azul</div>`);
+marcadores.push({
+    nome: 'Valparaíso 1',
+    cidade: 'Valparaíso',
+    estado: 'GO',
+    cepmg: 'CEPMG Fernando Pessoa',
+    marker: marker51
+});
+var marker52 = L.marker([-16.054657, -48.015398], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Valparaíso 2</h3><hr><b>Vendedora:</b> Marcia Maria<br><b>Cidade:</b> Valparaíso - GO<br><b>Contato:</b> 62 99361-1496<br><b>CEPMG:</b> CEPMG Céu Azul<br><b>Endereço:</b><br>Rua 82 Quadra 140 Lt 04 Céu Azul</div>`);
+marcadores.push({
+    nome: 'Valparaíso 2',
+    cidade: 'Valparaíso',
+    estado: 'GO',
+    cepmg: 'CEPMG Céu Azul',
+    marker: marker52
+});
+var marker53 = L.marker([-16.744930, -48.518636], {icon: marcadorAzul}).addTo(map)
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Vianópolis</h3><hr><b>Vendedora:</b> Luiz Eduardo<br><b>Cidade:</b> Vianópolis - GO<br><b>Contato:</b> 62 99318-1492<br><b>CEPMG:</b> CEPMG Americano do Brasil<br><b>Endereço:</b><br>Avenida Engenheiro Calil Elias Neto Nº 149</div>`);
+marcadores.push({
+    nome: 'Vianópolis',
+    cidade: 'Vianópolis',
+    estado: 'GO',
+    cepmg: 'CEPMG Americano do Brasil',
+    marker: marker53
+});
+if (lojasSemCoordenadas.length > 0) {document.getElementById('painel').style.display = 'block';let lista = document.getElementById('listaSemCoordenadas');for (let i = 0; i < lojasSemCoordenadas.length; i++) {let item =  document.createElement('li');item.innerText = lojasSemCoordenadas[i];lista.appendChild(item);}}function fecharResultados() {
+    document.getElementById('resultadoBusca').style.display = 'none';
+}
+function normalizarTexto(texto) {
+    return texto
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+}
+  function buscarLoja() {
+ var texto = normalizarTexto(
+  document.getElementById('pesquisa').value
+    );
+ if (texto.trim() === '') {  for (let i = 0; i < marcadores.length; i++) {   marcadores[i].marker.setIcon(marcadorAzul); } document.getElementById('resultadoBusca').style.display = 'none';  return; }    let encontrados = 0;
+    let grupo = [];
+    let listaResultados = document.getElementById('listaResultados');
+    listaResultados.innerHTML = '';
+    for (let i = 0; i < marcadores.length; i++) {
+        marcadores[i].marker.setIcon(marcadorAzul);
+        let campo = '';
+        if (tipoBuscaAtual == 'nome') {
+            campo = normalizarTexto(marcadores[i].nome);
+        }
+        if (tipoBuscaAtual == 'cidade') {
+            campo = normalizarTexto(marcadores[i].cidade);
+        }
+        if (tipoBuscaAtual == 'cepmg') {
+            campo = normalizarTexto(marcadores[i].cepmg);
+        }
+        if (campo.includes(texto)) {
+            marcadores[i].marker.setIcon(marcadorVermelho);
+            grupo.push(marcadores[i].marker);
+            encontrados++;
+            let item = document.createElement('button');
+            item.innerText = marcadores[i].nome;
+            item.style.width = '100%';
+            item.style.marginBottom = '8px';
+            item.style.textAlign = 'left';
+            item.style.padding = '10px';
+            item.style.borderRadius = '8px';
+            item.style.border = 'none';
+            item.style.background = '#dc2626';
+            item.style.color = 'white';
+            item.style.fontWeight = 'bold';
+            item.style.cursor = 'pointer';
+            item.style.transition = '0.2s';
+            item.onmouseover = function() {
+                this.style.background = '#991b1b';
+            };
+            item.onmouseout = function() {
+                this.style.background = '#dc2626';
+            };
+            item.onclick = function() {
+                map.setView(
+                    marcadores[i].marker.getLatLng(),
+                    15
+                );
+                marcadores[i].marker.openPopup();
+            };
+            listaResultados.appendChild(item);
+        }
+    }
+    if (grupo.length > 0) {
+        var bounds = L.featureGroup(grupo).getBounds();
+        map.fitBounds(bounds, {padding:[50,50]});
+        document.getElementById('resultadoBusca').style.display = 'block';
+    }
+    if (encontrados == 0) {
+        alert('Nenhuma loja encontrada!');
+        document.getElementById('resultadoBusca').style.display = 'none';
+    }
+}
+document.getElementById('pesquisa').addEventListener('input', function() {
+    buscarLoja();
+});
+document.getElementById('pesquisa').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        buscarLoja();
+    }
+});
+</script>
+</body>
+</html>

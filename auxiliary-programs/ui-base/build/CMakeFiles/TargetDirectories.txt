@@ -1,5 +1,0 @@
-C:/projetosju/military-house-business-locator/build/CMakeFiles/MeuSistema.dir
-C:/projetosju/military-house-business-locator/build/CMakeFiles/edit_cache.dir
-C:/projetosju/military-house-business-locator/build/CMakeFiles/rebuild_cache.dir
-C:/projetosju/military-house-business-locator/build/CMakeFiles/MeuSistema_autogen_timestamp_deps.dir
-C:/projetosju/military-house-business-locator/build/CMakeFiles/MeuSistema_autogen.dir

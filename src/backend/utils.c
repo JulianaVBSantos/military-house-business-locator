@@ -126,4 +126,3 @@ void removerAcentos(char *str)
 
     strcpy(str, resultado);
 }
-

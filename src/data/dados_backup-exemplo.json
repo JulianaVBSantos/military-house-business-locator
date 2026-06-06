@@ -1,0 +1,13 @@
+[{
+		"nome":	"Nome Loja",
+		"contato":	"00 0000-0000",
+		"vendedora":	"Nome Vendedora",
+		"endereco":	"Endereco",
+		"cidade":	"Nome Cidade",
+		"estado":	"SIGLA",
+		"cepmg":	"CEPMG",
+		"cep":	"00000-000",
+		"lat":	0,
+		"lng":	0
+	}
+]

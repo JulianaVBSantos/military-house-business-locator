@@ -14,24 +14,20 @@ public:
     MainWindow();
 
 private slots:
-
     void buscarLoja();
-
     void adicionarLojaQt();
-
     void removerLojaQt();
-
     void editarLojaQt();
-
-    void atualizarTabela();
+    void abrirMapa();
+    void restaurarDados();
 
 private:
-
     QTableWidget *tabela;
-
     QLineEdit *campoBusca;
-
     QComboBox *tipoBusca;
+    QString tipoSelecionado = "Nome";
+
+    void atualizarTabela();
 };
 
 #endif

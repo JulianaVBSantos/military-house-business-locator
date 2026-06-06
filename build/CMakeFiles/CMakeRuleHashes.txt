@@ -1,3 +1,4 @@
 # Hashes of file build rules.
-4c2d0141590269442dc93e5792d5fac9 CMakeFiles/MeuSistema_autogen
-d24d0341281f202ad5f604223a79c344 MeuSistema_autogen/timestamp
+4c2d0141590269442dc93e5792d5fac9 CMakeFiles/LocalizadorComercialCasaDoMilitar_autogen
+128a07cf9b8b3053c2578f194aa3b80c LocalizadorComercialCasaDoMilitar_autogen/timestamp
+5a312e197c70a474360de77ce256f0b4 qrc_resources.cpp
