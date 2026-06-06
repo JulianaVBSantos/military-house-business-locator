@@ -25,6 +25,7 @@ Sistema desenvolvido como parte de um projeto extensionista com o objetivo de ot
 
 ## Estrutura do Projeto
 
+```
 src/
 ├── main.c / main.cpp
 ├── backend/
@@ -46,6 +47,7 @@ src/
 ├── version.rc
 ├── icons/
 └── imagens/
+```
 ---
 
 ## Tecnologias Utilizadas
