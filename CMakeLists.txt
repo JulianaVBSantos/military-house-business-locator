@@ -17,11 +17,13 @@ qt6_add_resources(RESOURCES
     src/resources/resources.qrc
 )
 
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/logo.ico")
+
 # Criar executável
-add_executable(LocalizadorComercialCasaDoMilitar
+add_executable(LocalizadorComercialCasaDoMilitar WIN32 # Para o CMD n abrir junto
     
     src/main.cpp # Main
-
+     ${APP_ICON_RESOURCE_WINDOWS}
     # UI
     src/ui/MainWindow.cpp
     src/ui/MainWindow.h

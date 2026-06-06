@@ -26,8 +26,9 @@ private:
     QLineEdit *campoBusca;
     QComboBox *tipoBusca;
     QString tipoSelecionado = "Nome";
-
+    void onTabelaContextMenu(const QPoint &pos);
     void atualizarTabela();
+    bool administrador;
 };
 
 #endif

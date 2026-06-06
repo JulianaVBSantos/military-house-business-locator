@@ -22,10 +22,23 @@
 #include <cstring>
 #include <QGraphicsOpacityEffect>
 #include <QDir>
+#include <QCoreApplication>
+#include <QMenu>
+#include <QAction>
 
 extern "C"
 {
 #include "../backend/lojas.h"
+}
+
+static QString caminhoDados()
+{
+    return QCoreApplication::applicationDirPath() + "/data/dados.json";
+}
+
+static QString caminhoBackup()
+{
+    return QCoreApplication::applicationDirPath() + "/data/dados_backup.json";
 }
 
 QString normalizarTexto(QString texto)
@@ -53,22 +66,59 @@ QString normalizarTexto(QString texto)
     return texto;
 }
 
-void MainWindow::restaurarDados()
+void MainWindow::onTabelaContextMenu(const QPoint &pos)
 {
-    int resposta =
-        QMessageBox::question(
-            this,
-            "Restaurar Dados",
-            "Deseja restaurar todos os dados originais?\n\n"
-            "Todas as alterações serão perdidas.",
-            QMessageBox::Yes | QMessageBox::No);
-
-    if (resposta != QMessageBox::Yes)
+    int row = tabela->rowAt(pos.y());
+    if (row < 0)
         return;
 
-    carregarLojas("src/data/dados_backup.json");
+    tabela->selectRow(row);
 
-    salvarLojas("src/data/dados.json");
+    QTableWidgetItem *item = tabela->itemAt(pos);
+    if (!item)
+        return;
+
+    QMenu menu(this);
+
+    QAction *acaoEditar = menu.addAction("✏️ Editar loja");
+    QAction *acaoRemover = menu.addAction("🗑️ Remover loja");
+
+    // controle de permissão (depois de criar as ações)
+    acaoEditar->setEnabled(administrador);
+    acaoRemover->setEnabled(administrador);
+
+    QAction *selecionado =
+        menu.exec(tabela->viewport()->mapToGlobal(pos));
+
+    if (selecionado == acaoEditar)
+    {
+        editarLojaQt();
+    }
+    else if (selecionado == acaoRemover)
+    {
+        removerLojaQt();
+    }
+}
+
+void MainWindow::restaurarDados()
+{
+    QMessageBox msg(this);
+    msg.setWindowTitle("Restaurar Dados");
+    msg.setText("Deseja restaurar todos os dados originais?\n\nTodas as alterações serão perdidas.");
+
+    QPushButton *btnSim = msg.addButton("Sim", QMessageBox::YesRole);
+    QPushButton *btnNao = msg.addButton("Não", QMessageBox::NoRole);
+
+    msg.exec();
+
+    if (msg.clickedButton() != btnSim)
+        return;
+
+    carregarLojas(
+        caminhoBackup().toStdString().c_str());
+
+    salvarLojas(
+        caminhoDados().toStdString().c_str());
 
     atualizarTabela();
 
@@ -332,21 +382,24 @@ void MainWindow::adicionarLojaQt()
     novaLoja.lat = lat;
     novaLoja.lng = lng;
 
-    int resposta =
-        QMessageBox::question(
-            this,
-            "Confirmar",
-            "Deseja adicionar esta loja?");
+    QMessageBox msg(this);
+    msg.setWindowTitle("Confirmar");
+    msg.setText("Deseja adicionar esta loja?");
 
-    if (resposta != QMessageBox::Yes)
+    QPushButton *btnSim = msg.addButton("Sim", QMessageBox::YesRole);
+    msg.addButton("Não", QMessageBox::NoRole);
+
+    msg.exec();
+
+    if (msg.clickedButton() != btnSim)
         return;
 
     lojas[totalLojas] = novaLoja;
 
     totalLojas++;
 
-    salvarLojas("src/data/dados.json");
-
+    salvarLojas(
+        caminhoDados().toStdString().c_str());
     atualizarTabela();
 
     QMessageBox::information(
@@ -372,13 +425,16 @@ void MainWindow::removerLojaQt()
 
     int linha = selecao.first().topRow();
 
-    int resposta =
-        QMessageBox::question(
-            this,
-            "Remover",
-            "Deseja remover esta loja?");
+    QMessageBox msg(this);
+    msg.setWindowTitle("Remover");
+    msg.setText("Deseja remover esta loja?");
 
-    if (resposta != QMessageBox::Yes)
+    QPushButton *btnSim = msg.addButton("Sim", QMessageBox::YesRole);
+    msg.addButton("Não", QMessageBox::NoRole);
+
+    msg.exec();
+
+    if (msg.clickedButton() != btnSim)
         return;
 
     for (int i = linha; i < totalLojas - 1; i++)
@@ -388,7 +444,8 @@ void MainWindow::removerLojaQt()
 
     totalLojas--;
 
-    salvarLojas("src/data/dados.json");
+    salvarLojas(
+        caminhoDados().toStdString().c_str());
 
     atualizarTabela();
 
@@ -516,13 +573,16 @@ void MainWindow::editarLojaQt()
         if (!ok)
             return;
 
-        int confirmar =
-            QMessageBox::question(
-                this,
-                "Confirmar",
-                "Deseja alterar a latitude?");
+        QMessageBox msg(this);
+        msg.setWindowTitle("Confirmar");
+        msg.setText("Deseja alterar a latitude?");
 
-        if (confirmar != QMessageBox::Yes)
+        QPushButton *btnSim = msg.addButton("Sim", QMessageBox::YesRole);
+        msg.addButton("Não", QMessageBox::NoRole);
+
+        msg.exec();
+
+        if (msg.clickedButton() != btnSim)
             return;
 
         lojas[linha].lat = valor;
@@ -543,13 +603,16 @@ void MainWindow::editarLojaQt()
         if (!ok)
             return;
 
-        int confirmar =
-            QMessageBox::question(
-                this,
-                "Confirmar",
-                "Deseja alterar a longitude?");
+        QMessageBox msg(this);
+        msg.setWindowTitle("Confirmar");
+        msg.setText("Deseja alterar a longitude?");
 
-        if (confirmar != QMessageBox::Yes)
+        QPushButton *btnSim = msg.addButton("Sim", QMessageBox::YesRole);
+        msg.addButton("Não", QMessageBox::NoRole);
+
+        msg.exec();
+
+        if (msg.clickedButton() != btnSim)
             return;
 
         lojas[linha].lng = valor;
@@ -568,13 +631,16 @@ void MainWindow::editarLojaQt()
         if (!ok || novoValor.isEmpty())
             return;
 
-        int confirmar =
-            QMessageBox::question(
-                this,
-                "Confirmar",
-                "Deseja salvar a alteração?");
+        QMessageBox msg(this);
+        msg.setWindowTitle("Confirmar");
+        msg.setText("Deseja salvar a alteração?");
 
-        if (confirmar != QMessageBox::Yes)
+        QPushButton *btnSim = msg.addButton("Sim", QMessageBox::YesRole);
+        msg.addButton("Não", QMessageBox::NoRole);
+
+        msg.exec();
+
+        if (msg.clickedButton() != btnSim)
             return;
 
         if (campo == "Nome")
@@ -618,8 +684,8 @@ void MainWindow::editarLojaQt()
                     sizeof(lojas[linha].endereco));
     }
 
-    salvarLojas("src/data/dados.json");
-
+    salvarLojas(
+        caminhoDados().toStdString().c_str());
     atualizarTabela();
 
     tabela->clearSelection();
@@ -633,8 +699,15 @@ void MainWindow::editarLojaQt()
 
 MainWindow::MainWindow() // construtor
 {
+    QString pastaApp = QCoreApplication::applicationDirPath();
 
-    bool administrador = false;
+    QString arquivoDados =
+        pastaApp + "/data/dados.json";
+
+    QString arquivoBackup =
+        pastaApp + "/data/dados_backup.json";
+
+    administrador = false;
 
     while (true)
     {
@@ -1031,6 +1104,10 @@ MainWindow::MainWindow() // construtor
     tabela =
         new QTableWidget();
 
+    tabela->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(tabela, &QTableWidget::customContextMenuRequested,
+            this, &MainWindow::onTabelaContextMenu);
+
     tabela->setEditTriggers(
         QAbstractItemView::NoEditTriggers);
 
@@ -1088,7 +1165,7 @@ MainWindow::MainWindow() // construtor
         tabela);
 
     carregarLojas(
-        "src/data/dados.json");
+        caminhoDados().toStdString().c_str());
 
     atualizarTabela();
 
