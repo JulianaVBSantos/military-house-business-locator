@@ -11,42 +11,74 @@ Sistema desenvolvido como parte de um projeto extensionista com o objetivo de ot
 - Listagem de lojas cadastradas  
 - Filtragem por região (cidade/estado)  
 - Edição de dados das lojas  
-- Cadastro e remoção de lojas (Administrador)  
+- Cadastro de lojas (Administrador)
+- Remoção de lojas (Administrador)  
 
 ---
 
 ## Perfis de Usuário
 
-- **Atendente:** acesso às funcionalidades de consulta e edição  
-- **Administrador:** acesso completo, incluindo cadastro e remoção de lojas  
+- **Perfil Consulta:** acesso às funcionalidades de consulta e edição 
+- **Perfil Gestor:** acesso completo, incluindo cadastro e remoção de lojas  
 
+---
+
+## Estrutura do Projeto
+
+src/
+├── main.c / main.cpp
+├── backend/
+│ ├── lojas.c / lojas.h
+│ ├── json.c
+│ ├── mapa.c
+│ ├── utils.c
+│ └── cJSON.c / cJSON.h
+├── ui/
+│ ├── MainWindow.cpp / MainWindow.h
+├── data/
+│ ├── dados_exemplo.json
+│ ├── dados_exemplo.csv
+│ └── dados_backup-exemplo.json
+└── resources/
+├── logo.ico
+├── mapa.html
+├── resources.qrc
+├── version.rc
+├── icons/
+└── imagens/
 ---
 
 ## Tecnologias Utilizadas
 
-- Linguagem C (implementação principal)  
-- Terminal (CLI)  
-- Proposta de evolução com interface gráfica em Qt  
+- C (lógica principal do sistema)
+- C++
+- Qt (interface gráfica em desenvolvimento/evolução)
+- JSON (armazenamento de dados)
+- HTML (mapa e visualização complementar)
+- CMake (build do projeto)
 
 ---
 
-## Como Executar
+### Download
 
-1. Compile o programa:
-```bash
-gcc main.c -o sistema
-```
+[![Download](https://img.shields.io/badge/Download-Executável-brightgreen?style=for-the-badge&logo=download)](https://github.com/JulianaVBSantos/military-house-business-locator/releases/download/v1.2/Setup_Localizador_Comercial_Casa_Do_Militar_v1.2.exe)
 
-2. Execute:
-```bash
-./sistema
-```
+---
+
+## Recursos
+
+O sistema inclui:
+
+- Ícones personalizados
+- Logo do sistema (logo.ico)
+- Mapa em HTML integrado
+- Interface Qt
 
 ---
 
 ## Sobre o projeto
 
-Este sistema foi desenvolvido com foco em desempenho e simplicidade, considerando a realidade da instituição parceira. Como evolução, está prevista a implementação de uma interface gráfica para melhorar a usabilidade.
+Este sistema foi desenvolvido com foco em desempenho e simplicidade, considerando a realidade da instituição parceira. 
 
 ---
 
