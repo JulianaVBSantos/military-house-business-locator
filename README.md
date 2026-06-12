@@ -28,7 +28,13 @@ Sistema desenvolvido como parte de um projeto extensionista com o objetivo de ot
 ## Estrutura do Projeto
 
 ```
-src
+│   CMakeLists.txt
+│   LICENSE
+│   logo.ico
+│   mapa.html
+│   README.md
+│
+└───src
     │   main.c
     │   main.cpp
     │
@@ -43,9 +49,7 @@ src
     │       utils.c
     │
     ├───data
-    │       dados.json
     │       dados_backup-exemplo.json
-    │       dados_backup.json
     │       dados_exemplo.csv
     │       dados_exemplo.json
     │       municipios_com_estado.json
