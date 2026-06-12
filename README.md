@@ -9,10 +9,12 @@ Sistema desenvolvido como parte de um projeto extensionista com o objetivo de ot
 - Busca de lojas por nome  
 - Busca por colégio militar  
 - Listagem de lojas cadastradas  
-- Filtragem por região (cidade/estado)  
+- Filtragem por região (cidade/estado)
+- Localização por municipío: encontra a loja cadastrada mais próxima das cidades de GO e regiões ao redor
 - Edição de dados das lojas  
 - Cadastro de lojas (Administrador)
-- Remoção de lojas (Administrador)  
+- Remoção de lojas (Administrador)
+- Restauração de dados (Administrador)
 
 ---
 
@@ -26,27 +28,46 @@ Sistema desenvolvido como parte de um projeto extensionista com o objetivo de ot
 ## Estrutura do Projeto
 
 ```
-src/
-├── main.c / main.cpp
-├── backend/
-│ ├── lojas.c / lojas.h
-│ ├── json.c
-│ ├── mapa.c
-│ ├── utils.c
-│ └── cJSON.c / cJSON.h
-├── ui/
-│ ├── MainWindow.cpp / MainWindow.h
-├── data/
-│ ├── dados_exemplo.json
-│ ├── dados_exemplo.csv
-│ └── dados_backup-exemplo.json
-└── resources/
-├── logo.ico
-├── mapa.html
-├── resources.qrc
-├── version.rc
-├── icons/
-└── imagens/
+src
+    │   main.c
+    │   main.cpp
+    │
+    ├───backend
+    │       cJSON.c
+    │       cJSON.h
+    │       json.c
+    │       lojas.c
+    │       lojas.h
+    │       mapa.c
+    │       municipios.cpp
+    │       utils.c
+    │
+    ├───data
+    │       dados.json
+    │       dados_backup-exemplo.json
+    │       dados_backup.json
+    │       dados_exemplo.csv
+    │       dados_exemplo.json
+    │       municipios_com_estado.json
+    │       municipios_go_regiao.json
+    │
+    ├───resources
+    │   │   logo.ico
+    │   │   mapa.html
+    │   │   resources.qrc
+    │   │   version.rc
+    │   │
+    │   ├───icons
+    │   │       pin.png
+    │   │       school.png
+    │   │       search.png
+    │   │
+    │   └───imagens
+    │           logo.png
+    │
+    └───ui
+            MainWindow.cpp
+            MainWindow.h
 ```
 ---
 
@@ -63,7 +84,7 @@ src/
 
 ### Download
 
-[![Download](https://img.shields.io/badge/Download-Executável-brightgreen?style=for-the-badge&logo=download)](https://github.com/JulianaVBSantos/military-house-business-locator/releases/download/v1.2/Setup_Localizador_Comercial_Casa_Do_Militar_v1.2.exe)
+[![Download](https://img.shields.io/badge/Download-Executável-brightgreen?style=for-the-badge&logo=download)](https://github.com/JulianaVBSantos/military-house-business-locator/releases/download/v1.3.1/Setup_Localizador_Comercial_Casa_Do_Militar_v1.3.1.exe)
 
 ---
 
