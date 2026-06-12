@@ -26,11 +26,10 @@ void carregarLojas(const char *arquivo)
     if (fp == NULL)
     {
         printf("ERRO AO ABRIR ARQUIVO\n");
+        return;
     }
-    else
-    {
-        printf("Arquivo aberto com sucesso\n");
-    }
+
+    printf("Arquivo aberto com sucesso\n");
 
     fseek(fp, 0, SEEK_END);
     long tamanho = ftell(fp); // ftell retorna a posição atual em bytes
@@ -143,7 +142,6 @@ void carregarLojas(const char *arquivo)
         }
         totalLojas++;
     }
-
     cJSON_Delete(json);
     free(conteudo);
 }
@@ -181,6 +179,7 @@ void salvarLojas(const char *arquivo)
     }
 
     fprintf(fp, "%s", stringJSON);
+    fflush(fp);
     fclose(fp);
 
     free(stringJSON);

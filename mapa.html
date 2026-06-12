@@ -171,13 +171,1478 @@ var marcadorVermelho = new L.Icon({
 });
 var marcadores = [];
 var lojasSemCoordenadas = [];
+var camadaMunicipios =
+L.layerGroup().addTo(map);
+var municipios = [];
+municipios.push({nome:"Abadia de Goiás",uf:"GO",lat:-16.757300,lng:-49.441200});
+municipios.push({nome:"Abadia dos Dourados",uf:"MG",lat:-18.483100,lng:-47.391600});
+municipios.push({nome:"Abadiânia",uf:"GO",lat:-16.197000,lng:-48.705700});
+municipios.push({nome:"Abaeté",uf:"MG",lat:-19.155100,lng:-45.444400});
+municipios.push({nome:"Abre Campo",uf:"MG",lat:-20.299600,lng:-42.474300});
+municipios.push({nome:"Abreulândia",uf:"TO",lat:-9.621010,lng:-49.151800});
+municipios.push({nome:"Acaiaca",uf:"MG",lat:-20.359000,lng:-43.143900});
+municipios.push({nome:"Acorizal",uf:"MT",lat:-15.194000,lng:-56.363200});
+municipios.push({nome:"Acreúna",uf:"GO",lat:-17.396000,lng:-50.374900});
+municipios.push({nome:"Açucena",uf:"MG",lat:-19.067100,lng:-42.541900});
+municipios.push({nome:"Adelândia",uf:"GO",lat:-16.412700,lng:-50.165700});
+municipios.push({nome:"Água Boa",uf:"MG",lat:-17.991400,lng:-42.380600});
+municipios.push({nome:"Água Boa",uf:"MT",lat:-14.051000,lng:-52.160100});
+municipios.push({nome:"Água Clara",uf:"MS",lat:-20.445200,lng:-52.879000});
+municipios.push({nome:"Água Comprida",uf:"MG",lat:-20.057600,lng:-48.106900});
+municipios.push({nome:"Água Fria de Goiás",uf:"GO",lat:-14.977800,lng:-47.782300});
+municipios.push({nome:"Água Limpa",uf:"GO",lat:-18.077100,lng:-48.760300});
+municipios.push({nome:"Aguanil",uf:"MG",lat:-20.943900,lng:-45.391500});
+municipios.push({nome:"Águas Formosas",uf:"MG",lat:-17.080200,lng:-40.938400});
+municipios.push({nome:"Águas Lindas de Goiás",uf:"GO",lat:-15.761700,lng:-48.281600});
+municipios.push({nome:"Águas Vermelhas",uf:"MG",lat:-15.743100,lng:-41.457100});
+municipios.push({nome:"Aguiarnópolis",uf:"TO",lat:-6.554090,lng:-47.470200});
+municipios.push({nome:"Aimorés",uf:"MG",lat:-19.500700,lng:-41.074600});
+municipios.push({nome:"Aiuruoca",uf:"MG",lat:-21.973600,lng:-44.604200});
+municipios.push({nome:"Alagoa",uf:"MG",lat:-22.171000,lng:-44.641300});
+municipios.push({nome:"Albertina",uf:"MG",lat:-22.201800,lng:-46.613900});
+municipios.push({nome:"Alcinópolis",uf:"MS",lat:-18.325500,lng:-53.704200});
+municipios.push({nome:"Além Paraíba",uf:"MG",lat:-21.879700,lng:-42.717600});
+municipios.push({nome:"Alexânia",uf:"GO",lat:-16.083400,lng:-48.507600});
+municipios.push({nome:"Alfenas",uf:"MG",lat:-21.425600,lng:-45.947700});
+municipios.push({nome:"Alfredo Vasconcelos",uf:"MG",lat:-21.153500,lng:-43.771800});
+municipios.push({nome:"Aliança do Tocantins",uf:"TO",lat:-11.305600,lng:-48.936100});
+municipios.push({nome:"Almas",uf:"TO",lat:-11.570600,lng:-47.179200});
+municipios.push({nome:"Almenara",uf:"MG",lat:-16.178500,lng:-40.694200});
+municipios.push({nome:"Aloândia",uf:"GO",lat:-17.729200,lng:-49.476900});
+municipios.push({nome:"Alpercata",uf:"MG",lat:-18.974000,lng:-41.970000});
+municipios.push({nome:"Alpinópolis",uf:"MG",lat:-20.863100,lng:-46.387800});
+municipios.push({nome:"Alta Floresta",uf:"MT",lat:-9.866740,lng:-56.086700});
+municipios.push({nome:"Alterosa",uf:"MG",lat:-21.248800,lng:-46.138700});
+municipios.push({nome:"Alto Araguaia",uf:"MT",lat:-17.315300,lng:-53.218100});
+municipios.push({nome:"Alto Boa Vista",uf:"MT",lat:-11.673200,lng:-51.388300});
+municipios.push({nome:"Alto Caparaó",uf:"MG",lat:-20.431000,lng:-41.873800});
+municipios.push({nome:"Alto Garças",uf:"MT",lat:-16.946200,lng:-53.527200});
+municipios.push({nome:"Alto Horizonte",uf:"GO",lat:-14.197800,lng:-49.337800});
+municipios.push({nome:"Alto Jequitibá",uf:"MG",lat:-20.420800,lng:-41.967000});
+municipios.push({nome:"Alto Paraguai",uf:"MT",lat:-14.513700,lng:-56.477600});
+municipios.push({nome:"Alto Paraíso de Goiás",uf:"GO",lat:-14.130500,lng:-47.510000});
+municipios.push({nome:"Alto Rio Doce",uf:"MG",lat:-21.028100,lng:-43.406700});
+municipios.push({nome:"Alto Taquari",uf:"MT",lat:-17.824100,lng:-53.279200});
+municipios.push({nome:"Alvarenga",uf:"MG",lat:-19.417400,lng:-41.731700});
+municipios.push({nome:"Alvinópolis",uf:"MG",lat:-20.109800,lng:-43.053500});
+municipios.push({nome:"Alvorada",uf:"TO",lat:-12.478500,lng:-49.124900});
+municipios.push({nome:"Alvorada de Minas",uf:"MG",lat:-18.733400,lng:-43.363800});
+municipios.push({nome:"Alvorada do Norte",uf:"GO",lat:-14.479700,lng:-46.491000});
+municipios.push({nome:"Amambai",uf:"MS",lat:-23.105800,lng:-55.225300});
+municipios.push({nome:"Amaralina",uf:"GO",lat:-13.923600,lng:-49.296200});
+municipios.push({nome:"Americano do Brasil",uf:"GO",lat:-16.251400,lng:-49.983100});
+municipios.push({nome:"Amorinópolis",uf:"GO",lat:-16.615100,lng:-51.091900});
+municipios.push({nome:"Amparo do Serra",uf:"MG",lat:-20.505100,lng:-42.800900});
+municipios.push({nome:"Ananás",uf:"TO",lat:-6.364370,lng:-48.073500});
+municipios.push({nome:"Anápolis",uf:"GO",lat:-16.328100,lng:-48.953000});
+municipios.push({nome:"Anastácio",uf:"MS",lat:-20.482300,lng:-55.810400});
+municipios.push({nome:"Anaurilândia",uf:"MS",lat:-22.185200,lng:-52.719100});
+municipios.push({nome:"Andradas",uf:"MG",lat:-22.069500,lng:-46.572400});
+municipios.push({nome:"Andrelândia",uf:"MG",lat:-21.741100,lng:-44.311700});
+municipios.push({nome:"Angelândia",uf:"MG",lat:-17.727900,lng:-42.264100});
+municipios.push({nome:"Angélica",uf:"MS",lat:-22.152700,lng:-53.770800});
+municipios.push({nome:"Angico",uf:"TO",lat:-6.391790,lng:-47.861100});
+municipios.push({nome:"Anhanguera",uf:"GO",lat:-18.333900,lng:-48.220400});
+municipios.push({nome:"Anicuns",uf:"GO",lat:-16.464200,lng:-49.961700});
+municipios.push({nome:"Antônio Carlos",uf:"MG",lat:-21.321000,lng:-43.745100});
+municipios.push({nome:"Antônio Dias",uf:"MG",lat:-19.649100,lng:-42.873200});
+municipios.push({nome:"Antônio João",uf:"MS",lat:-22.192700,lng:-55.951700});
+municipios.push({nome:"Antônio Prado de Minas",uf:"MG",lat:-21.019200,lng:-42.110900});
+municipios.push({nome:"Aparecida de Goiânia",uf:"GO",lat:-16.819800,lng:-49.246900});
+municipios.push({nome:"Aparecida do Rio Doce",uf:"GO",lat:-18.294100,lng:-51.151600});
+municipios.push({nome:"Aparecida do Rio Negro",uf:"TO",lat:-9.941390,lng:-47.963800});
+municipios.push({nome:"Aparecida do Taboado",uf:"MS",lat:-20.087300,lng:-51.096100});
+municipios.push({nome:"Apiacás",uf:"MT",lat:-9.539810,lng:-57.458700});
+municipios.push({nome:"Aporé",uf:"GO",lat:-18.960700,lng:-51.923200});
+municipios.push({nome:"Aquidauana",uf:"MS",lat:-20.466600,lng:-55.786800});
+municipios.push({nome:"Araçaí",uf:"MG",lat:-19.195500,lng:-44.249300});
+municipios.push({nome:"Aracitaba",uf:"MG",lat:-21.344600,lng:-43.373600});
+municipios.push({nome:"Araçu",uf:"GO",lat:-16.356300,lng:-49.680400});
+municipios.push({nome:"Araçuaí",uf:"MG",lat:-16.852300,lng:-42.063700});
+municipios.push({nome:"Aragarças",uf:"GO",lat:-15.895500,lng:-52.237200});
+municipios.push({nome:"Aragoiânia",uf:"GO",lat:-16.908700,lng:-49.447600});
+municipios.push({nome:"Aragominas",uf:"TO",lat:-7.160050,lng:-48.529100});
+municipios.push({nome:"Araguacema",uf:"TO",lat:-8.807550,lng:-49.556900});
+municipios.push({nome:"Araguaçu",uf:"TO",lat:-12.928900,lng:-49.823100});
+municipios.push({nome:"Araguaiana",uf:"MT",lat:-15.729100,lng:-51.834100});
+municipios.push({nome:"Araguaína",uf:"TO",lat:-7.192380,lng:-48.204400});
+municipios.push({nome:"Araguainha",uf:"MT",lat:-16.857000,lng:-53.031800});
+municipios.push({nome:"Araguanã",uf:"TO",lat:-6.582250,lng:-48.639500});
+municipios.push({nome:"Araguapaz",uf:"GO",lat:-15.090900,lng:-50.631500});
+municipios.push({nome:"Araguari",uf:"MG",lat:-18.645600,lng:-48.193400});
+municipios.push({nome:"Araguatins",uf:"TO",lat:-5.646590,lng:-48.123200});
+municipios.push({nome:"Aral Moreira",uf:"MS",lat:-22.938500,lng:-55.633400});
+municipios.push({nome:"Arantina",uf:"MG",lat:-21.910200,lng:-44.255500});
+municipios.push({nome:"Arapoema",uf:"TO",lat:-7.654630,lng:-49.063700});
+municipios.push({nome:"Araponga",uf:"MG",lat:-20.668600,lng:-42.517800});
+municipios.push({nome:"Araporã",uf:"MG",lat:-18.435700,lng:-49.184700});
+municipios.push({nome:"Arapuá",uf:"MG",lat:-19.026800,lng:-46.148400});
+municipios.push({nome:"Araputanga",uf:"MT",lat:-15.464100,lng:-58.342500});
+municipios.push({nome:"Araújos",uf:"MG",lat:-19.940500,lng:-45.167100});
+municipios.push({nome:"Araxá",uf:"MG",lat:-19.590200,lng:-46.943800});
+municipios.push({nome:"Arceburgo",uf:"MG",lat:-21.359000,lng:-46.940100});
+municipios.push({nome:"Arcos",uf:"MG",lat:-20.286300,lng:-45.537300});
+municipios.push({nome:"Areado",uf:"MG",lat:-21.357200,lng:-46.142100});
+municipios.push({nome:"Arenápolis",uf:"MT",lat:-14.447200,lng:-56.843700});
+municipios.push({nome:"Arenópolis",uf:"GO",lat:-16.383700,lng:-51.556300});
+municipios.push({nome:"Argirita",uf:"MG",lat:-21.608300,lng:-42.829200});
+municipios.push({nome:"Aricanduva",uf:"MG",lat:-17.866600,lng:-42.553300});
+municipios.push({nome:"Arinos",uf:"MG",lat:-15.918700,lng:-46.104300});
+municipios.push({nome:"Aripuanã",uf:"MT",lat:-10.172300,lng:-59.456800});
+municipios.push({nome:"Arraias",uf:"TO",lat:-12.928700,lng:-46.935900});
+municipios.push({nome:"Aruanã",uf:"GO",lat:-14.916600,lng:-51.075000});
+municipios.push({nome:"Astolfo Dutra",uf:"MG",lat:-21.318400,lng:-42.857200});
+municipios.push({nome:"Ataléia",uf:"MG",lat:-18.043800,lng:-41.114900});
+municipios.push({nome:"Augustinópolis",uf:"TO",lat:-5.468630,lng:-47.886300});
+municipios.push({nome:"Augusto de Lima",uf:"MG",lat:-18.099700,lng:-44.265500});
+municipios.push({nome:"Aurilândia",uf:"GO",lat:-16.677300,lng:-50.464100});
+municipios.push({nome:"Aurora do Tocantins",uf:"TO",lat:-12.710500,lng:-46.407600});
+municipios.push({nome:"Avelinópolis",uf:"GO",lat:-16.467200,lng:-49.757900});
+municipios.push({nome:"Axixá do Tocantins",uf:"TO",lat:-5.612750,lng:-47.770100});
+municipios.push({nome:"Babaçulândia",uf:"TO",lat:-7.209230,lng:-47.761300});
+municipios.push({nome:"Baependi",uf:"MG",lat:-21.957000,lng:-44.887400});
+municipios.push({nome:"Baldim",uf:"MG",lat:-19.283200,lng:-43.961300});
+municipios.push({nome:"Baliza",uf:"GO",lat:-16.196600,lng:-52.539300});
+municipios.push({nome:"Bambuí",uf:"MG",lat:-20.016600,lng:-45.975400});
+municipios.push({nome:"Bandeira",uf:"MG",lat:-15.878300,lng:-40.562200});
+municipios.push({nome:"Bandeira do Sul",uf:"MG",lat:-21.730800,lng:-46.383300});
+municipios.push({nome:"Bandeirantes",uf:"MS",lat:-19.927500,lng:-54.358500});
+municipios.push({nome:"Bandeirantes do Tocantins",uf:"TO",lat:-7.756120,lng:-48.583600});
+municipios.push({nome:"Barão de Cocais",uf:"MG",lat:-19.938900,lng:-43.475500});
+municipios.push({nome:"Barão de Melgaço",uf:"MT",lat:-16.206700,lng:-55.962300});
+municipios.push({nome:"Barão de Monte Alto",uf:"MG",lat:-21.244400,lng:-42.237200});
+municipios.push({nome:"Barbacena",uf:"MG",lat:-21.221400,lng:-43.770300});
+municipios.push({nome:"Barra do Bugres",uf:"MT",lat:-15.070200,lng:-57.187800});
+municipios.push({nome:"Barra do Garças",uf:"MT",lat:-15.880400,lng:-52.264000});
+municipios.push({nome:"Barra do Ouro",uf:"TO",lat:-7.695930,lng:-47.677600});
+municipios.push({nome:"Barra Longa",uf:"MG",lat:-20.286900,lng:-43.040200});
+municipios.push({nome:"Barro Alto",uf:"GO",lat:-14.965800,lng:-48.908600});
+municipios.push({nome:"Barrolândia",uf:"TO",lat:-9.834040,lng:-48.725200});
+municipios.push({nome:"Barroso",uf:"MG",lat:-21.190700,lng:-43.972000});
+municipios.push({nome:"Bataguassu",uf:"MS",lat:-21.715900,lng:-52.422100});
+municipios.push({nome:"Batayporã",uf:"MS",lat:-22.294400,lng:-53.270500});
+municipios.push({nome:"Bela Vista",uf:"MS",lat:-22.107300,lng:-56.526300});
+municipios.push({nome:"Bela Vista de Goiás",uf:"GO",lat:-16.969300,lng:-48.951300});
+municipios.push({nome:"Bela Vista de Minas",uf:"MG",lat:-19.830200,lng:-43.092200});
+municipios.push({nome:"Belmiro Braga",uf:"MG",lat:-21.944000,lng:-43.408400});
+municipios.push({nome:"Belo Horizonte",uf:"MG",lat:-19.910200,lng:-43.926600});
+municipios.push({nome:"Belo Oriente",uf:"MG",lat:-19.219900,lng:-42.482800});
+municipios.push({nome:"Belo Vale",uf:"MG",lat:-20.407700,lng:-44.027500});
+municipios.push({nome:"Berilo",uf:"MG",lat:-16.956700,lng:-42.460600});
+municipios.push({nome:"Berizal",uf:"MG",lat:-15.610000,lng:-41.743200});
+municipios.push({nome:"Bernardo Sayão",uf:"TO",lat:-7.874810,lng:-48.889300});
+municipios.push({nome:"Bertópolis",uf:"MG",lat:-17.059000,lng:-40.580000});
+municipios.push({nome:"Betim",uf:"MG",lat:-19.966800,lng:-44.200800});
+municipios.push({nome:"Bias Fortes",uf:"MG",lat:-21.602000,lng:-43.757400});
+municipios.push({nome:"Bicas",uf:"MG",lat:-21.723200,lng:-43.056000});
+municipios.push({nome:"Biquinhas",uf:"MG",lat:-18.775400,lng:-45.497400});
+municipios.push({nome:"Boa Esperança",uf:"MG",lat:-21.092700,lng:-45.561200});
+municipios.push({nome:"Boa Esperança do Norte",uf:"MT",lat:-13.506700,lng:-55.148600});
+municipios.push({nome:"Bocaina de Minas",uf:"MG",lat:-22.169700,lng:-44.397200});
+municipios.push({nome:"Bocaiúva",uf:"MG",lat:-17.113500,lng:-43.810400});
+municipios.push({nome:"Bodoquena",uf:"MS",lat:-20.537000,lng:-56.712700});
+municipios.push({nome:"Bom Despacho",uf:"MG",lat:-19.738600,lng:-45.262200});
+municipios.push({nome:"Bom Jardim de Goiás",uf:"GO",lat:-16.206300,lng:-52.172800});
+municipios.push({nome:"Bom Jardim de Minas",uf:"MG",lat:-21.947900,lng:-44.188500});
+municipios.push({nome:"Bom Jesus da Penha",uf:"MG",lat:-21.014800,lng:-46.517400});
+municipios.push({nome:"Bom Jesus de Goiás",uf:"GO",lat:-18.217300,lng:-49.740000});
+municipios.push({nome:"Bom Jesus do Amparo",uf:"MG",lat:-19.705400,lng:-43.478200});
+municipios.push({nome:"Bom Jesus do Araguaia",uf:"MT",lat:-12.170600,lng:-51.503200});
+municipios.push({nome:"Bom Jesus do Galho",uf:"MG",lat:-19.836000,lng:-42.316500});
+municipios.push({nome:"Bom Jesus do Tocantins",uf:"TO",lat:-8.963060,lng:-48.165000});
+municipios.push({nome:"Bom Repouso",uf:"MG",lat:-22.467500,lng:-46.144000});
+municipios.push({nome:"Bom Sucesso",uf:"MG",lat:-21.032900,lng:-44.753700});
+municipios.push({nome:"Bonfim",uf:"MG",lat:-20.330200,lng:-44.236600});
+municipios.push({nome:"Bonfinópolis",uf:"GO",lat:-16.617300,lng:-48.961600});
+municipios.push({nome:"Bonfinópolis de Minas",uf:"MG",lat:-16.568000,lng:-45.983900});
+municipios.push({nome:"Bonito",uf:"MS",lat:-21.126100,lng:-56.483600});
+municipios.push({nome:"Bonito de Minas",uf:"MG",lat:-15.323100,lng:-44.754300});
+municipios.push({nome:"Bonópolis",uf:"GO",lat:-13.632900,lng:-49.810600});
+municipios.push({nome:"Borda da Mata",uf:"MG",lat:-22.270700,lng:-46.165300});
+municipios.push({nome:"Botelhos",uf:"MG",lat:-21.641200,lng:-46.391000});
+municipios.push({nome:"Botumirim",uf:"MG",lat:-16.865700,lng:-43.008600});
+municipios.push({nome:"Brás Pires",uf:"MG",lat:-20.841900,lng:-43.240600});
+municipios.push({nome:"Brasilândia",uf:"MS",lat:-21.254400,lng:-52.036500});
+municipios.push({nome:"Brasilândia de Minas",uf:"MG",lat:-16.999900,lng:-46.008100});
+municipios.push({nome:"Brasilândia do Tocantins",uf:"TO",lat:-8.389180,lng:-48.482200});
+municipios.push({nome:"Brasília",uf:"DF",lat:-15.779500,lng:-47.929700});
+municipios.push({nome:"Brasília de Minas",uf:"MG",lat:-16.210400,lng:-44.429900});
+municipios.push({nome:"Brasnorte",uf:"MT",lat:-12.147400,lng:-57.983300});
+municipios.push({nome:"Braúnas",uf:"MG",lat:-19.056200,lng:-42.709900});
+municipios.push({nome:"Brazabrantes",uf:"GO",lat:-16.428100,lng:-49.386300});
+municipios.push({nome:"Brazópolis",uf:"MG",lat:-22.474300,lng:-45.616600});
+municipios.push({nome:"Brejinho de Nazaré",uf:"TO",lat:-11.005800,lng:-48.568300});
+municipios.push({nome:"Britânia",uf:"GO",lat:-15.242800,lng:-51.160200});
+municipios.push({nome:"Brumadinho",uf:"MG",lat:-20.151000,lng:-44.200700});
+municipios.push({nome:"Bueno Brandão",uf:"MG",lat:-22.438300,lng:-46.349100});
+municipios.push({nome:"Buenópolis",uf:"MG",lat:-17.874400,lng:-44.177500});
+municipios.push({nome:"Bugre",uf:"MG",lat:-19.423100,lng:-42.255200});
+municipios.push({nome:"Buriti Alegre",uf:"GO",lat:-18.137800,lng:-49.040400});
+municipios.push({nome:"Buriti de Goiás",uf:"GO",lat:-16.179200,lng:-50.430200});
+municipios.push({nome:"Buriti do Tocantins",uf:"TO",lat:-5.314480,lng:-48.227100});
+municipios.push({nome:"Buritinópolis",uf:"GO",lat:-14.477200,lng:-46.407600});
+municipios.push({nome:"Buritis",uf:"MG",lat:-15.621800,lng:-46.422100});
+municipios.push({nome:"Buritizeiro",uf:"MG",lat:-17.365600,lng:-44.960600});
+municipios.push({nome:"Caarapó",uf:"MS",lat:-22.636800,lng:-54.820900});
+municipios.push({nome:"Cabeceira Grande",uf:"MG",lat:-16.033500,lng:-47.086200});
+municipios.push({nome:"Cabeceiras",uf:"GO",lat:-15.799500,lng:-46.926500});
+municipios.push({nome:"Cabo Verde",uf:"MG",lat:-21.469900,lng:-46.391900});
+municipios.push({nome:"Cáceres",uf:"MT",lat:-16.076400,lng:-57.681800});
+municipios.push({nome:"Cachoeira Alta",uf:"GO",lat:-18.761800,lng:-50.943200});
+municipios.push({nome:"Cachoeira da Prata",uf:"MG",lat:-19.521000,lng:-44.454400});
+municipios.push({nome:"Cachoeira de Goiás",uf:"GO",lat:-16.663500,lng:-50.646000});
+municipios.push({nome:"Cachoeira de Minas",uf:"MG",lat:-22.351100,lng:-45.780900});
+municipios.push({nome:"Cachoeira de Pajeú",uf:"MG",lat:-15.968800,lng:-41.494800});
+municipios.push({nome:"Cachoeira Dourada",uf:"GO",lat:-18.485900,lng:-49.476600});
+municipios.push({nome:"Cachoeira Dourada",uf:"MG",lat:-18.516100,lng:-49.503900});
+municipios.push({nome:"Cachoeirinha",uf:"TO",lat:-6.115600,lng:-47.923400});
+municipios.push({nome:"Caçu",uf:"GO",lat:-18.559400,lng:-51.132800});
+municipios.push({nome:"Caetanópolis",uf:"MG",lat:-19.297100,lng:-44.418900});
+municipios.push({nome:"Caeté",uf:"MG",lat:-19.882600,lng:-43.670400});
+municipios.push({nome:"Caiana",uf:"MG",lat:-20.695600,lng:-41.929200});
+municipios.push({nome:"Caiapônia",uf:"GO",lat:-16.953900,lng:-51.809100});
+municipios.push({nome:"Cajuri",uf:"MG",lat:-20.790300,lng:-42.792500});
+municipios.push({nome:"Caldas",uf:"MG",lat:-21.918300,lng:-46.384300});
+municipios.push({nome:"Caldas Novas",uf:"GO",lat:-17.744100,lng:-48.624600});
+municipios.push({nome:"Caldazinha",uf:"GO",lat:-16.711700,lng:-49.001300});
+municipios.push({nome:"Camacho",uf:"MG",lat:-20.629400,lng:-45.159300});
+municipios.push({nome:"Camanducaia",uf:"MG",lat:-22.751500,lng:-46.149400});
+municipios.push({nome:"Camapuã",uf:"MS",lat:-19.534700,lng:-54.043100});
+municipios.push({nome:"Cambuí",uf:"MG",lat:-22.611500,lng:-46.057200});
+municipios.push({nome:"Cambuquira",uf:"MG",lat:-21.854000,lng:-45.289600});
+municipios.push({nome:"Campanário",uf:"MG",lat:-18.242700,lng:-41.735500});
+municipios.push({nome:"Campanha",uf:"MG",lat:-21.836000,lng:-45.400400});
+municipios.push({nome:"Campestre",uf:"MG",lat:-21.707900,lng:-46.238100});
+municipios.push({nome:"Campestre de Goiás",uf:"GO",lat:-16.762400,lng:-49.695000});
+municipios.push({nome:"Campina Verde",uf:"MG",lat:-19.538200,lng:-49.486200});
+municipios.push({nome:"Campinaçu",uf:"GO",lat:-13.787000,lng:-48.570400});
+municipios.push({nome:"Campinápolis",uf:"MT",lat:-14.516200,lng:-52.893000});
+municipios.push({nome:"Campinorte",uf:"GO",lat:-14.313700,lng:-49.151100});
+municipios.push({nome:"Campo Alegre de Goiás",uf:"GO",lat:-17.636300,lng:-47.776800});
+municipios.push({nome:"Campo Azul",uf:"MG",lat:-16.502800,lng:-44.809600});
+municipios.push({nome:"Campo Belo",uf:"MG",lat:-20.893200,lng:-45.269900});
+municipios.push({nome:"Campo do Meio",uf:"MG",lat:-21.112700,lng:-45.827300});
+municipios.push({nome:"Campo Florido",uf:"MG",lat:-19.763100,lng:-48.571600});
+municipios.push({nome:"Campo Grande",uf:"MS",lat:-20.448600,lng:-54.629500});
+municipios.push({nome:"Campo Limpo de Goiás",uf:"GO",lat:-16.297100,lng:-49.089500});
+municipios.push({nome:"Campo Novo do Parecis",uf:"MT",lat:-13.658700,lng:-57.890700});
+municipios.push({nome:"Campo Verde",uf:"MT",lat:-15.545000,lng:-55.162600});
+municipios.push({nome:"Campos Altos",uf:"MG",lat:-19.691400,lng:-46.172500});
+municipios.push({nome:"Campos Belos",uf:"GO",lat:-13.035000,lng:-46.768100});
+municipios.push({nome:"Campos de Júlio",uf:"MT",lat:-13.724200,lng:-59.285800});
+municipios.push({nome:"Campos Gerais",uf:"MG",lat:-21.237000,lng:-45.756900});
+municipios.push({nome:"Campos Lindos",uf:"TO",lat:-7.989560,lng:-46.864500});
+municipios.push({nome:"Campos Verdes",uf:"GO",lat:-14.244200,lng:-49.652800});
+municipios.push({nome:"Cana Verde",uf:"MG",lat:-21.023200,lng:-45.180100});
+municipios.push({nome:"Canaã",uf:"MG",lat:-20.686900,lng:-42.616700});
+municipios.push({nome:"Canabrava do Norte",uf:"MT",lat:-11.055600,lng:-51.820900});
+municipios.push({nome:"Canápolis",uf:"MG",lat:-18.721200,lng:-49.203500});
+municipios.push({nome:"Canarana",uf:"MT",lat:-13.551500,lng:-52.270500});
+municipios.push({nome:"Candeias",uf:"MG",lat:-20.769200,lng:-45.276500});
+municipios.push({nome:"Cantagalo",uf:"MG",lat:-18.524800,lng:-42.622300});
+municipios.push({nome:"Caparaó",uf:"MG",lat:-20.528900,lng:-41.906100});
+municipios.push({nome:"Capela Nova",uf:"MG",lat:-20.917900,lng:-43.622000});
+municipios.push({nome:"Capelinha",uf:"MG",lat:-17.688800,lng:-42.514700});
+municipios.push({nome:"Capetinga",uf:"MG",lat:-20.616300,lng:-47.057100});
+municipios.push({nome:"Capim Branco",uf:"MG",lat:-19.547100,lng:-44.130400});
+municipios.push({nome:"Capinópolis",uf:"MG",lat:-18.686200,lng:-49.570600});
+municipios.push({nome:"Capitão Andrade",uf:"MG",lat:-19.074800,lng:-41.861400});
+municipios.push({nome:"Capitão Enéas",uf:"MG",lat:-16.326500,lng:-43.708400});
+municipios.push({nome:"Capitólio",uf:"MG",lat:-20.616400,lng:-46.049300});
+municipios.push({nome:"Caputira",uf:"MG",lat:-20.170300,lng:-42.268300});
+municipios.push({nome:"Caracol",uf:"MS",lat:-22.011000,lng:-57.027700});
+municipios.push({nome:"Caraí",uf:"MG",lat:-17.186200,lng:-41.700400});
+municipios.push({nome:"Caranaíba",uf:"MG",lat:-20.870700,lng:-43.741700});
+municipios.push({nome:"Carandaí",uf:"MG",lat:-20.956600,lng:-43.811000});
+municipios.push({nome:"Carangola",uf:"MG",lat:-20.734300,lng:-42.031300});
+municipios.push({nome:"Caratinga",uf:"MG",lat:-19.786800,lng:-42.129200});
+municipios.push({nome:"Carbonita",uf:"MG",lat:-17.525500,lng:-43.013700});
+municipios.push({nome:"Careaçu",uf:"MG",lat:-22.042400,lng:-45.696000});
+municipios.push({nome:"Cariri do Tocantins",uf:"TO",lat:-11.888100,lng:-49.160900});
+municipios.push({nome:"Carlinda",uf:"MT",lat:-9.949120,lng:-55.841700});
+municipios.push({nome:"Carlos Chagas",uf:"MG",lat:-17.697300,lng:-40.772300});
+municipios.push({nome:"Carmésia",uf:"MG",lat:-19.087700,lng:-43.138200});
+municipios.push({nome:"Carmo da Cachoeira",uf:"MG",lat:-21.463300,lng:-45.220100});
+municipios.push({nome:"Carmo da Mata",uf:"MG",lat:-20.557500,lng:-44.873500});
+municipios.push({nome:"Carmo de Minas",uf:"MG",lat:-22.120400,lng:-45.130700});
+municipios.push({nome:"Carmo do Cajuru",uf:"MG",lat:-20.191200,lng:-44.766400});
+municipios.push({nome:"Carmo do Paranaíba",uf:"MG",lat:-18.991000,lng:-46.316700});
+municipios.push({nome:"Carmo do Rio Claro",uf:"MG",lat:-20.973600,lng:-46.114900});
+municipios.push({nome:"Carmo do Rio Verde",uf:"GO",lat:-15.354900,lng:-49.708000});
+municipios.push({nome:"Carmolândia",uf:"TO",lat:-7.032620,lng:-48.397800});
+municipios.push({nome:"Carmópolis de Minas",uf:"MG",lat:-20.539600,lng:-44.633600});
+municipios.push({nome:"Carneirinho",uf:"MG",lat:-19.698700,lng:-50.689400});
+municipios.push({nome:"Carrancas",uf:"MG",lat:-21.489800,lng:-44.644600});
+municipios.push({nome:"Carrasco Bonito",uf:"TO",lat:-5.314150,lng:-48.031400});
+municipios.push({nome:"Carvalhópolis",uf:"MG",lat:-21.773500,lng:-45.842100});
+municipios.push({nome:"Carvalhos",uf:"MG",lat:-22.000000,lng:-44.463200});
+municipios.push({nome:"Casa Grande",uf:"MG",lat:-20.792500,lng:-43.934300});
+municipios.push({nome:"Cascalho Rico",uf:"MG",lat:-18.577200,lng:-47.871600});
+municipios.push({nome:"Caseara",uf:"TO",lat:-9.276120,lng:-49.952100});
+municipios.push({nome:"Cássia",uf:"MG",lat:-20.583100,lng:-46.920100});
+municipios.push({nome:"Cassilândia",uf:"MS",lat:-19.117900,lng:-51.731300});
+municipios.push({nome:"Castanheira",uf:"MT",lat:-11.125100,lng:-58.608100});
+municipios.push({nome:"Castelândia",uf:"GO",lat:-18.092100,lng:-50.203000});
+municipios.push({nome:"Cataguases",uf:"MG",lat:-21.392400,lng:-42.689600});
+municipios.push({nome:"Catalão",uf:"GO",lat:-18.165600,lng:-47.944000});
+municipios.push({nome:"Catas Altas",uf:"MG",lat:-20.073400,lng:-43.406100});
+municipios.push({nome:"Catas Altas da Noruega",uf:"MG",lat:-20.690100,lng:-43.493900});
+municipios.push({nome:"Catuji",uf:"MG",lat:-17.301800,lng:-41.527600});
+municipios.push({nome:"Caturaí",uf:"GO",lat:-16.444700,lng:-49.493600});
+municipios.push({nome:"Catuti",uf:"MG",lat:-15.361600,lng:-42.962700});
+municipios.push({nome:"Cavalcante",uf:"GO",lat:-13.797600,lng:-47.456600});
+municipios.push({nome:"Caxambu",uf:"MG",lat:-21.975300,lng:-44.931900});
+municipios.push({nome:"Cedro do Abaeté",uf:"MG",lat:-19.145800,lng:-45.712000});
+municipios.push({nome:"Centenário",uf:"TO",lat:-8.961030,lng:-47.330400});
+municipios.push({nome:"Central de Minas",uf:"MG",lat:-18.761200,lng:-41.314300});
+municipios.push({nome:"Centralina",uf:"MG",lat:-18.585200,lng:-49.201400});
+municipios.push({nome:"Ceres",uf:"GO",lat:-15.306100,lng:-49.600000});
+municipios.push({nome:"Cezarina",uf:"GO",lat:-16.971800,lng:-49.775800});
+municipios.push({nome:"Chácara",uf:"MG",lat:-21.673300,lng:-43.215000});
+municipios.push({nome:"Chalé",uf:"MG",lat:-20.045300,lng:-41.689700});
+municipios.push({nome:"Chapada da Natividade",uf:"TO",lat:-11.617500,lng:-47.748600});
+municipios.push({nome:"Chapada de Areia",uf:"TO",lat:-10.141900,lng:-49.140300});
+municipios.push({nome:"Chapada do Norte",uf:"MG",lat:-17.088100,lng:-42.539200});
+municipios.push({nome:"Chapada dos Guimarães",uf:"MT",lat:-15.464300,lng:-55.749900});
+municipios.push({nome:"Chapada Gaúcha",uf:"MG",lat:-15.301400,lng:-45.611600});
+municipios.push({nome:"Chapadão do Céu",uf:"GO",lat:-18.407300,lng:-52.549000});
+municipios.push({nome:"Chapadão do Sul",uf:"MS",lat:-18.788000,lng:-52.626300});
+municipios.push({nome:"Chiador",uf:"MG",lat:-21.999600,lng:-43.061700});
+municipios.push({nome:"Cidade Ocidental",uf:"GO",lat:-16.076500,lng:-47.925200});
+municipios.push({nome:"Cipotânea",uf:"MG",lat:-20.902600,lng:-43.362900});
+municipios.push({nome:"Claraval",uf:"MG",lat:-20.397000,lng:-47.276800});
+municipios.push({nome:"Claro dos Poções",uf:"MG",lat:-17.082000,lng:-44.206100});
+municipios.push({nome:"Cláudia",uf:"MT",lat:-11.507500,lng:-54.883500});
+municipios.push({nome:"Cláudio",uf:"MG",lat:-20.443700,lng:-44.767300});
+municipios.push({nome:"Cocalinho",uf:"MT",lat:-14.390300,lng:-51.000100});
+municipios.push({nome:"Cocalzinho de Goiás",uf:"GO",lat:-15.791400,lng:-48.774700});
+municipios.push({nome:"Coimbra",uf:"MG",lat:-20.853500,lng:-42.800800});
+municipios.push({nome:"Colíder",uf:"MT",lat:-10.813500,lng:-55.461000});
+municipios.push({nome:"Colinas do Sul",uf:"GO",lat:-14.152800,lng:-48.076000});
+municipios.push({nome:"Colinas do Tocantins",uf:"TO",lat:-8.057640,lng:-48.475700});
+municipios.push({nome:"Colméia",uf:"TO",lat:-8.724630,lng:-48.763800});
+municipios.push({nome:"Colniza",uf:"MT",lat:-9.461210,lng:-59.225200});
+municipios.push({nome:"Coluna",uf:"MG",lat:-18.231100,lng:-42.835200});
+municipios.push({nome:"Combinado",uf:"TO",lat:-12.791700,lng:-46.538800});
+municipios.push({nome:"Comendador Gomes",uf:"MG",lat:-19.697300,lng:-49.078900});
+municipios.push({nome:"Comercinho",uf:"MG",lat:-16.296300,lng:-41.794500});
+municipios.push({nome:"Comodoro",uf:"MT",lat:-13.661400,lng:-59.784800});
+municipios.push({nome:"Conceição da Aparecida",uf:"MG",lat:-21.096000,lng:-46.204900});
+municipios.push({nome:"Conceição da Barra de Minas",uf:"MG",lat:-21.131600,lng:-44.472900});
+municipios.push({nome:"Conceição das Alagoas",uf:"MG",lat:-19.917200,lng:-48.383900});
+municipios.push({nome:"Conceição das Pedras",uf:"MG",lat:-22.157600,lng:-45.456200});
+municipios.push({nome:"Conceição de Ipanema",uf:"MG",lat:-19.932600,lng:-41.690800});
+municipios.push({nome:"Conceição do Mato Dentro",uf:"MG",lat:-19.034400,lng:-43.422100});
+municipios.push({nome:"Conceição do Pará",uf:"MG",lat:-19.745600,lng:-44.894500});
+municipios.push({nome:"Conceição do Rio Verde",uf:"MG",lat:-21.877800,lng:-45.087000});
+municipios.push({nome:"Conceição do Tocantins",uf:"TO",lat:-12.220900,lng:-47.295100});
+municipios.push({nome:"Conceição dos Ouros",uf:"MG",lat:-22.407800,lng:-45.799600});
+municipios.push({nome:"Cônego Marinho",uf:"MG",lat:-15.289200,lng:-44.418100});
+municipios.push({nome:"Confins",uf:"MG",lat:-19.628200,lng:-43.993100});
+municipios.push({nome:"Confresa",uf:"MT",lat:-10.643700,lng:-51.569900});
+municipios.push({nome:"Congonhal",uf:"MG",lat:-22.148800,lng:-46.043000});
+municipios.push({nome:"Congonhas",uf:"MG",lat:-20.495800,lng:-43.851000});
+municipios.push({nome:"Congonhas do Norte",uf:"MG",lat:-18.802100,lng:-43.676700});
+municipios.push({nome:"Conquista",uf:"MG",lat:-19.931200,lng:-47.549200});
+municipios.push({nome:"Conquista D Oeste",uf:"MT",lat:-14.538100,lng:-59.544400});
+municipios.push({nome:"Conselheiro Lafaiete",uf:"MG",lat:-20.663400,lng:-43.784600});
+municipios.push({nome:"Conselheiro Pena",uf:"MG",lat:-19.178900,lng:-41.473600});
+municipios.push({nome:"Consolação",uf:"MG",lat:-22.549300,lng:-45.925500});
+municipios.push({nome:"Contagem",uf:"MG",lat:-19.932100,lng:-44.053900});
+municipios.push({nome:"Coqueiral",uf:"MG",lat:-21.185800,lng:-45.436600});
+municipios.push({nome:"Coração de Jesus",uf:"MG",lat:-16.684100,lng:-44.363500});
+municipios.push({nome:"Cordisburgo",uf:"MG",lat:-19.122400,lng:-44.322400});
+municipios.push({nome:"Cordislândia",uf:"MG",lat:-21.789100,lng:-45.699900});
+municipios.push({nome:"Corguinho",uf:"MS",lat:-19.824300,lng:-54.828100});
+municipios.push({nome:"Corinto",uf:"MG",lat:-18.369000,lng:-44.454200});
+municipios.push({nome:"Coroaci",uf:"MG",lat:-18.615600,lng:-42.279100});
+municipios.push({nome:"Coromandel",uf:"MG",lat:-18.473400,lng:-47.193300});
+municipios.push({nome:"Coronel Fabriciano",uf:"MG",lat:-19.517900,lng:-42.627600});
+municipios.push({nome:"Coronel Murta",uf:"MG",lat:-16.614800,lng:-42.184000});
+municipios.push({nome:"Coronel Pacheco",uf:"MG",lat:-21.589800,lng:-43.256000});
+municipios.push({nome:"Coronel Sapucaia",uf:"MS",lat:-23.272400,lng:-55.527800});
+municipios.push({nome:"Coronel Xavier Chaves",uf:"MG",lat:-21.027700,lng:-44.220600});
+municipios.push({nome:"Córrego Danta",uf:"MG",lat:-19.819800,lng:-45.903200});
+municipios.push({nome:"Córrego do Bom Jesus",uf:"MG",lat:-22.626900,lng:-46.024100});
+municipios.push({nome:"Córrego do Ouro",uf:"GO",lat:-16.291800,lng:-50.550300});
+municipios.push({nome:"Córrego Fundo",uf:"MG",lat:-20.447400,lng:-45.561700});
+municipios.push({nome:"Córrego Novo",uf:"MG",lat:-19.836100,lng:-42.398800});
+municipios.push({nome:"Corumbá",uf:"MS",lat:-19.007700,lng:-57.651000});
+municipios.push({nome:"Corumbá de Goiás",uf:"GO",lat:-15.924500,lng:-48.811700});
+municipios.push({nome:"Corumbaíba",uf:"GO",lat:-18.141500,lng:-48.562600});
+municipios.push({nome:"Costa Rica",uf:"MS",lat:-18.543200,lng:-53.128700});
+municipios.push({nome:"Cotriguaçu",uf:"MT",lat:-9.856560,lng:-58.419200});
+municipios.push({nome:"Couto de Magalhães de Minas",uf:"MG",lat:-18.072700,lng:-43.464800});
+municipios.push({nome:"Couto Magalhães",uf:"TO",lat:-8.284110,lng:-49.247300});
+municipios.push({nome:"Coxim",uf:"MS",lat:-18.501300,lng:-54.751000});
+municipios.push({nome:"Crisólita",uf:"MG",lat:-17.238100,lng:-40.918400});
+municipios.push({nome:"Cristais",uf:"MG",lat:-20.873300,lng:-45.516700});
+municipios.push({nome:"Cristalândia",uf:"TO",lat:-10.598500,lng:-49.194200});
+municipios.push({nome:"Cristália",uf:"MG",lat:-16.716000,lng:-42.857100});
+municipios.push({nome:"Cristalina",uf:"GO",lat:-16.767600,lng:-47.613100});
+municipios.push({nome:"Cristiano Otoni",uf:"MG",lat:-20.832400,lng:-43.816600});
+municipios.push({nome:"Cristianópolis",uf:"GO",lat:-17.198700,lng:-48.703400});
+municipios.push({nome:"Cristina",uf:"MG",lat:-22.208000,lng:-45.267300});
+municipios.push({nome:"Crixás",uf:"GO",lat:-14.541200,lng:-49.974000});
+municipios.push({nome:"Crixás do Tocantins",uf:"TO",lat:-11.099400,lng:-48.915200});
+municipios.push({nome:"Cromínia",uf:"GO",lat:-17.288300,lng:-49.379800});
+municipios.push({nome:"Crucilândia",uf:"MG",lat:-20.392300,lng:-44.333400});
+municipios.push({nome:"Cruzeiro da Fortaleza",uf:"MG",lat:-18.944000,lng:-46.666900});
+municipios.push({nome:"Cruzília",uf:"MG",lat:-21.840000,lng:-44.806700});
+municipios.push({nome:"Cuiabá",uf:"MT",lat:-15.601000,lng:-56.097400});
+municipios.push({nome:"Cumari",uf:"GO",lat:-18.264400,lng:-48.151100});
+municipios.push({nome:"Cuparaque",uf:"MG",lat:-18.964800,lng:-41.098600});
+municipios.push({nome:"Curral de Dentro",uf:"MG",lat:-15.932700,lng:-41.855700});
+municipios.push({nome:"Curvelândia",uf:"MT",lat:-15.608400,lng:-57.913300});
+municipios.push({nome:"Curvelo",uf:"MG",lat:-18.752700,lng:-44.430300});
+municipios.push({nome:"Damianópolis",uf:"GO",lat:-14.560400,lng:-46.178000});
+municipios.push({nome:"Damolândia",uf:"GO",lat:-16.254400,lng:-49.363100});
+municipios.push({nome:"Darcinópolis",uf:"TO",lat:-6.715910,lng:-47.759700});
+municipios.push({nome:"Datas",uf:"MG",lat:-18.447800,lng:-43.659100});
+municipios.push({nome:"Davinópolis",uf:"GO",lat:-18.150100,lng:-47.556800});
+municipios.push({nome:"Delfim Moreira",uf:"MG",lat:-22.503600,lng:-45.279200});
+municipios.push({nome:"Delfinópolis",uf:"MG",lat:-20.346800,lng:-46.845600});
+municipios.push({nome:"Delta",uf:"MG",lat:-19.972100,lng:-47.784100});
+municipios.push({nome:"Denise",uf:"MT",lat:-14.732400,lng:-57.058300});
+municipios.push({nome:"Deodápolis",uf:"MS",lat:-22.276300,lng:-54.168200});
+municipios.push({nome:"Descoberto",uf:"MG",lat:-21.460000,lng:-42.961800});
+municipios.push({nome:"Desterro de Entre Rios",uf:"MG",lat:-20.665000,lng:-44.333400});
+municipios.push({nome:"Desterro do Melo",uf:"MG",lat:-21.143000,lng:-43.517800});
+municipios.push({nome:"Diamantina",uf:"MG",lat:-18.241300,lng:-43.603100});
+municipios.push({nome:"Diamantino",uf:"MT",lat:-14.403700,lng:-56.436600});
+municipios.push({nome:"Dianópolis",uf:"TO",lat:-11.624000,lng:-46.819800});
+municipios.push({nome:"Diogo de Vasconcelos",uf:"MG",lat:-20.487900,lng:-43.195300});
+municipios.push({nome:"Dionísio",uf:"MG",lat:-19.843300,lng:-42.770100});
+municipios.push({nome:"Diorama",uf:"GO",lat:-16.232900,lng:-51.254300});
+municipios.push({nome:"Divinésia",uf:"MG",lat:-20.991700,lng:-43.000300});
+municipios.push({nome:"Divino",uf:"MG",lat:-20.613400,lng:-42.143800});
+municipios.push({nome:"Divino das Laranjeiras",uf:"MG",lat:-18.775500,lng:-41.478100});
+municipios.push({nome:"Divinolândia de Minas",uf:"MG",lat:-18.800400,lng:-42.610300});
+municipios.push({nome:"Divinópolis",uf:"MG",lat:-20.144600,lng:-44.891200});
+municipios.push({nome:"Divinópolis de Goiás",uf:"GO",lat:-13.285300,lng:-46.399900});
+municipios.push({nome:"Divinópolis do Tocantins",uf:"TO",lat:-9.800180,lng:-49.216900});
+municipios.push({nome:"Divisa Alegre",uf:"MG",lat:-15.722100,lng:-41.346300});
+municipios.push({nome:"Divisa Nova",uf:"MG",lat:-21.509200,lng:-46.190400});
+municipios.push({nome:"Divisópolis",uf:"MG",lat:-15.725400,lng:-40.999700});
+municipios.push({nome:"Dois Irmãos do Buriti",uf:"MS",lat:-20.684800,lng:-55.291500});
+municipios.push({nome:"Dois Irmãos do Tocantins",uf:"TO",lat:-9.255340,lng:-49.063800});
+municipios.push({nome:"Dom Aquino",uf:"MT",lat:-15.809900,lng:-54.922300});
+municipios.push({nome:"Dom Bosco",uf:"MG",lat:-16.652000,lng:-46.259700});
+municipios.push({nome:"Dom Cavati",uf:"MG",lat:-19.373500,lng:-42.112100});
+municipios.push({nome:"Dom Joaquim",uf:"MG",lat:-18.961000,lng:-43.254400});
+municipios.push({nome:"Dom Silvério",uf:"MG",lat:-20.162700,lng:-42.962700});
+municipios.push({nome:"Dom Viçoso",uf:"MG",lat:-22.251100,lng:-45.164300});
+municipios.push({nome:"Dona Eusébia",uf:"MG",lat:-21.319000,lng:-42.807000});
+municipios.push({nome:"Dores de Campos",uf:"MG",lat:-21.113900,lng:-44.020700});
+municipios.push({nome:"Dores de Guanhães",uf:"MG",lat:-19.051600,lng:-42.925400});
+municipios.push({nome:"Dores do Indaiá",uf:"MG",lat:-19.462800,lng:-45.592700});
+municipios.push({nome:"Dores do Turvo",uf:"MG",lat:-20.978500,lng:-43.183400});
+municipios.push({nome:"Doresópolis",uf:"MG",lat:-20.286800,lng:-45.900700});
+municipios.push({nome:"Douradina",uf:"MS",lat:-22.040500,lng:-54.615800});
+municipios.push({nome:"Douradoquara",uf:"MG",lat:-18.433800,lng:-47.599300});
+municipios.push({nome:"Dourados",uf:"MS",lat:-22.223100,lng:-54.812000});
+municipios.push({nome:"Doverlândia",uf:"GO",lat:-16.718800,lng:-52.318900});
+municipios.push({nome:"Dueré",uf:"TO",lat:-11.341600,lng:-49.271600});
+municipios.push({nome:"Durandé",uf:"MG",lat:-20.205800,lng:-41.797700});
+municipios.push({nome:"Edealina",uf:"GO",lat:-17.423900,lng:-49.664400});
+municipios.push({nome:"Edéia",uf:"GO",lat:-17.340600,lng:-49.929500});
+municipios.push({nome:"Eldorado",uf:"MS",lat:-23.786800,lng:-54.283800});
+municipios.push({nome:"Elói Mendes",uf:"MG",lat:-21.608800,lng:-45.569100});
+municipios.push({nome:"Engenheiro Caldas",uf:"MG",lat:-19.206500,lng:-42.050300});
+municipios.push({nome:"Engenheiro Navarro",uf:"MG",lat:-17.283100,lng:-43.947000});
+municipios.push({nome:"Entre Folhas",uf:"MG",lat:-19.621800,lng:-42.230600});
+municipios.push({nome:"Entre Rios de Minas",uf:"MG",lat:-20.670600,lng:-44.065400});
+municipios.push({nome:"Ervália",uf:"MG",lat:-20.840300,lng:-42.654400});
+municipios.push({nome:"Esmeraldas",uf:"MG",lat:-19.764000,lng:-44.306500});
+municipios.push({nome:"Espera Feliz",uf:"MG",lat:-20.650800,lng:-41.911900});
+municipios.push({nome:"Esperantina",uf:"TO",lat:-5.365930,lng:-48.537800});
+municipios.push({nome:"Espinosa",uf:"MG",lat:-14.924900,lng:-42.809000});
+municipios.push({nome:"Espírito Santo do Dourado",uf:"MG",lat:-22.045400,lng:-45.954800});
+municipios.push({nome:"Estiva",uf:"MG",lat:-22.457700,lng:-46.019100});
+municipios.push({nome:"Estrela Dalva",uf:"MG",lat:-21.741200,lng:-42.457400});
+municipios.push({nome:"Estrela do Indaiá",uf:"MG",lat:-19.516900,lng:-45.785900});
+municipios.push({nome:"Estrela do Norte",uf:"GO",lat:-13.866500,lng:-49.071600});
+municipios.push({nome:"Estrela do Sul",uf:"MG",lat:-18.739900,lng:-47.695600});
+municipios.push({nome:"Eugenópolis",uf:"MG",lat:-21.100200,lng:-42.187800});
+municipios.push({nome:"Ewbank da Câmara",uf:"MG",lat:-21.549800,lng:-43.506800});
+municipios.push({nome:"Extrema",uf:"MG",lat:-22.854000,lng:-46.317800});
+municipios.push({nome:"Faina",uf:"GO",lat:-15.447300,lng:-50.362200});
+municipios.push({nome:"Fama",uf:"MG",lat:-21.408900,lng:-45.828600});
+municipios.push({nome:"Faria Lemos",uf:"MG",lat:-20.809700,lng:-42.021300});
+municipios.push({nome:"Fátima",uf:"TO",lat:-10.760300,lng:-48.907600});
+municipios.push({nome:"Fátima do Sul",uf:"MS",lat:-22.378900,lng:-54.513100});
+municipios.push({nome:"Fazenda Nova",uf:"GO",lat:-16.183400,lng:-50.778100});
+municipios.push({nome:"Felício dos Santos",uf:"MG",lat:-18.075500,lng:-43.242200});
+municipios.push({nome:"Felisburgo",uf:"MG",lat:-16.634800,lng:-40.760500});
+municipios.push({nome:"Felixlândia",uf:"MG",lat:-18.750700,lng:-44.900400});
+municipios.push({nome:"Feliz Natal",uf:"MT",lat:-12.385000,lng:-54.922700});
+municipios.push({nome:"Fernandes Tourinho",uf:"MG",lat:-19.154100,lng:-42.080300});
+municipios.push({nome:"Ferros",uf:"MG",lat:-19.234300,lng:-43.019200});
+municipios.push({nome:"Fervedouro",uf:"MG",lat:-20.726000,lng:-42.279000});
+municipios.push({nome:"Figueirão",uf:"MS",lat:-18.678200,lng:-53.638000});
+municipios.push({nome:"Figueirópolis",uf:"TO",lat:-12.131200,lng:-49.174800});
+municipios.push({nome:"Figueirópolis D Oeste",uf:"MT",lat:-15.443900,lng:-58.739100});
+municipios.push({nome:"Filadélfia",uf:"TO",lat:-7.335010,lng:-47.495400});
+municipios.push({nome:"Firminópolis",uf:"GO",lat:-16.577800,lng:-50.304000});
+municipios.push({nome:"Flores de Goiás",uf:"GO",lat:-14.445100,lng:-47.041700});
+municipios.push({nome:"Florestal",uf:"MG",lat:-19.888000,lng:-44.431800});
+municipios.push({nome:"Formiga",uf:"MG",lat:-20.461800,lng:-45.426800});
+municipios.push({nome:"Formosa",uf:"GO",lat:-15.540000,lng:-47.337000});
+municipios.push({nome:"Formoso",uf:"GO",lat:-13.649900,lng:-48.877500});
+municipios.push({nome:"Formoso",uf:"MG",lat:-14.944600,lng:-46.237100});
+municipios.push({nome:"Formoso do Araguaia",uf:"TO",lat:-11.797600,lng:-49.531600});
+municipios.push({nome:"Fortaleza de Minas",uf:"MG",lat:-20.850800,lng:-46.712000});
+municipios.push({nome:"Fortaleza do Tabocão",uf:"TO",lat:-9.056110,lng:-48.520600});
+municipios.push({nome:"Fortuna de Minas",uf:"MG",lat:-19.557800,lng:-44.447200});
+municipios.push({nome:"Francisco Badaró",uf:"MG",lat:-16.988300,lng:-42.356800});
+municipios.push({nome:"Francisco Dumont",uf:"MG",lat:-17.310700,lng:-44.231700});
+municipios.push({nome:"Francisco Sá",uf:"MG",lat:-16.482700,lng:-43.489600});
+municipios.push({nome:"Franciscópolis",uf:"MG",lat:-17.957800,lng:-42.009400});
+municipios.push({nome:"Frei Gaspar",uf:"MG",lat:-18.070900,lng:-41.432500});
+municipios.push({nome:"Frei Inocêncio",uf:"MG",lat:-18.555600,lng:-41.912100});
+municipios.push({nome:"Frei Lagonegro",uf:"MG",lat:-18.175100,lng:-42.761700});
+municipios.push({nome:"Fronteira",uf:"MG",lat:-20.274800,lng:-49.198400});
+municipios.push({nome:"Fronteira dos Vales",uf:"MG",lat:-16.889800,lng:-40.923000});
+municipios.push({nome:"Fruta de Leite",uf:"MG",lat:-16.122500,lng:-42.528800});
+municipios.push({nome:"Frutal",uf:"MG",lat:-20.025900,lng:-48.935500});
+municipios.push({nome:"Funilândia",uf:"MG",lat:-19.366100,lng:-44.061000});
+municipios.push({nome:"Galiléia",uf:"MG",lat:-19.000500,lng:-41.538700});
+municipios.push({nome:"Gameleira de Goiás",uf:"GO",lat:-16.485400,lng:-48.645400});
+municipios.push({nome:"Gameleiras",uf:"MG",lat:-15.082900,lng:-43.125000});
+municipios.push({nome:"Gaúcha do Norte",uf:"MT",lat:-13.244300,lng:-53.080900});
+municipios.push({nome:"General Carneiro",uf:"MT",lat:-15.709400,lng:-52.757400});
+municipios.push({nome:"Glaucilândia",uf:"MG",lat:-16.848100,lng:-43.692000});
+municipios.push({nome:"Glória D Oeste",uf:"MT",lat:-15.768000,lng:-58.310800});
+municipios.push({nome:"Glória de Dourados",uf:"MS",lat:-22.413600,lng:-54.233500});
+municipios.push({nome:"Goiabeira",uf:"MG",lat:-18.980700,lng:-41.223500});
+municipios.push({nome:"Goianá",uf:"MG",lat:-21.536000,lng:-43.195700});
+municipios.push({nome:"Goianápolis",uf:"GO",lat:-16.509800,lng:-49.023400});
+municipios.push({nome:"Goiandira",uf:"GO",lat:-18.135200,lng:-48.087500});
+municipios.push({nome:"Goianésia",uf:"GO",lat:-15.311800,lng:-49.116200});
+municipios.push({nome:"Goiânia",uf:"GO",lat:-16.686400,lng:-49.264300});
+municipios.push({nome:"Goianira",uf:"GO",lat:-16.494700,lng:-49.427000});
+municipios.push({nome:"Goianorte",uf:"TO",lat:-8.774130,lng:-48.931300});
+municipios.push({nome:"Goiás",uf:"GO",lat:-15.933300,lng:-50.140000});
+municipios.push({nome:"Goiatins",uf:"TO",lat:-7.714780,lng:-47.325200});
+municipios.push({nome:"Goiatuba",uf:"GO",lat:-18.010500,lng:-49.365800});
+municipios.push({nome:"Gonçalves",uf:"MG",lat:-22.654500,lng:-45.855600});
+municipios.push({nome:"Gonzaga",uf:"MG",lat:-18.819600,lng:-42.476900});
+municipios.push({nome:"Gouveia",uf:"MG",lat:-18.451900,lng:-43.742300});
+municipios.push({nome:"Gouvelândia",uf:"GO",lat:-18.623800,lng:-50.080500});
+municipios.push({nome:"Governador Valadares",uf:"MG",lat:-18.854500,lng:-41.955500});
+municipios.push({nome:"Grão Mogol",uf:"MG",lat:-16.566200,lng:-42.892300});
+municipios.push({nome:"Grupiara",uf:"MG",lat:-18.500300,lng:-47.731800});
+municipios.push({nome:"Guanhães",uf:"MG",lat:-18.771300,lng:-42.931200});
+municipios.push({nome:"Guapé",uf:"MG",lat:-20.763100,lng:-45.915200});
+municipios.push({nome:"Guapó",uf:"GO",lat:-16.829700,lng:-49.534500});
+municipios.push({nome:"Guaraciaba",uf:"MG",lat:-20.571600,lng:-43.009400});
+municipios.push({nome:"Guaraciama",uf:"MG",lat:-17.014200,lng:-43.667500});
+municipios.push({nome:"Guaraí",uf:"TO",lat:-8.835430,lng:-48.511400});
+municipios.push({nome:"Guaraíta",uf:"GO",lat:-15.612100,lng:-50.026500});
+municipios.push({nome:"Guaranésia",uf:"MG",lat:-21.300900,lng:-46.796400});
+municipios.push({nome:"Guarani",uf:"MG",lat:-21.356300,lng:-43.032800});
+municipios.push({nome:"Guarani de Goiás",uf:"GO",lat:-13.942100,lng:-46.486800});
+municipios.push({nome:"Guarantã do Norte",uf:"MT",lat:-9.962180,lng:-54.912100});
+municipios.push({nome:"Guarará",uf:"MG",lat:-21.730400,lng:-43.033400});
+municipios.push({nome:"Guarda-Mor",uf:"MG",lat:-17.767300,lng:-47.099800});
+municipios.push({nome:"Guarinos",uf:"GO",lat:-14.729200,lng:-49.700600});
+municipios.push({nome:"Guaxupé",uf:"MG",lat:-21.305000,lng:-46.708100});
+municipios.push({nome:"Guia Lopes da Laguna",uf:"MS",lat:-21.458300,lng:-56.111700});
+municipios.push({nome:"Guidoval",uf:"MG",lat:-21.155000,lng:-42.788700});
+municipios.push({nome:"Guimarânia",uf:"MG",lat:-18.842500,lng:-46.790100});
+municipios.push({nome:"Guiratinga",uf:"MT",lat:-16.346000,lng:-53.757500});
+municipios.push({nome:"Guiricema",uf:"MG",lat:-21.009800,lng:-42.720700});
+municipios.push({nome:"Gurinhatã",uf:"MG",lat:-19.214300,lng:-49.787600});
+municipios.push({nome:"Gurupi",uf:"TO",lat:-11.727900,lng:-49.068000});
+municipios.push({nome:"Heitoraí",uf:"GO",lat:-15.719000,lng:-49.826800});
+municipios.push({nome:"Heliodora",uf:"MG",lat:-22.064400,lng:-45.545300});
+municipios.push({nome:"Hidrolândia",uf:"GO",lat:-16.962600,lng:-49.226500});
+municipios.push({nome:"Hidrolina",uf:"GO",lat:-14.726100,lng:-49.463400});
+municipios.push({nome:"Iaciara",uf:"GO",lat:-14.101100,lng:-46.633500});
+municipios.push({nome:"Iapu",uf:"MG",lat:-19.438700,lng:-42.214700});
+municipios.push({nome:"Ibertioga",uf:"MG",lat:-21.433000,lng:-43.963900});
+municipios.push({nome:"Ibiá",uf:"MG",lat:-19.474900,lng:-46.547400});
+municipios.push({nome:"Ibiaí",uf:"MG",lat:-16.859100,lng:-44.904600});
+municipios.push({nome:"Ibiracatu",uf:"MG",lat:-15.660500,lng:-44.166700});
+municipios.push({nome:"Ibiraci",uf:"MG",lat:-20.461100,lng:-47.122200});
+municipios.push({nome:"Ibirité",uf:"MG",lat:-20.025200,lng:-44.056900});
+municipios.push({nome:"Ibitiúra de Minas",uf:"MG",lat:-22.060400,lng:-46.436800});
+municipios.push({nome:"Ibituruna",uf:"MG",lat:-21.154100,lng:-44.747900});
+municipios.push({nome:"Icaraí de Minas",uf:"MG",lat:-16.214000,lng:-44.903400});
+municipios.push({nome:"Igarapé",uf:"MG",lat:-20.070700,lng:-44.299400});
+municipios.push({nome:"Igaratinga",uf:"MG",lat:-19.947600,lng:-44.706300});
+municipios.push({nome:"Iguatama",uf:"MG",lat:-20.177600,lng:-45.711100});
+municipios.push({nome:"Iguatemi",uf:"MS",lat:-23.673600,lng:-54.563700});
+municipios.push({nome:"Ijaci",uf:"MG",lat:-21.173800,lng:-44.923300});
+municipios.push({nome:"Ilicínea",uf:"MG",lat:-20.940200,lng:-45.830800});
+municipios.push({nome:"Imbé de Minas",uf:"MG",lat:-19.601700,lng:-41.969500});
+municipios.push({nome:"Inaciolândia",uf:"GO",lat:-18.486900,lng:-49.988800});
+municipios.push({nome:"Inconfidentes",uf:"MG",lat:-22.313600,lng:-46.326400});
+municipios.push({nome:"Indaiabira",uf:"MG",lat:-15.491100,lng:-42.200500});
+municipios.push({nome:"Indianópolis",uf:"MG",lat:-19.034100,lng:-47.915500});
+municipios.push({nome:"Indiara",uf:"GO",lat:-17.138700,lng:-49.986200});
+municipios.push({nome:"Indiavaí",uf:"MT",lat:-15.492100,lng:-58.580200});
+municipios.push({nome:"Ingaí",uf:"MG",lat:-21.402400,lng:-44.915200});
+municipios.push({nome:"Inhapim",uf:"MG",lat:-19.547600,lng:-42.114700});
+municipios.push({nome:"Inhaúma",uf:"MG",lat:-19.489800,lng:-44.393400});
+municipios.push({nome:"Inhumas",uf:"GO",lat:-16.361100,lng:-49.500100});
+municipios.push({nome:"Inimutaba",uf:"MG",lat:-18.727100,lng:-44.358400});
+municipios.push({nome:"Inocência",uf:"MS",lat:-19.727700,lng:-51.928100});
+municipios.push({nome:"Ipaba",uf:"MG",lat:-19.415800,lng:-42.413900});
+municipios.push({nome:"Ipameri",uf:"GO",lat:-17.721500,lng:-48.158100});
+municipios.push({nome:"Ipanema",uf:"MG",lat:-19.799200,lng:-41.716400});
+municipios.push({nome:"Ipatinga",uf:"MG",lat:-19.470300,lng:-42.547600});
+municipios.push({nome:"Ipiaçu",uf:"MG",lat:-18.692700,lng:-49.943600});
+municipios.push({nome:"Ipiranga de Goiás",uf:"GO",lat:-15.168900,lng:-49.669500});
+municipios.push({nome:"Ipiranga do Norte",uf:"MT",lat:-12.240800,lng:-56.153100});
+municipios.push({nome:"Iporá",uf:"GO",lat:-16.439800,lng:-51.118000});
+municipios.push({nome:"Ipueiras",uf:"TO",lat:-11.232900,lng:-48.460000});
+municipios.push({nome:"Ipuiúna",uf:"MG",lat:-22.101300,lng:-46.191500});
+municipios.push({nome:"Iraí de Minas",uf:"MG",lat:-18.981900,lng:-47.461000});
+municipios.push({nome:"Israelândia",uf:"GO",lat:-16.314400,lng:-50.908700});
+municipios.push({nome:"Itaberaí",uf:"GO",lat:-16.020600,lng:-49.806000});
+municipios.push({nome:"Itabira",uf:"MG",lat:-19.623900,lng:-43.231200});
+municipios.push({nome:"Itabirinha",uf:"MG",lat:-18.571200,lng:-41.234000});
+municipios.push({nome:"Itabirito",uf:"MG",lat:-20.250100,lng:-43.803800});
+municipios.push({nome:"Itacajá",uf:"TO",lat:-8.392930,lng:-47.772600});
+municipios.push({nome:"Itacambira",uf:"MG",lat:-17.062500,lng:-43.306900});
+municipios.push({nome:"Itacarambi",uf:"MG",lat:-15.089000,lng:-44.095000});
+municipios.push({nome:"Itaguara",uf:"MG",lat:-20.394700,lng:-44.487500});
+municipios.push({nome:"Itaguari",uf:"GO",lat:-15.918000,lng:-49.607100});
+municipios.push({nome:"Itaguaru",uf:"GO",lat:-15.756500,lng:-49.635400});
+municipios.push({nome:"Itaguatins",uf:"TO",lat:-5.772670,lng:-47.486400});
+municipios.push({nome:"Itaipé",uf:"MG",lat:-17.401400,lng:-41.669700});
+municipios.push({nome:"Itajá",uf:"GO",lat:-19.067300,lng:-51.549500});
+municipios.push({nome:"Itajubá",uf:"MG",lat:-22.422500,lng:-45.459800});
+municipios.push({nome:"Itamarandiba",uf:"MG",lat:-17.855200,lng:-42.856100});
+municipios.push({nome:"Itamarati de Minas",uf:"MG",lat:-21.417900,lng:-42.813000});
+municipios.push({nome:"Itambacuri",uf:"MG",lat:-18.035000,lng:-41.683000});
+municipios.push({nome:"Itambé do Mato Dentro",uf:"MG",lat:-19.415800,lng:-43.318200});
+municipios.push({nome:"Itamogi",uf:"MG",lat:-21.075800,lng:-47.046000});
+municipios.push({nome:"Itamonte",uf:"MG",lat:-22.285900,lng:-44.868000});
+municipios.push({nome:"Itanhandu",uf:"MG",lat:-22.294200,lng:-44.938200});
+municipios.push({nome:"Itanhangá",uf:"MT",lat:-12.225900,lng:-56.646300});
+municipios.push({nome:"Itanhomi",uf:"MG",lat:-19.173600,lng:-41.863000});
+municipios.push({nome:"Itaobim",uf:"MG",lat:-16.557100,lng:-41.501700});
+municipios.push({nome:"Itapaci",uf:"GO",lat:-14.952200,lng:-49.551100});
+municipios.push({nome:"Itapagipe",uf:"MG",lat:-19.906200,lng:-49.378100});
+municipios.push({nome:"Itapecerica",uf:"MG",lat:-20.470400,lng:-45.127000});
+municipios.push({nome:"Itapeva",uf:"MG",lat:-22.766500,lng:-46.224100});
+municipios.push({nome:"Itapirapuã",uf:"GO",lat:-15.820500,lng:-50.609400});
+municipios.push({nome:"Itapiratins",uf:"TO",lat:-8.379820,lng:-48.107200});
+municipios.push({nome:"Itaporã",uf:"MS",lat:-22.080000,lng:-54.793400});
+municipios.push({nome:"Itaporã do Tocantins",uf:"TO",lat:-8.571720,lng:-48.689500});
+municipios.push({nome:"Itapuranga",uf:"GO",lat:-15.560600,lng:-49.949000});
+municipios.push({nome:"Itaquiraí",uf:"MS",lat:-23.477900,lng:-54.187000});
+municipios.push({nome:"Itarumã",uf:"GO",lat:-18.764600,lng:-51.348500});
+municipios.push({nome:"Itatiaiuçu",uf:"MG",lat:-20.198300,lng:-44.421100});
+municipios.push({nome:"Itaú de Minas",uf:"MG",lat:-20.737500,lng:-46.752500});
+municipios.push({nome:"Itaúba",uf:"MT",lat:-11.061400,lng:-55.276600});
+municipios.push({nome:"Itauçu",uf:"GO",lat:-16.202900,lng:-49.610900});
+municipios.push({nome:"Itaúna",uf:"MG",lat:-20.081800,lng:-44.580100});
+municipios.push({nome:"Itaverava",uf:"MG",lat:-20.676900,lng:-43.614100});
+municipios.push({nome:"Itinga",uf:"MG",lat:-16.610000,lng:-41.767200});
+municipios.push({nome:"Itiquira",uf:"MT",lat:-17.214700,lng:-54.142200});
+municipios.push({nome:"Itueta",uf:"MG",lat:-19.399900,lng:-41.174600});
+municipios.push({nome:"Ituiutaba",uf:"MG",lat:-18.977200,lng:-49.463900});
+municipios.push({nome:"Itumbiara",uf:"GO",lat:-18.409300,lng:-49.215800});
+municipios.push({nome:"Itumirim",uf:"MG",lat:-21.317100,lng:-44.872400});
+municipios.push({nome:"Iturama",uf:"MG",lat:-19.727600,lng:-50.196600});
+municipios.push({nome:"Itutinga",uf:"MG",lat:-21.300000,lng:-44.656700});
+municipios.push({nome:"Ivinhema",uf:"MS",lat:-22.304600,lng:-53.818400});
+municipios.push({nome:"Ivolândia",uf:"GO",lat:-16.599500,lng:-50.792100});
+municipios.push({nome:"Jaboticatubas",uf:"MG",lat:-19.511900,lng:-43.737300});
+municipios.push({nome:"Jaciara",uf:"MT",lat:-15.954800,lng:-54.973300});
+municipios.push({nome:"Jacinto",uf:"MG",lat:-16.142800,lng:-40.295000});
+municipios.push({nome:"Jacuí",uf:"MG",lat:-21.013700,lng:-46.735900});
+municipios.push({nome:"Jacutinga",uf:"MG",lat:-22.286000,lng:-46.616600});
+municipios.push({nome:"Jaguaraçu",uf:"MG",lat:-19.647000,lng:-42.749800});
+municipios.push({nome:"Jaíba",uf:"MG",lat:-15.343200,lng:-43.668800});
+municipios.push({nome:"Jampruca",uf:"MG",lat:-18.461000,lng:-41.809000});
+municipios.push({nome:"Janaúba",uf:"MG",lat:-15.802200,lng:-43.313200});
+municipios.push({nome:"Jandaia",uf:"GO",lat:-17.048100,lng:-50.145300});
+municipios.push({nome:"Jangada",uf:"MT",lat:-15.235000,lng:-56.491700});
+municipios.push({nome:"Januária",uf:"MG",lat:-15.480200,lng:-44.363900});
+municipios.push({nome:"Japaraíba",uf:"MG",lat:-20.144200,lng:-45.501500});
+municipios.push({nome:"Japonvar",uf:"MG",lat:-15.989100,lng:-44.275800});
+municipios.push({nome:"Japorã",uf:"MS",lat:-23.890300,lng:-54.405900});
+municipios.push({nome:"Jaraguá",uf:"GO",lat:-15.752900,lng:-49.334400});
+municipios.push({nome:"Jaraguari",uf:"MS",lat:-20.138600,lng:-54.399600});
+municipios.push({nome:"Jardim",uf:"MS",lat:-21.479900,lng:-56.148900});
+municipios.push({nome:"Jataí",uf:"GO",lat:-17.878400,lng:-51.720400});
+municipios.push({nome:"Jateí",uf:"MS",lat:-22.480600,lng:-54.307900});
+municipios.push({nome:"Jaú do Tocantins",uf:"TO",lat:-12.650900,lng:-48.589000});
+municipios.push({nome:"Jaupaci",uf:"GO",lat:-16.177300,lng:-50.950800});
+municipios.push({nome:"Jauru",uf:"MT",lat:-15.334200,lng:-58.872300});
+municipios.push({nome:"Jeceaba",uf:"MG",lat:-20.533900,lng:-43.989400});
+municipios.push({nome:"Jenipapo de Minas",uf:"MG",lat:-17.083100,lng:-42.258900});
+municipios.push({nome:"Jequeri",uf:"MG",lat:-20.454200,lng:-42.665100});
+municipios.push({nome:"Jequitaí",uf:"MG",lat:-17.229000,lng:-44.437600});
+municipios.push({nome:"Jequitibá",uf:"MG",lat:-19.234500,lng:-44.030400});
+municipios.push({nome:"Jequitinhonha",uf:"MG",lat:-16.437500,lng:-41.011700});
+municipios.push({nome:"Jesuânia",uf:"MG",lat:-21.988700,lng:-45.291100});
+municipios.push({nome:"Jesúpolis",uf:"GO",lat:-15.948400,lng:-49.373900});
+municipios.push({nome:"Joaíma",uf:"MG",lat:-16.652200,lng:-41.022900});
+municipios.push({nome:"Joanésia",uf:"MG",lat:-19.172900,lng:-42.677500});
+municipios.push({nome:"João Monlevade",uf:"MG",lat:-19.812600,lng:-43.173500});
+municipios.push({nome:"João Pinheiro",uf:"MG",lat:-17.739800,lng:-46.171500});
+municipios.push({nome:"Joaquim Felício",uf:"MG",lat:-17.758000,lng:-44.164300});
+municipios.push({nome:"Jordânia",uf:"MG",lat:-15.900900,lng:-40.184100});
+municipios.push({nome:"José Gonçalves de Minas",uf:"MG",lat:-16.905300,lng:-42.601400});
+municipios.push({nome:"José Raydan",uf:"MG",lat:-18.219500,lng:-42.494600});
+municipios.push({nome:"Josenópolis",uf:"MG",lat:-16.541700,lng:-42.515100});
+municipios.push({nome:"Joviânia",uf:"GO",lat:-17.802000,lng:-49.619700});
+municipios.push({nome:"Juara",uf:"MT",lat:-11.263900,lng:-57.524400});
+municipios.push({nome:"Juarina",uf:"TO",lat:-8.119510,lng:-49.064300});
+municipios.push({nome:"Juatuba",uf:"MG",lat:-19.944800,lng:-44.345100});
+municipios.push({nome:"Juína",uf:"MT",lat:-11.372800,lng:-58.748300});
+municipios.push({nome:"Juiz de Fora",uf:"MG",lat:-21.759500,lng:-43.339800});
+municipios.push({nome:"Juramento",uf:"MG",lat:-16.847300,lng:-43.586500});
+municipios.push({nome:"Juruaia",uf:"MG",lat:-21.249300,lng:-46.573500});
+municipios.push({nome:"Juruena",uf:"MT",lat:-10.317800,lng:-58.359200});
+municipios.push({nome:"Juscimeira",uf:"MT",lat:-16.063300,lng:-54.885900});
+municipios.push({nome:"Jussara",uf:"GO",lat:-15.865900,lng:-50.866800});
+municipios.push({nome:"Juti",uf:"MS",lat:-22.859600,lng:-54.606100});
+municipios.push({nome:"Juvenília",uf:"MG",lat:-14.266200,lng:-44.159700});
+municipios.push({nome:"Ladainha",uf:"MG",lat:-17.627900,lng:-41.748800});
+municipios.push({nome:"Ladário",uf:"MS",lat:-19.008900,lng:-57.597300});
+municipios.push({nome:"Lagamar",uf:"MG",lat:-18.175900,lng:-46.806300});
+municipios.push({nome:"Lagoa da Confusão",uf:"TO",lat:-10.790600,lng:-49.619900});
+municipios.push({nome:"Lagoa da Prata",uf:"MG",lat:-20.023700,lng:-45.540100});
+municipios.push({nome:"Lagoa do Tocantins",uf:"TO",lat:-10.368000,lng:-47.538000});
+municipios.push({nome:"Lagoa dos Patos",uf:"MG",lat:-16.978000,lng:-44.575400});
+municipios.push({nome:"Lagoa Dourada",uf:"MG",lat:-20.913900,lng:-44.079700});
+municipios.push({nome:"Lagoa Formosa",uf:"MG",lat:-18.771500,lng:-46.401200});
+municipios.push({nome:"Lagoa Grande",uf:"MG",lat:-17.832300,lng:-46.516500});
+municipios.push({nome:"Lagoa Santa",uf:"GO",lat:-19.183200,lng:-51.399800});
+municipios.push({nome:"Lagoa Santa",uf:"MG",lat:-19.639700,lng:-43.893200});
+municipios.push({nome:"Laguna Carapã",uf:"MS",lat:-22.544800,lng:-55.150200});
+municipios.push({nome:"Lajeado",uf:"TO",lat:-9.749960,lng:-48.356500});
+municipios.push({nome:"Lajinha",uf:"MG",lat:-20.153900,lng:-41.622800});
+municipios.push({nome:"Lambari",uf:"MG",lat:-21.967100,lng:-45.349800});
+municipios.push({nome:"Lambari D Oeste",uf:"MT",lat:-15.318800,lng:-58.004600});
+municipios.push({nome:"Lamim",uf:"MG",lat:-20.790000,lng:-43.470600});
+municipios.push({nome:"Laranjal",uf:"MG",lat:-21.371500,lng:-42.473200});
+municipios.push({nome:"Lassance",uf:"MG",lat:-17.887000,lng:-44.573500});
+municipios.push({nome:"Lavandeira",uf:"TO",lat:-12.784700,lng:-46.509900});
+municipios.push({nome:"Lavras",uf:"MG",lat:-21.248000,lng:-45.000900});
+municipios.push({nome:"Leandro Ferreira",uf:"MG",lat:-19.719300,lng:-45.027900});
+municipios.push({nome:"Leme do Prado",uf:"MG",lat:-17.079300,lng:-42.693600});
+municipios.push({nome:"Leopoldina",uf:"MG",lat:-21.529600,lng:-42.642100});
+municipios.push({nome:"Leopoldo de Bulhões",uf:"GO",lat:-16.619000,lng:-48.742800});
+municipios.push({nome:"Liberdade",uf:"MG",lat:-22.027500,lng:-44.320800});
+municipios.push({nome:"Lima Duarte",uf:"MG",lat:-21.838600,lng:-43.793400});
+municipios.push({nome:"Limeira do Oeste",uf:"MG",lat:-19.551200,lng:-50.581500});
+municipios.push({nome:"Lizarda",uf:"TO",lat:-9.590020,lng:-46.673800});
+municipios.push({nome:"Lontra",uf:"MG",lat:-15.901300,lng:-44.306000});
+municipios.push({nome:"Lucas do Rio Verde",uf:"MT",lat:-13.058800,lng:-55.904200});
+municipios.push({nome:"Luciara",uf:"MT",lat:-11.221900,lng:-50.667600});
+municipios.push({nome:"Luisburgo",uf:"MG",lat:-20.446800,lng:-42.097600});
+municipios.push({nome:"Luislândia",uf:"MG",lat:-16.109500,lng:-44.588600});
+municipios.push({nome:"Luminárias",uf:"MG",lat:-21.514500,lng:-44.903400});
+municipios.push({nome:"Luz",uf:"MG",lat:-19.791100,lng:-45.679400});
+municipios.push({nome:"Luziânia",uf:"GO",lat:-16.253000,lng:-47.950000});
+municipios.push({nome:"Luzinópolis",uf:"TO",lat:-6.177940,lng:-47.858200});
+municipios.push({nome:"Machacalis",uf:"MG",lat:-17.072300,lng:-40.724500});
+municipios.push({nome:"Machado",uf:"MG",lat:-21.677800,lng:-45.921900});
+municipios.push({nome:"Madre de Deus de Minas",uf:"MG",lat:-21.483000,lng:-44.328700});
+municipios.push({nome:"Mairipotaba",uf:"GO",lat:-17.297500,lng:-49.489800});
+municipios.push({nome:"Malacacheta",uf:"MG",lat:-17.845600,lng:-42.076900});
+municipios.push({nome:"Mambaí",uf:"GO",lat:-14.482300,lng:-46.116500});
+municipios.push({nome:"Mamonas",uf:"MG",lat:-15.047900,lng:-42.946900});
+municipios.push({nome:"Manga",uf:"MG",lat:-14.752900,lng:-43.939100});
+municipios.push({nome:"Manhuaçu",uf:"MG",lat:-20.257200,lng:-42.028000});
+municipios.push({nome:"Manhumirim",uf:"MG",lat:-20.359100,lng:-41.958900});
+municipios.push({nome:"Mantena",uf:"MG",lat:-18.776100,lng:-40.987400});
+municipios.push({nome:"Mar de Espanha",uf:"MG",lat:-21.870700,lng:-43.006200});
+municipios.push({nome:"Mara Rosa",uf:"GO",lat:-14.014800,lng:-49.177700});
+municipios.push({nome:"Maracaju",uf:"MS",lat:-21.610500,lng:-55.167800});
+municipios.push({nome:"Maravilhas",uf:"MG",lat:-19.507600,lng:-44.677900});
+municipios.push({nome:"Marcelândia",uf:"MT",lat:-11.046300,lng:-54.437700});
+municipios.push({nome:"Maria da Fé",uf:"MG",lat:-22.304400,lng:-45.377300});
+municipios.push({nome:"Mariana",uf:"MG",lat:-20.376500,lng:-43.414000});
+municipios.push({nome:"Marianópolis do Tocantins",uf:"TO",lat:-9.793770,lng:-49.655300});
+municipios.push({nome:"Marilac",uf:"MG",lat:-18.507900,lng:-42.082200});
+municipios.push({nome:"Mário Campos",uf:"MG",lat:-20.058200,lng:-44.188300});
+municipios.push({nome:"Maripá de Minas",uf:"MG",lat:-21.697900,lng:-42.954600});
+municipios.push({nome:"Marliéria",uf:"MG",lat:-19.709600,lng:-42.732700});
+municipios.push({nome:"Marmelópolis",uf:"MG",lat:-22.447000,lng:-45.164500});
+municipios.push({nome:"Martinho Campos",uf:"MG",lat:-19.330600,lng:-45.243400});
+municipios.push({nome:"Martins Soares",uf:"MG",lat:-20.254600,lng:-41.878600});
+municipios.push({nome:"Marzagão",uf:"GO",lat:-17.983000,lng:-48.641500});
+municipios.push({nome:"Mata Verde",uf:"MG",lat:-15.686900,lng:-40.736600});
+municipios.push({nome:"Mateiros",uf:"TO",lat:-10.546400,lng:-46.416800});
+municipios.push({nome:"Materlândia",uf:"MG",lat:-18.469900,lng:-43.057900});
+municipios.push({nome:"Mateus Leme",uf:"MG",lat:-19.979400,lng:-44.431800});
+municipios.push({nome:"Mathias Lobato",uf:"MG",lat:-18.590000,lng:-41.916600});
+municipios.push({nome:"Matias Barbosa",uf:"MG",lat:-21.869000,lng:-43.313500});
+municipios.push({nome:"Matias Cardoso",uf:"MG",lat:-14.856300,lng:-43.914600});
+municipios.push({nome:"Matipó",uf:"MG",lat:-20.287300,lng:-42.340100});
+municipios.push({nome:"Mato Verde",uf:"MG",lat:-15.394400,lng:-42.860000});
+municipios.push({nome:"Matozinhos",uf:"MG",lat:-19.554300,lng:-44.086800});
+municipios.push({nome:"Matrinchã",uf:"GO",lat:-15.434200,lng:-50.745600});
+municipios.push({nome:"Matupá",uf:"MT",lat:-10.182100,lng:-54.946700});
+municipios.push({nome:"Matutina",uf:"MG",lat:-19.217900,lng:-45.966400});
+municipios.push({nome:"Maurilândia",uf:"GO",lat:-17.971900,lng:-50.338800});
+municipios.push({nome:"Maurilândia do Tocantins",uf:"TO",lat:-5.951690,lng:-47.512500});
+municipios.push({nome:"Medeiros",uf:"MG",lat:-19.986500,lng:-46.218100});
+municipios.push({nome:"Medina",uf:"MG",lat:-16.224500,lng:-41.472800});
+municipios.push({nome:"Mendes Pimentel",uf:"MG",lat:-18.663100,lng:-41.405200});
+municipios.push({nome:"Mercês",uf:"MG",lat:-21.197600,lng:-43.333700});
+municipios.push({nome:"Mesquita",uf:"MG",lat:-19.224000,lng:-42.607900});
+municipios.push({nome:"Mimoso de Goiás",uf:"GO",lat:-15.051500,lng:-48.161100});
+municipios.push({nome:"Minaçu",uf:"GO",lat:-13.530400,lng:-48.220600});
+municipios.push({nome:"Minas Novas",uf:"MG",lat:-17.215600,lng:-42.588400});
+municipios.push({nome:"Minduri",uf:"MG",lat:-21.679700,lng:-44.605100});
+municipios.push({nome:"Mineiros",uf:"GO",lat:-17.565400,lng:-52.553700});
+municipios.push({nome:"Mirabela",uf:"MG",lat:-16.256000,lng:-44.160200});
+municipios.push({nome:"Miracema do Tocantins",uf:"TO",lat:-9.565560,lng:-48.393000});
+municipios.push({nome:"Miradouro",uf:"MG",lat:-20.889900,lng:-42.345800});
+municipios.push({nome:"Miraí",uf:"MG",lat:-21.202100,lng:-42.612200});
+municipios.push({nome:"Miranda",uf:"MS",lat:-20.235500,lng:-56.374600});
+municipios.push({nome:"Miranorte",uf:"TO",lat:-9.529070,lng:-48.592200});
+municipios.push({nome:"Mirassol d Oeste",uf:"MT",lat:-15.675900,lng:-58.095100});
+municipios.push({nome:"Miravânia",uf:"MG",lat:-14.734800,lng:-44.409200});
+municipios.push({nome:"Moeda",uf:"MG",lat:-20.339900,lng:-44.050900});
+municipios.push({nome:"Moema",uf:"MG",lat:-19.838700,lng:-45.412700});
+municipios.push({nome:"Moiporá",uf:"GO",lat:-16.543400,lng:-50.739000});
+municipios.push({nome:"Monjolos",uf:"MG",lat:-18.324500,lng:-44.118000});
+municipios.push({nome:"Monsenhor Paulo",uf:"MG",lat:-21.757900,lng:-45.539100});
+municipios.push({nome:"Montalvânia",uf:"MG",lat:-14.419700,lng:-44.371900});
+municipios.push({nome:"Monte Alegre de Goiás",uf:"GO",lat:-13.255200,lng:-46.892800});
+municipios.push({nome:"Monte Alegre de Minas",uf:"MG",lat:-18.869000,lng:-48.881000});
+municipios.push({nome:"Monte Azul",uf:"MG",lat:-15.151400,lng:-42.871800});
+municipios.push({nome:"Monte Belo",uf:"MG",lat:-21.327100,lng:-46.363500});
+municipios.push({nome:"Monte Carmelo",uf:"MG",lat:-18.730200,lng:-47.491200});
+municipios.push({nome:"Monte do Carmo",uf:"TO",lat:-10.761100,lng:-48.111400});
+municipios.push({nome:"Monte Formoso",uf:"MG",lat:-16.869100,lng:-41.247300});
+municipios.push({nome:"Monte Santo de Minas",uf:"MG",lat:-21.187300,lng:-46.975300});
+municipios.push({nome:"Monte Santo do Tocantins",uf:"TO",lat:-10.007500,lng:-48.994100});
+municipios.push({nome:"Monte Sião",uf:"MG",lat:-22.433500,lng:-46.573000});
+municipios.push({nome:"Montes Claros",uf:"MG",lat:-16.728200,lng:-43.857800});
+municipios.push({nome:"Montes Claros de Goiás",uf:"GO",lat:-16.005900,lng:-51.397900});
+municipios.push({nome:"Montezuma",uf:"MG",lat:-15.170200,lng:-42.494100});
+municipios.push({nome:"Montividiu",uf:"GO",lat:-17.443900,lng:-51.172800});
+municipios.push({nome:"Montividiu do Norte",uf:"GO",lat:-13.348500,lng:-48.685300});
+municipios.push({nome:"Morada Nova de Minas",uf:"MG",lat:-18.599800,lng:-45.358400});
+municipios.push({nome:"Morrinhos",uf:"GO",lat:-17.733400,lng:-49.105900});
+municipios.push({nome:"Morro Agudo de Goiás",uf:"GO",lat:-15.318400,lng:-50.055300});
+municipios.push({nome:"Morro da Garça",uf:"MG",lat:-18.535600,lng:-44.601000});
+municipios.push({nome:"Morro do Pilar",uf:"MG",lat:-19.223600,lng:-43.379500});
+municipios.push({nome:"Mossâmedes",uf:"GO",lat:-16.124000,lng:-50.213600});
+municipios.push({nome:"Mozarlândia",uf:"GO",lat:-14.745700,lng:-50.571300});
+municipios.push({nome:"Mundo Novo",uf:"MS",lat:-23.935500,lng:-54.281000});
+municipios.push({nome:"Mundo Novo",uf:"GO",lat:-13.772900,lng:-50.281400});
+municipios.push({nome:"Munhoz",uf:"MG",lat:-22.609200,lng:-46.362000});
+municipios.push({nome:"Muriaé",uf:"MG",lat:-21.130000,lng:-42.369300});
+municipios.push({nome:"Muricilândia",uf:"TO",lat:-7.146690,lng:-48.609100});
+municipios.push({nome:"Mutum",uf:"MG",lat:-19.812100,lng:-41.440700});
+municipios.push({nome:"Mutunópolis",uf:"GO",lat:-13.730300,lng:-49.274500});
+municipios.push({nome:"Muzambinho",uf:"MG",lat:-21.369200,lng:-46.521300});
+municipios.push({nome:"Nacip Raydan",uf:"MG",lat:-18.454400,lng:-42.248100});
+municipios.push({nome:"Nanuque",uf:"MG",lat:-17.848100,lng:-40.353300});
+municipios.push({nome:"Naque",uf:"MG",lat:-19.229100,lng:-42.331200});
+municipios.push({nome:"Natalândia",uf:"MG",lat:-16.502100,lng:-46.487400});
+municipios.push({nome:"Natércia",uf:"MG",lat:-22.115800,lng:-45.512300});
+municipios.push({nome:"Natividade",uf:"TO",lat:-11.703400,lng:-47.722300});
+municipios.push({nome:"Naviraí",uf:"MS",lat:-23.061800,lng:-54.199500});
+municipios.push({nome:"Nazaré",uf:"TO",lat:-6.374960,lng:-47.664300});
+municipios.push({nome:"Nazareno",uf:"MG",lat:-21.216800,lng:-44.613800});
+municipios.push({nome:"Nazário",uf:"GO",lat:-16.580800,lng:-49.881700});
+municipios.push({nome:"Nepomuceno",uf:"MG",lat:-21.232400,lng:-45.235000});
+municipios.push({nome:"Nerópolis",uf:"GO",lat:-16.404700,lng:-49.222700});
+municipios.push({nome:"Ninheira",uf:"MG",lat:-15.314800,lng:-41.756400});
+municipios.push({nome:"Nioaque",uf:"MS",lat:-21.141900,lng:-55.829600});
+municipios.push({nome:"Niquelândia",uf:"GO",lat:-14.466200,lng:-48.459900});
+municipios.push({nome:"Nobres",uf:"MT",lat:-14.719200,lng:-56.328400});
+municipios.push({nome:"Nortelândia",uf:"MT",lat:-14.454000,lng:-56.794500});
+municipios.push({nome:"Nossa Senhora do Livramento",uf:"MT",lat:-15.772000,lng:-56.343200});
+municipios.push({nome:"Nova Alvorada do Sul",uf:"MS",lat:-21.465700,lng:-54.382500});
+municipios.push({nome:"Nova América",uf:"GO",lat:-15.020600,lng:-49.895300});
+municipios.push({nome:"Nova Andradina",uf:"MS",lat:-22.238000,lng:-53.343700});
+municipios.push({nome:"Nova Aurora",uf:"GO",lat:-18.059700,lng:-48.255200});
+municipios.push({nome:"Nova Bandeirantes",uf:"MT",lat:-9.849770,lng:-57.813900});
+municipios.push({nome:"Nova Belém",uf:"MG",lat:-18.492500,lng:-41.110700});
+municipios.push({nome:"Nova Brasilândia",uf:"MT",lat:-14.961200,lng:-54.968500});
+municipios.push({nome:"Nova Canaã do Norte",uf:"MT",lat:-10.558000,lng:-55.953000});
+municipios.push({nome:"Nova Crixás",uf:"GO",lat:-14.095700,lng:-50.330000});
+municipios.push({nome:"Nova Era",uf:"MG",lat:-19.757700,lng:-43.033300});
+municipios.push({nome:"Nova Glória",uf:"GO",lat:-15.145000,lng:-49.573700});
+municipios.push({nome:"Nova Guarita",uf:"MT",lat:-10.312000,lng:-55.406100});
+municipios.push({nome:"Nova Iguaçu de Goiás",uf:"GO",lat:-14.286800,lng:-49.387200});
+municipios.push({nome:"Nova Lacerda",uf:"MT",lat:-14.472700,lng:-59.600100});
+municipios.push({nome:"Nova Lima",uf:"MG",lat:-19.975800,lng:-43.850900});
+municipios.push({nome:"Nova Marilândia",uf:"MT",lat:-14.356800,lng:-56.969600});
+municipios.push({nome:"Nova Maringá",uf:"MT",lat:-13.013600,lng:-57.090800});
+municipios.push({nome:"Nova Módica",uf:"MG",lat:-18.441700,lng:-41.498400});
+municipios.push({nome:"Nova Monte Verde",uf:"MT",lat:-9.999980,lng:-57.526100});
+municipios.push({nome:"Nova Mutum",uf:"MT",lat:-13.837400,lng:-56.074300});
+municipios.push({nome:"Nova Nazaré",uf:"MT",lat:-13.948600,lng:-51.800200});
+municipios.push({nome:"Nova Olímpia",uf:"MT",lat:-14.788900,lng:-57.288600});
+municipios.push({nome:"Nova Olinda",uf:"TO",lat:-7.631710,lng:-48.425200});
+municipios.push({nome:"Nova Ponte",uf:"MG",lat:-19.146100,lng:-47.677900});
+municipios.push({nome:"Nova Porteirinha",uf:"MG",lat:-15.799300,lng:-43.294100});
+municipios.push({nome:"Nova Resende",uf:"MG",lat:-21.128600,lng:-46.415700});
+municipios.push({nome:"Nova Roma",uf:"GO",lat:-13.738800,lng:-46.873400});
+municipios.push({nome:"Nova Rosalândia",uf:"TO",lat:-10.565100,lng:-48.912500});
+municipios.push({nome:"Nova Santa Helena",uf:"MT",lat:-10.865100,lng:-55.187200});
+municipios.push({nome:"Nova Serrana",uf:"MG",lat:-19.871300,lng:-44.984700});
+municipios.push({nome:"Nova Ubiratã",uf:"MT",lat:-12.983400,lng:-55.255600});
+municipios.push({nome:"Nova União",uf:"MG",lat:-19.687600,lng:-43.583000});
+municipios.push({nome:"Nova Veneza",uf:"GO",lat:-16.369500,lng:-49.316800});
+municipios.push({nome:"Nova Xavantina",uf:"MT",lat:-14.677100,lng:-52.350200});
+municipios.push({nome:"Novo Acordo",uf:"TO",lat:-9.970630,lng:-47.678500});
+municipios.push({nome:"Novo Alegre",uf:"TO",lat:-12.921700,lng:-46.571300});
+municipios.push({nome:"Novo Brasil",uf:"GO",lat:-16.031300,lng:-50.711300});
+municipios.push({nome:"Novo Cruzeiro",uf:"MG",lat:-17.465400,lng:-41.882600});
+municipios.push({nome:"Novo Gama",uf:"GO",lat:-16.059200,lng:-48.041700});
+municipios.push({nome:"Novo Horizonte do Norte",uf:"MT",lat:-11.408900,lng:-57.348800});
+municipios.push({nome:"Novo Horizonte do Sul",uf:"MS",lat:-22.669300,lng:-53.860100});
+municipios.push({nome:"Novo Jardim",uf:"TO",lat:-11.826000,lng:-46.632500});
+municipios.push({nome:"Novo Mundo",uf:"MT",lat:-9.956160,lng:-55.202900});
+municipios.push({nome:"Novo Oriente de Minas",uf:"MG",lat:-17.408900,lng:-41.219400});
+municipios.push({nome:"Novo Planalto",uf:"GO",lat:-13.242400,lng:-49.506000});
+municipios.push({nome:"Novo Santo Antônio",uf:"MT",lat:-12.287500,lng:-50.968600});
+municipios.push({nome:"Novo São Joaquim",uf:"MT",lat:-14.905400,lng:-53.019400});
+municipios.push({nome:"Novorizonte",uf:"MG",lat:-16.016200,lng:-42.404400});
+municipios.push({nome:"Olaria",uf:"MG",lat:-21.859800,lng:-43.935600});
+municipios.push({nome:"Olhos d Água",uf:"MG",lat:-17.398200,lng:-43.571900});
+municipios.push({nome:"Olímpio Noronha",uf:"MG",lat:-22.068500,lng:-45.265700});
+municipios.push({nome:"Oliveira",uf:"MG",lat:-20.698200,lng:-44.829000});
+municipios.push({nome:"Oliveira de Fátima",uf:"TO",lat:-10.707000,lng:-48.908600});
+municipios.push({nome:"Oliveira Fortes",uf:"MG",lat:-21.340100,lng:-43.449900});
+municipios.push({nome:"Onça de Pitangui",uf:"MG",lat:-19.727600,lng:-44.805800});
+municipios.push({nome:"Oratórios",uf:"MG",lat:-20.429800,lng:-42.797700});
+municipios.push({nome:"Orizânia",uf:"MG",lat:-20.514200,lng:-42.199100});
+municipios.push({nome:"Orizona",uf:"GO",lat:-17.033400,lng:-48.296400});
+municipios.push({nome:"Ouro Branco",uf:"MG",lat:-20.526300,lng:-43.696200});
+municipios.push({nome:"Ouro Fino",uf:"MG",lat:-22.277900,lng:-46.371600});
+municipios.push({nome:"Ouro Preto",uf:"MG",lat:-20.379600,lng:-43.512000});
+municipios.push({nome:"Ouro Verde de Goiás",uf:"GO",lat:-16.218100,lng:-49.194200});
+municipios.push({nome:"Ouro Verde de Minas",uf:"MG",lat:-18.071900,lng:-41.273400});
+municipios.push({nome:"Ouvidor",uf:"GO",lat:-18.227700,lng:-47.835500});
+municipios.push({nome:"Padre Bernardo",uf:"GO",lat:-15.160500,lng:-48.283300});
+municipios.push({nome:"Padre Carvalho",uf:"MG",lat:-16.364600,lng:-42.508800});
+municipios.push({nome:"Padre Paraíso",uf:"MG",lat:-17.075800,lng:-41.482100});
+municipios.push({nome:"Pai Pedro",uf:"MG",lat:-15.527100,lng:-43.070000});
+municipios.push({nome:"Paineiras",uf:"MG",lat:-18.899300,lng:-45.532100});
+municipios.push({nome:"Pains",uf:"MG",lat:-20.370500,lng:-45.662700});
+municipios.push({nome:"Paiva",uf:"MG",lat:-21.291300,lng:-43.408800});
+municipios.push({nome:"Palestina de Goiás",uf:"GO",lat:-16.739200,lng:-51.530900});
+municipios.push({nome:"Palma",uf:"MG",lat:-21.374800,lng:-42.312300});
+municipios.push({nome:"Palmas",uf:"TO",lat:-10.240000,lng:-48.355800});
+municipios.push({nome:"Palmeirante",uf:"TO",lat:-7.847860,lng:-47.924200});
+municipios.push({nome:"Palmeiras de Goiás",uf:"GO",lat:-16.804400,lng:-49.924000});
+municipios.push({nome:"Palmeiras do Tocantins",uf:"TO",lat:-6.616580,lng:-47.546400});
+municipios.push({nome:"Palmeirópolis",uf:"TO",lat:-13.044700,lng:-48.402600});
+municipios.push({nome:"Palmelo",uf:"GO",lat:-17.325800,lng:-48.426000});
+municipios.push({nome:"Palminópolis",uf:"GO",lat:-16.792400,lng:-50.165200});
+municipios.push({nome:"Palmópolis",uf:"MG",lat:-16.736400,lng:-40.429600});
+municipios.push({nome:"Panamá",uf:"GO",lat:-18.178300,lng:-49.355000});
+municipios.push({nome:"Papagaios",uf:"MG",lat:-19.441900,lng:-44.746800});
+municipios.push({nome:"Pará de Minas",uf:"MG",lat:-19.853400,lng:-44.611400});
+municipios.push({nome:"Paracatu",uf:"MG",lat:-17.225200,lng:-46.871100});
+municipios.push({nome:"Paraguaçu",uf:"MG",lat:-21.546500,lng:-45.737400});
+municipios.push({nome:"Paraíso das Águas",uf:"MS",lat:-19.021600,lng:-53.011600});
+municipios.push({nome:"Paraíso do Tocantins",uf:"TO",lat:-10.175000,lng:-48.882300});
+municipios.push({nome:"Paraisópolis",uf:"MG",lat:-22.553900,lng:-45.780300});
+municipios.push({nome:"Paranã",uf:"TO",lat:-12.616700,lng:-47.873400});
+municipios.push({nome:"Paranaíba",uf:"MS",lat:-19.674600,lng:-51.190900});
+municipios.push({nome:"Paranaiguara",uf:"GO",lat:-18.914100,lng:-50.653900});
+municipios.push({nome:"Paranaíta",uf:"MT",lat:-9.658350,lng:-56.478600});
+municipios.push({nome:"Paranatinga",uf:"MT",lat:-14.426500,lng:-54.052400});
+municipios.push({nome:"Paranhos",uf:"MS",lat:-23.891100,lng:-55.429000});
+municipios.push({nome:"Paraopeba",uf:"MG",lat:-19.273200,lng:-44.404400});
+municipios.push({nome:"Paraúna",uf:"GO",lat:-16.946300,lng:-50.448400});
+municipios.push({nome:"Passa Quatro",uf:"MG",lat:-22.387100,lng:-44.970900});
+municipios.push({nome:"Passa Tempo",uf:"MG",lat:-20.653900,lng:-44.492600});
+municipios.push({nome:"Passa-Vinte",uf:"MG",lat:-22.209700,lng:-44.234400});
+municipios.push({nome:"Passabém",uf:"MG",lat:-19.350900,lng:-43.138300});
+municipios.push({nome:"Passos",uf:"MG",lat:-20.719300,lng:-46.609000});
+municipios.push({nome:"Patis",uf:"MG",lat:-16.077300,lng:-44.078700});
+municipios.push({nome:"Patos de Minas",uf:"MG",lat:-18.569900,lng:-46.501300});
+municipios.push({nome:"Patrocínio",uf:"MG",lat:-18.937900,lng:-46.993400});
+municipios.push({nome:"Patrocínio do Muriaé",uf:"MG",lat:-21.154400,lng:-42.212500});
+municipios.push({nome:"Pau D Arco",uf:"TO",lat:-7.539190,lng:-49.367000});
+municipios.push({nome:"Paula Cândido",uf:"MG",lat:-20.875400,lng:-42.975200});
+municipios.push({nome:"Paulistas",uf:"MG",lat:-18.427600,lng:-42.862800});
+municipios.push({nome:"Pavão",uf:"MG",lat:-17.426700,lng:-41.003500});
+municipios.push({nome:"Peçanha",uf:"MG",lat:-18.544100,lng:-42.558300});
+municipios.push({nome:"Pedra Azul",uf:"MG",lat:-16.008600,lng:-41.290900});
+municipios.push({nome:"Pedra Bonita",uf:"MG",lat:-20.521900,lng:-42.330400});
+municipios.push({nome:"Pedra do Anta",uf:"MG",lat:-20.596800,lng:-42.712300});
+municipios.push({nome:"Pedra do Indaiá",uf:"MG",lat:-20.256300,lng:-45.210700});
+municipios.push({nome:"Pedra Dourada",uf:"MG",lat:-20.826600,lng:-42.151500});
+municipios.push({nome:"Pedra Preta",uf:"MT",lat:-16.624500,lng:-54.472200});
+municipios.push({nome:"Pedralva",uf:"MG",lat:-22.238600,lng:-45.465400});
+municipios.push({nome:"Pedras de Maria da Cruz",uf:"MG",lat:-15.603200,lng:-44.391000});
+municipios.push({nome:"Pedrinópolis",uf:"MG",lat:-19.224100,lng:-47.457900});
+municipios.push({nome:"Pedro Afonso",uf:"TO",lat:-8.970340,lng:-48.172900});
+municipios.push({nome:"Pedro Gomes",uf:"MS",lat:-18.099600,lng:-54.550700});
+municipios.push({nome:"Pedro Leopoldo",uf:"MG",lat:-19.630800,lng:-44.038300});
+municipios.push({nome:"Pedro Teixeira",uf:"MG",lat:-21.707600,lng:-43.743000});
+municipios.push({nome:"Peixe",uf:"TO",lat:-12.025400,lng:-48.539500});
+municipios.push({nome:"Peixoto de Azevedo",uf:"MT",lat:-10.226200,lng:-54.979400});
+municipios.push({nome:"Pequeri",uf:"MG",lat:-21.834100,lng:-43.114500});
+municipios.push({nome:"Pequi",uf:"MG",lat:-19.628400,lng:-44.660400});
+municipios.push({nome:"Pequizeiro",uf:"TO",lat:-8.593200,lng:-48.932700});
+municipios.push({nome:"Perdigão",uf:"MG",lat:-19.941100,lng:-45.078000});
+municipios.push({nome:"Perdizes",uf:"MG",lat:-19.343400,lng:-47.296300});
+municipios.push({nome:"Perdões",uf:"MG",lat:-21.093200,lng:-45.089600});
+municipios.push({nome:"Periquito",uf:"MG",lat:-19.157300,lng:-42.233300});
+municipios.push({nome:"Perolândia",uf:"GO",lat:-17.525800,lng:-52.065000});
+municipios.push({nome:"Pescador",uf:"MG",lat:-18.357000,lng:-41.600600});
+municipios.push({nome:"Petrolina de Goiás",uf:"GO",lat:-16.096800,lng:-49.336400});
+municipios.push({nome:"Piau",uf:"MG",lat:-21.509600,lng:-43.313000});
+municipios.push({nome:"Piedade de Caratinga",uf:"MG",lat:-19.759300,lng:-42.075600});
+municipios.push({nome:"Piedade de Ponte Nova",uf:"MG",lat:-20.243800,lng:-42.737900});
+municipios.push({nome:"Piedade do Rio Grande",uf:"MG",lat:-21.469000,lng:-44.193800});
+municipios.push({nome:"Piedade dos Gerais",uf:"MG",lat:-20.471500,lng:-44.224300});
+municipios.push({nome:"Pilar de Goiás",uf:"GO",lat:-14.760800,lng:-49.578400});
+municipios.push({nome:"Pimenta",uf:"MG",lat:-20.482700,lng:-45.804900});
+municipios.push({nome:"Pindorama do Tocantins",uf:"TO",lat:-11.131100,lng:-47.572600});
+municipios.push({nome:"Pingo-d Água",uf:"MG",lat:-19.728700,lng:-42.409500});
+municipios.push({nome:"Pintópolis",uf:"MG",lat:-16.057200,lng:-45.140200});
+municipios.push({nome:"Piracanjuba",uf:"GO",lat:-17.302000,lng:-49.017000});
+municipios.push({nome:"Piracema",uf:"MG",lat:-20.508900,lng:-44.478300});
+municipios.push({nome:"Pirajuba",uf:"MG",lat:-19.909200,lng:-48.702700});
+municipios.push({nome:"Piranga",uf:"MG",lat:-20.683400,lng:-43.296700});
+municipios.push({nome:"Piranguçu",uf:"MG",lat:-22.524900,lng:-45.494500});
+municipios.push({nome:"Piranguinho",uf:"MG",lat:-22.395000,lng:-45.532400});
+municipios.push({nome:"Piranhas",uf:"GO",lat:-16.425800,lng:-51.823500});
+municipios.push({nome:"Pirapetinga",uf:"MG",lat:-21.655400,lng:-42.343400});
+municipios.push({nome:"Pirapora",uf:"MG",lat:-17.339200,lng:-44.934000});
+municipios.push({nome:"Piraquê",uf:"TO",lat:-6.773020,lng:-48.295800});
+municipios.push({nome:"Piraúba",uf:"MG",lat:-21.282500,lng:-43.017200});
+municipios.push({nome:"Pirenópolis",uf:"GO",lat:-15.850700,lng:-48.958400});
+municipios.push({nome:"Pires do Rio",uf:"GO",lat:-17.301900,lng:-48.276800});
+municipios.push({nome:"Pitangui",uf:"MG",lat:-19.674100,lng:-44.896400});
+municipios.push({nome:"Pium",uf:"TO",lat:-10.442000,lng:-49.187600});
+municipios.push({nome:"Piumhi",uf:"MG",lat:-20.476200,lng:-45.958900});
+municipios.push({nome:"Planaltina",uf:"GO",lat:-15.452000,lng:-47.608900});
+municipios.push({nome:"Planalto da Serra",uf:"MT",lat:-14.651800,lng:-54.781900});
+municipios.push({nome:"Planura",uf:"MG",lat:-20.137600,lng:-48.700000});
+municipios.push({nome:"Poço Fundo",uf:"MG",lat:-21.780000,lng:-45.965800});
+municipios.push({nome:"Poconé",uf:"MT",lat:-16.266000,lng:-56.626100});
+municipios.push({nome:"Poços de Caldas",uf:"MG",lat:-21.780000,lng:-46.569200});
+municipios.push({nome:"Pocrane",uf:"MG",lat:-19.620800,lng:-41.633400});
+municipios.push({nome:"Pompéu",uf:"MG",lat:-19.225700,lng:-45.014100});
+municipios.push({nome:"Ponta Porã",uf:"MS",lat:-22.529600,lng:-55.720300});
+municipios.push({nome:"Pontal do Araguaia",uf:"MT",lat:-15.927400,lng:-52.327300});
+municipios.push({nome:"Pontalina",uf:"GO",lat:-17.522500,lng:-49.448900});
+municipios.push({nome:"Ponte Alta do Bom Jesus",uf:"TO",lat:-12.085300,lng:-46.482500});
+municipios.push({nome:"Ponte Alta do Tocantins",uf:"TO",lat:-10.748100,lng:-47.527600});
+municipios.push({nome:"Ponte Branca",uf:"MT",lat:-16.758400,lng:-52.836900});
+municipios.push({nome:"Ponte Nova",uf:"MG",lat:-20.411100,lng:-42.897800});
+municipios.push({nome:"Pontes e Lacerda",uf:"MT",lat:-15.221900,lng:-59.343500});
+municipios.push({nome:"Ponto Chique",uf:"MG",lat:-16.628200,lng:-45.058800});
+municipios.push({nome:"Ponto dos Volantes",uf:"MG",lat:-16.747300,lng:-41.502500});
+municipios.push({nome:"Porangatu",uf:"GO",lat:-13.439100,lng:-49.150300});
+municipios.push({nome:"Porteirão",uf:"GO",lat:-17.814300,lng:-50.165300});
+municipios.push({nome:"Porteirinha",uf:"MG",lat:-15.740400,lng:-43.028100});
+municipios.push({nome:"Portelândia",uf:"GO",lat:-17.355400,lng:-52.679900});
+municipios.push({nome:"Porto Alegre do Norte",uf:"MT",lat:-10.876100,lng:-51.635700});
+municipios.push({nome:"Porto Alegre do Tocantins",uf:"TO",lat:-11.618000,lng:-47.062100});
+municipios.push({nome:"Porto dos Gaúchos",uf:"MT",lat:-11.533000,lng:-57.413200});
+municipios.push({nome:"Porto Esperidião",uf:"MT",lat:-15.857000,lng:-58.461900});
+municipios.push({nome:"Porto Estrela",uf:"MT",lat:-15.323500,lng:-57.220400});
+municipios.push({nome:"Porto Firme",uf:"MG",lat:-20.664200,lng:-43.083400});
+municipios.push({nome:"Porto Murtinho",uf:"MS",lat:-21.698100,lng:-57.883600});
+municipios.push({nome:"Porto Nacional",uf:"TO",lat:-10.702700,lng:-48.408000});
+municipios.push({nome:"Posse",uf:"GO",lat:-14.085900,lng:-46.370400});
+municipios.push({nome:"Poté",uf:"MG",lat:-17.807700,lng:-41.786000});
+municipios.push({nome:"Pouso Alegre",uf:"MG",lat:-22.226600,lng:-45.938900});
+municipios.push({nome:"Pouso Alto",uf:"MG",lat:-22.196400,lng:-44.974800});
+municipios.push({nome:"Poxoréu",uf:"MT",lat:-15.829900,lng:-54.420800});
+municipios.push({nome:"Prados",uf:"MG",lat:-21.059700,lng:-44.077800});
+municipios.push({nome:"Praia Norte",uf:"TO",lat:-5.392810,lng:-47.811100});
+municipios.push({nome:"Prata",uf:"MG",lat:-19.308600,lng:-48.927600});
+municipios.push({nome:"Pratápolis",uf:"MG",lat:-20.741100,lng:-46.862400});
+municipios.push({nome:"Pratinha",uf:"MG",lat:-19.739000,lng:-46.375500});
+municipios.push({nome:"Presidente Bernardes",uf:"MG",lat:-20.765600,lng:-43.189500});
+municipios.push({nome:"Presidente Juscelino",uf:"MG",lat:-18.640100,lng:-44.060000});
+municipios.push({nome:"Presidente Kennedy",uf:"TO",lat:-8.540600,lng:-48.506200});
+municipios.push({nome:"Presidente Kubitschek",uf:"MG",lat:-18.619300,lng:-43.562800});
+municipios.push({nome:"Presidente Olegário",uf:"MG",lat:-18.409600,lng:-46.416500});
+municipios.push({nome:"Primavera do Leste",uf:"MT",lat:-15.544000,lng:-54.281100});
+municipios.push({nome:"Professor Jamil",uf:"GO",lat:-17.249700,lng:-49.244000});
+municipios.push({nome:"Prudente de Morais",uf:"MG",lat:-19.474200,lng:-44.159100});
+municipios.push({nome:"Pugmil",uf:"TO",lat:-10.424000,lng:-48.895700});
+municipios.push({nome:"Quartel Geral",uf:"MG",lat:-19.270300,lng:-45.556900});
+municipios.push({nome:"Queluzito",uf:"MG",lat:-20.741600,lng:-43.885100});
+municipios.push({nome:"Querência",uf:"MT",lat:-12.609300,lng:-52.182100});
+municipios.push({nome:"Quirinópolis",uf:"GO",lat:-18.447200,lng:-50.454700});
+municipios.push({nome:"Raposos",uf:"MG",lat:-19.963600,lng:-43.807900});
+municipios.push({nome:"Raul Soares",uf:"MG",lat:-20.106100,lng:-42.450200});
+municipios.push({nome:"Recreio",uf:"MG",lat:-21.528900,lng:-42.467600});
+municipios.push({nome:"Recursolândia",uf:"TO",lat:-8.722700,lng:-47.242100});
+municipios.push({nome:"Reduto",uf:"MG",lat:-20.240100,lng:-41.984800});
+municipios.push({nome:"Resende Costa",uf:"MG",lat:-20.917100,lng:-44.240700});
+municipios.push({nome:"Reserva do Cabaçal",uf:"MT",lat:-15.074300,lng:-58.458500});
+municipios.push({nome:"Resplendor",uf:"MG",lat:-19.319400,lng:-41.246200});
+municipios.push({nome:"Ressaquinha",uf:"MG",lat:-21.064200,lng:-43.759800});
+municipios.push({nome:"Riachinho",uf:"TO",lat:-6.440050,lng:-48.137100});
+municipios.push({nome:"Riachinho",uf:"MG",lat:-16.225800,lng:-45.988800});
+municipios.push({nome:"Riacho dos Machados",uf:"MG",lat:-16.009100,lng:-43.048800});
+municipios.push({nome:"Rialma",uf:"GO",lat:-15.314500,lng:-49.581400});
+municipios.push({nome:"Rianápolis",uf:"GO",lat:-15.445600,lng:-49.511400});
+municipios.push({nome:"Ribas do Rio Pardo",uf:"MS",lat:-20.444500,lng:-53.758800});
+municipios.push({nome:"Ribeirão Cascalheira",uf:"MT",lat:-12.936700,lng:-51.824400});
+municipios.push({nome:"Ribeirão das Neves",uf:"MG",lat:-19.762100,lng:-44.084400});
+municipios.push({nome:"Ribeirão Vermelho",uf:"MG",lat:-21.187900,lng:-45.063700});
+municipios.push({nome:"Ribeirãozinho",uf:"MT",lat:-16.485600,lng:-52.692400});
+municipios.push({nome:"Rio Acima",uf:"MG",lat:-20.087600,lng:-43.787800});
+municipios.push({nome:"Rio Branco",uf:"MT",lat:-15.248300,lng:-58.125900});
+municipios.push({nome:"Rio Brilhante",uf:"MS",lat:-21.803300,lng:-54.542700});
+municipios.push({nome:"Rio Casca",uf:"MG",lat:-20.228500,lng:-42.646200});
+municipios.push({nome:"Rio da Conceição",uf:"TO",lat:-11.394900,lng:-46.884700});
+municipios.push({nome:"Rio do Prado",uf:"MG",lat:-16.605600,lng:-40.571400});
+municipios.push({nome:"Rio Doce",uf:"MG",lat:-20.241200,lng:-42.899500});
+municipios.push({nome:"Rio dos Bois",uf:"TO",lat:-9.344250,lng:-48.524500});
+municipios.push({nome:"Rio Espera",uf:"MG",lat:-20.855000,lng:-43.472100});
+municipios.push({nome:"Rio Manso",uf:"MG",lat:-20.266600,lng:-44.306900});
+municipios.push({nome:"Rio Negro",uf:"MS",lat:-19.447000,lng:-54.985900});
+municipios.push({nome:"Rio Novo",uf:"MG",lat:-21.464900,lng:-43.116800});
+municipios.push({nome:"Rio Paranaíba",uf:"MG",lat:-19.186100,lng:-46.245500});
+municipios.push({nome:"Rio Pardo de Minas",uf:"MG",lat:-15.616000,lng:-42.540500});
+municipios.push({nome:"Rio Piracicaba",uf:"MG",lat:-19.928400,lng:-43.182900});
+municipios.push({nome:"Rio Pomba",uf:"MG",lat:-21.271200,lng:-43.169600});
+municipios.push({nome:"Rio Preto",uf:"MG",lat:-22.086100,lng:-43.829300});
+municipios.push({nome:"Rio Quente",uf:"GO",lat:-17.774000,lng:-48.772500});
+municipios.push({nome:"Rio Sono",uf:"TO",lat:-9.350020,lng:-47.888000});
+municipios.push({nome:"Rio Verde",uf:"GO",lat:-17.792300,lng:-50.919200});
+municipios.push({nome:"Rio Verde de Mato Grosso",uf:"MS",lat:-18.924900,lng:-54.843400});
+municipios.push({nome:"Rio Vermelho",uf:"MG",lat:-18.292200,lng:-43.001800});
+municipios.push({nome:"Ritápolis",uf:"MG",lat:-21.027600,lng:-44.320400});
+municipios.push({nome:"Rochedo",uf:"MS",lat:-19.956500,lng:-54.884800});
+municipios.push({nome:"Rochedo de Minas",uf:"MG",lat:-21.628400,lng:-43.016500});
+municipios.push({nome:"Rodeiro",uf:"MG",lat:-21.203500,lng:-42.858600});
+municipios.push({nome:"Romaria",uf:"MG",lat:-18.883800,lng:-47.578200});
+municipios.push({nome:"Rondolândia",uf:"MT",lat:-10.837600,lng:-61.469700});
+municipios.push({nome:"Rondonópolis",uf:"MT",lat:-16.467300,lng:-54.637200});
+municipios.push({nome:"Rosário da Limeira",uf:"MG",lat:-20.981200,lng:-42.511200});
+municipios.push({nome:"Rosário Oeste",uf:"MT",lat:-14.825900,lng:-56.423600});
+municipios.push({nome:"Rubelita",uf:"MG",lat:-16.405300,lng:-42.261000});
+municipios.push({nome:"Rubiataba",uf:"GO",lat:-15.161700,lng:-49.804800});
+municipios.push({nome:"Rubim",uf:"MG",lat:-16.377500,lng:-40.539700});
+municipios.push({nome:"Sabará",uf:"MG",lat:-19.884000,lng:-43.826300});
+municipios.push({nome:"Sabinópolis",uf:"MG",lat:-18.665300,lng:-43.075200});
+municipios.push({nome:"Sacramento",uf:"MG",lat:-19.862200,lng:-47.450800});
+municipios.push({nome:"Salinas",uf:"MG",lat:-16.175300,lng:-42.296400});
+municipios.push({nome:"Salto da Divisa",uf:"MG",lat:-16.006300,lng:-39.939100});
+municipios.push({nome:"Salto do Céu",uf:"MT",lat:-15.130300,lng:-58.131700});
+municipios.push({nome:"Sampaio",uf:"TO",lat:-5.354230,lng:-47.878200});
+municipios.push({nome:"Sanclerlândia",uf:"GO",lat:-16.197000,lng:-50.312400});
+municipios.push({nome:"Sandolândia",uf:"TO",lat:-12.538000,lng:-49.924200});
+municipios.push({nome:"Santa Bárbara",uf:"MG",lat:-19.960400,lng:-43.410100});
+municipios.push({nome:"Santa Bárbara de Goiás",uf:"GO",lat:-16.571400,lng:-49.695400});
+municipios.push({nome:"Santa Bárbara do Leste",uf:"MG",lat:-19.975300,lng:-42.145700});
+municipios.push({nome:"Santa Bárbara do Monte Verde",uf:"MG",lat:-21.959200,lng:-43.702700});
+municipios.push({nome:"Santa Bárbara do Tugúrio",uf:"MG",lat:-21.243100,lng:-43.560700});
+municipios.push({nome:"Santa Carmem",uf:"MT",lat:-11.912500,lng:-55.226300});
+municipios.push({nome:"Santa Cruz de Goiás",uf:"GO",lat:-17.315500,lng:-48.480900});
+municipios.push({nome:"Santa Cruz de Minas",uf:"MG",lat:-21.124100,lng:-44.220200});
+municipios.push({nome:"Santa Cruz de Salinas",uf:"MG",lat:-16.096700,lng:-41.741800});
+municipios.push({nome:"Santa Cruz do Escalvado",uf:"MG",lat:-20.237200,lng:-42.816900});
+municipios.push({nome:"Santa Cruz do Xingu",uf:"MT",lat:-10.153200,lng:-52.395300});
+municipios.push({nome:"Santa Efigênia de Minas",uf:"MG",lat:-18.823500,lng:-42.438800});
+municipios.push({nome:"Santa Fé de Goiás",uf:"GO",lat:-15.766400,lng:-51.103700});
+municipios.push({nome:"Santa Fé de Minas",uf:"MG",lat:-16.685900,lng:-45.410200});
+municipios.push({nome:"Santa Fé do Araguaia",uf:"TO",lat:-7.158030,lng:-48.716500});
+municipios.push({nome:"Santa Helena de Goiás",uf:"GO",lat:-17.811500,lng:-50.597700});
+municipios.push({nome:"Santa Helena de Minas",uf:"MG",lat:-16.970700,lng:-40.672700});
+municipios.push({nome:"Santa Isabel",uf:"GO",lat:-15.295800,lng:-49.425900});
+municipios.push({nome:"Santa Juliana",uf:"MG",lat:-19.310800,lng:-47.532200});
+municipios.push({nome:"Santa Luzia",uf:"MG",lat:-19.754800,lng:-43.849700});
+municipios.push({nome:"Santa Margarida",uf:"MG",lat:-20.383900,lng:-42.251900});
+municipios.push({nome:"Santa Maria de Itabira",uf:"MG",lat:-19.443100,lng:-43.106400});
+municipios.push({nome:"Santa Maria do Salto",uf:"MG",lat:-16.247900,lng:-40.151200});
+municipios.push({nome:"Santa Maria do Suaçuí",uf:"MG",lat:-18.189600,lng:-42.413900});
+municipios.push({nome:"Santa Maria do Tocantins",uf:"TO",lat:-8.804600,lng:-47.788700});
+municipios.push({nome:"Santa Rita de Caldas",uf:"MG",lat:-22.029200,lng:-46.338500});
+municipios.push({nome:"Santa Rita de Ibitipoca",uf:"MG",lat:-21.565800,lng:-43.916300});
+municipios.push({nome:"Santa Rita de Jacutinga",uf:"MG",lat:-22.147400,lng:-44.097700});
+municipios.push({nome:"Santa Rita de Minas",uf:"MG",lat:-19.876000,lng:-42.136300});
+municipios.push({nome:"Santa Rita do Araguaia",uf:"GO",lat:-17.326900,lng:-53.201200});
+municipios.push({nome:"Santa Rita do Itueto",uf:"MG",lat:-19.357600,lng:-41.382100});
+municipios.push({nome:"Santa Rita do Novo Destino",uf:"GO",lat:-15.135100,lng:-49.120300});
+municipios.push({nome:"Santa Rita do Pardo",uf:"MS",lat:-21.301600,lng:-52.833300});
+municipios.push({nome:"Santa Rita do Sapucaí",uf:"MG",lat:-22.246100,lng:-45.703400});
+municipios.push({nome:"Santa Rita do Tocantins",uf:"TO",lat:-10.861700,lng:-48.916100});
+municipios.push({nome:"Santa Rita do Trivelato",uf:"MT",lat:-13.814600,lng:-55.270600});
+municipios.push({nome:"Santa Rosa da Serra",uf:"MG",lat:-19.518600,lng:-45.961100});
+municipios.push({nome:"Santa Rosa de Goiás",uf:"GO",lat:-16.084000,lng:-49.495300});
+municipios.push({nome:"Santa Rosa do Tocantins",uf:"TO",lat:-11.447400,lng:-48.121600});
+municipios.push({nome:"Santa Tereza de Goiás",uf:"GO",lat:-13.713800,lng:-49.014400});
+municipios.push({nome:"Santa Tereza do Tocantins",uf:"TO",lat:-10.274600,lng:-47.803300});
+municipios.push({nome:"Santa Terezinha",uf:"MT",lat:-10.470400,lng:-50.514000});
+municipios.push({nome:"Santa Terezinha de Goiás",uf:"GO",lat:-14.432600,lng:-49.709100});
+municipios.push({nome:"Santa Terezinha do Tocantins",uf:"TO",lat:-6.444380,lng:-47.668400});
+municipios.push({nome:"Santa Vitória",uf:"MG",lat:-18.841400,lng:-50.120800});
+municipios.push({nome:"Santana da Vargem",uf:"MG",lat:-21.244900,lng:-45.500500});
+municipios.push({nome:"Santana de Cataguases",uf:"MG",lat:-21.289300,lng:-42.552400});
+municipios.push({nome:"Santana de Pirapama",uf:"MG",lat:-18.996200,lng:-44.040900});
+municipios.push({nome:"Santana do Deserto",uf:"MG",lat:-21.951200,lng:-43.158300});
+municipios.push({nome:"Santana do Garambéu",uf:"MG",lat:-21.598300,lng:-44.105000});
+municipios.push({nome:"Santana do Jacaré",uf:"MG",lat:-20.900700,lng:-45.128500});
+municipios.push({nome:"Santana do Manhuaçu",uf:"MG",lat:-20.103100,lng:-41.927800});
+municipios.push({nome:"Santana do Paraíso",uf:"MG",lat:-19.366100,lng:-42.544600});
+municipios.push({nome:"Santana do Riacho",uf:"MG",lat:-19.166200,lng:-43.722000});
+municipios.push({nome:"Santana dos Montes",uf:"MG",lat:-20.786800,lng:-43.694900});
+municipios.push({nome:"Santo Afonso",uf:"MT",lat:-14.494500,lng:-57.009100});
+municipios.push({nome:"Santo Antônio da Barra",uf:"GO",lat:-17.558500,lng:-50.634500});
+municipios.push({nome:"Santo Antônio de Goiás",uf:"GO",lat:-16.481500,lng:-49.309600});
+municipios.push({nome:"Santo Antônio do Amparo",uf:"MG",lat:-20.943000,lng:-44.917600});
+municipios.push({nome:"Santo Antônio do Aventureiro",uf:"MG",lat:-21.760600,lng:-42.811500});
+municipios.push({nome:"Santo Antônio do Descoberto",uf:"GO",lat:-15.941200,lng:-48.257800});
+municipios.push({nome:"Santo Antônio do Grama",uf:"MG",lat:-20.318500,lng:-42.604700});
+municipios.push({nome:"Santo Antônio do Itambé",uf:"MG",lat:-18.460900,lng:-43.300600});
+municipios.push({nome:"Santo Antônio do Jacinto",uf:"MG",lat:-16.533200,lng:-40.181700});
+municipios.push({nome:"Santo Antônio do Leste",uf:"MT",lat:-14.805000,lng:-53.607500});
+municipios.push({nome:"Santo Antônio do Leverger",uf:"MT",lat:-15.863200,lng:-56.078800});
+municipios.push({nome:"Santo Antônio do Monte",uf:"MG",lat:-20.085000,lng:-45.294700});
+municipios.push({nome:"Santo Antônio do Retiro",uf:"MG",lat:-15.339300,lng:-42.617100});
+municipios.push({nome:"Santo Antônio do Rio Abaixo",uf:"MG",lat:-19.237400,lng:-43.260400});
+municipios.push({nome:"Santo Hipólito",uf:"MG",lat:-18.296800,lng:-44.222900});
+municipios.push({nome:"Santos Dumont",uf:"MG",lat:-21.463400,lng:-43.549900});
+municipios.push({nome:"São Bento Abade",uf:"MG",lat:-21.583900,lng:-45.069900});
+municipios.push({nome:"São Bento do Tocantins",uf:"TO",lat:-6.025800,lng:-47.901200});
+municipios.push({nome:"São Brás do Suaçuí",uf:"MG",lat:-20.624200,lng:-43.951500});
+municipios.push({nome:"São Domingos",uf:"GO",lat:-13.621000,lng:-46.741500});
+municipios.push({nome:"São Domingos das Dores",uf:"MG",lat:-19.524600,lng:-42.010600});
+municipios.push({nome:"São Domingos do Prata",uf:"MG",lat:-19.867800,lng:-42.971000});
+municipios.push({nome:"São Félix de Minas",uf:"MG",lat:-18.595900,lng:-41.488900});
+municipios.push({nome:"São Félix do Araguaia",uf:"MT",lat:-11.615000,lng:-50.670600});
+municipios.push({nome:"São Félix do Tocantins",uf:"TO",lat:-10.161500,lng:-46.661800});
+municipios.push({nome:"São Francisco",uf:"MG",lat:-15.951400,lng:-44.859300});
+municipios.push({nome:"São Francisco de Goiás",uf:"GO",lat:-15.925600,lng:-49.260500});
+municipios.push({nome:"São Francisco de Paula",uf:"MG",lat:-20.703600,lng:-44.983800});
+municipios.push({nome:"São Francisco de Sales",uf:"MG",lat:-19.861100,lng:-49.772700});
+municipios.push({nome:"São Francisco do Glória",uf:"MG",lat:-20.792300,lng:-42.267300});
+municipios.push({nome:"São Gabriel do Oeste",uf:"MS",lat:-19.388900,lng:-54.550700});
+municipios.push({nome:"São Geraldo",uf:"MG",lat:-20.925200,lng:-42.836400});
+municipios.push({nome:"São Geraldo da Piedade",uf:"MG",lat:-18.841100,lng:-42.286700});
+municipios.push({nome:"São Geraldo do Baixio",uf:"MG",lat:-18.909700,lng:-41.363000});
+municipios.push({nome:"São Gonçalo do Abaeté",uf:"MG",lat:-18.331500,lng:-45.826500});
+municipios.push({nome:"São Gonçalo do Pará",uf:"MG",lat:-19.982200,lng:-44.859300});
+municipios.push({nome:"São Gonçalo do Rio Abaixo",uf:"MG",lat:-19.822100,lng:-43.366000});
+municipios.push({nome:"São Gonçalo do Rio Preto",uf:"MG",lat:-18.002500,lng:-43.385400});
+municipios.push({nome:"São Gonçalo do Sapucaí",uf:"MG",lat:-21.893200,lng:-45.589300});
+municipios.push({nome:"São Gotardo",uf:"MG",lat:-19.308700,lng:-46.046500});
+municipios.push({nome:"São João Batista do Glória",uf:"MG",lat:-20.635000,lng:-46.508000});
+municipios.push({nome:"São João d Aliança",uf:"GO",lat:-14.704800,lng:-47.522800});
+municipios.push({nome:"São João da Lagoa",uf:"MG",lat:-16.845500,lng:-44.350700});
+municipios.push({nome:"São João da Mata",uf:"MG",lat:-21.928000,lng:-45.929700});
+municipios.push({nome:"São João da Paraúna",uf:"GO",lat:-16.812600,lng:-50.409200});
+municipios.push({nome:"São João da Ponte",uf:"MG",lat:-15.927100,lng:-44.009600});
+municipios.push({nome:"São João das Missões",uf:"MG",lat:-14.885900,lng:-44.092200});
+municipios.push({nome:"São João del Rei",uf:"MG",lat:-21.131100,lng:-44.252600});
+municipios.push({nome:"São João do Manhuaçu",uf:"MG",lat:-20.393300,lng:-42.153300});
+municipios.push({nome:"São João do Manteninha",uf:"MG",lat:-18.723000,lng:-41.162800});
+municipios.push({nome:"São João do Oriente",uf:"MG",lat:-19.338400,lng:-42.157500});
+municipios.push({nome:"São João do Pacuí",uf:"MG",lat:-16.537300,lng:-44.513400});
+municipios.push({nome:"São João do Paraíso",uf:"MG",lat:-15.316800,lng:-42.021300});
+municipios.push({nome:"São João Evangelista",uf:"MG",lat:-18.548000,lng:-42.765500});
+municipios.push({nome:"São João Nepomuceno",uf:"MG",lat:-21.538100,lng:-43.006900});
+municipios.push({nome:"São Joaquim de Bicas",uf:"MG",lat:-20.048000,lng:-44.274900});
+municipios.push({nome:"São José da Barra",uf:"MG",lat:-20.717800,lng:-46.313000});
+municipios.push({nome:"São José da Lapa",uf:"MG",lat:-19.697100,lng:-43.958600});
+municipios.push({nome:"São José da Safira",uf:"MG",lat:-18.324300,lng:-42.143100});
+municipios.push({nome:"São José da Varginha",uf:"MG",lat:-19.700600,lng:-44.556000});
+municipios.push({nome:"São José do Alegre",uf:"MG",lat:-22.324300,lng:-45.525800});
+municipios.push({nome:"São José do Divino",uf:"MG",lat:-18.479300,lng:-41.390700});
+municipios.push({nome:"São José do Goiabal",uf:"MG",lat:-19.921400,lng:-42.703500});
+municipios.push({nome:"São José do Jacuri",uf:"MG",lat:-18.281000,lng:-42.672900});
+municipios.push({nome:"São José do Mantimento",uf:"MG",lat:-20.005800,lng:-41.748600});
+municipios.push({nome:"São José do Povo",uf:"MT",lat:-16.454900,lng:-54.248700});
+municipios.push({nome:"São José do Rio Claro",uf:"MT",lat:-13.439800,lng:-56.721800});
+municipios.push({nome:"São José do Xingu",uf:"MT",lat:-10.798200,lng:-52.748600});
+municipios.push({nome:"São José dos Quatro Marcos",uf:"MT",lat:-15.627600,lng:-58.177200});
+municipios.push({nome:"São Lourenço",uf:"MG",lat:-22.116600,lng:-45.050600});
+municipios.push({nome:"São Luís de Montes Belos",uf:"GO",lat:-16.521100,lng:-50.372600});
+municipios.push({nome:"São Luiz do Norte",uf:"GO",lat:-14.860800,lng:-49.328500});
+municipios.push({nome:"São Miguel do Anta",uf:"MG",lat:-20.706700,lng:-42.717400});
+municipios.push({nome:"São Miguel do Araguaia",uf:"GO",lat:-13.273100,lng:-50.163400});
+municipios.push({nome:"São Miguel do Passa Quatro",uf:"GO",lat:-17.058200,lng:-48.662000});
+municipios.push({nome:"São Miguel do Tocantins",uf:"TO",lat:-5.563050,lng:-47.574300});
+municipios.push({nome:"São Patrício",uf:"GO",lat:-15.350000,lng:-49.818000});
+municipios.push({nome:"São Pedro da Cipa",uf:"MT",lat:-16.010900,lng:-54.917600});
+municipios.push({nome:"São Pedro da União",uf:"MG",lat:-21.131000,lng:-46.612300});
+municipios.push({nome:"São Pedro do Suaçuí",uf:"MG",lat:-18.360900,lng:-42.598100});
+municipios.push({nome:"São Pedro dos Ferros",uf:"MG",lat:-20.173200,lng:-42.525100});
+municipios.push({nome:"São Romão",uf:"MG",lat:-16.364100,lng:-45.074900});
+municipios.push({nome:"São Roque de Minas",uf:"MG",lat:-20.249000,lng:-46.363900});
+municipios.push({nome:"São Salvador do Tocantins",uf:"TO",lat:-12.745800,lng:-48.235200});
+municipios.push({nome:"São Sebastião da Bela Vista",uf:"MG",lat:-22.158300,lng:-45.754600});
+municipios.push({nome:"São Sebastião da Vargem Alegre",uf:"MG",lat:-19.747700,lng:-43.367900});
+municipios.push({nome:"São Sebastião do Anta",uf:"MG",lat:-19.506400,lng:-41.985000});
+municipios.push({nome:"São Sebastião do Maranhão",uf:"MG",lat:-18.087300,lng:-42.565900});
+municipios.push({nome:"São Sebastião do Oeste",uf:"MG",lat:-20.275800,lng:-45.006300});
+municipios.push({nome:"São Sebastião do Paraíso",uf:"MG",lat:-20.916700,lng:-46.983700});
+municipios.push({nome:"São Sebastião do Rio Preto",uf:"MG",lat:-19.295900,lng:-43.175700});
+municipios.push({nome:"São Sebastião do Rio Verde",uf:"MG",lat:-22.218300,lng:-44.976100});
+municipios.push({nome:"São Sebastião do Tocantins",uf:"TO",lat:-5.261310,lng:-48.202100});
+municipios.push({nome:"São Simão",uf:"GO",lat:-18.996000,lng:-50.547000});
+municipios.push({nome:"São Thomé das Letras",uf:"MG",lat:-21.721800,lng:-44.984900});
+municipios.push({nome:"São Tiago",uf:"MG",lat:-20.907500,lng:-44.509800});
+municipios.push({nome:"São Tomás de Aquino",uf:"MG",lat:-20.779100,lng:-47.096200});
+municipios.push({nome:"São Valério",uf:"TO",lat:-11.974300,lng:-48.235300});
+municipios.push({nome:"São Vicente de Minas",uf:"MG",lat:-21.704200,lng:-44.443100});
+municipios.push({nome:"Sapezal",uf:"MT",lat:-12.989200,lng:-58.764500});
+municipios.push({nome:"Sapucaí-Mirim",uf:"MG",lat:-22.740900,lng:-45.738000});
+municipios.push({nome:"Sardoá",uf:"MG",lat:-18.782800,lng:-42.362900});
+municipios.push({nome:"Sarzedo",uf:"MG",lat:-20.036700,lng:-44.144600});
+municipios.push({nome:"Selvíria",uf:"MS",lat:-20.363700,lng:-51.419200});
+municipios.push({nome:"Sem-Peixe",uf:"MG",lat:-20.100800,lng:-42.848300});
+municipios.push({nome:"Senador Amaral",uf:"MG",lat:-22.586900,lng:-46.176300});
+municipios.push({nome:"Senador Canedo",uf:"GO",lat:-16.708400,lng:-49.091400});
+municipios.push({nome:"Senador Cortes",uf:"MG",lat:-21.798600,lng:-42.942400});
+municipios.push({nome:"Senador Firmino",uf:"MG",lat:-20.915800,lng:-43.090400});
+municipios.push({nome:"Senador José Bento",uf:"MG",lat:-22.163300,lng:-46.179200});
+municipios.push({nome:"Senador Modestino Gonçalves",uf:"MG",lat:-17.946500,lng:-43.217200});
+municipios.push({nome:"Senhora de Oliveira",uf:"MG",lat:-20.797200,lng:-43.339400});
+municipios.push({nome:"Senhora do Porto",uf:"MG",lat:-18.890900,lng:-43.079900});
+municipios.push({nome:"Senhora dos Remédios",uf:"MG",lat:-21.035100,lng:-43.581200});
+municipios.push({nome:"Sericita",uf:"MG",lat:-20.474800,lng:-42.482800});
+municipios.push({nome:"Seritinga",uf:"MG",lat:-21.913400,lng:-44.518000});
+municipios.push({nome:"Serra Azul de Minas",uf:"MG",lat:-18.360200,lng:-43.167500});
+municipios.push({nome:"Serra da Saudade",uf:"MG",lat:-19.444700,lng:-45.795000});
+municipios.push({nome:"Serra do Salitre",uf:"MG",lat:-19.108300,lng:-46.696100});
+municipios.push({nome:"Serra dos Aimorés",uf:"MG",lat:-17.787200,lng:-40.245300});
+municipios.push({nome:"Serra Nova Dourada",uf:"MT",lat:-12.089600,lng:-51.402500});
+municipios.push({nome:"Serrania",uf:"MG",lat:-21.544100,lng:-46.041700});
+municipios.push({nome:"Serranópolis",uf:"GO",lat:-18.306700,lng:-51.958600});
+municipios.push({nome:"Serranópolis de Minas",uf:"MG",lat:-15.817600,lng:-42.873200});
+municipios.push({nome:"Serranos",uf:"MG",lat:-21.885700,lng:-44.512500});
+municipios.push({nome:"Serro",uf:"MG",lat:-18.599100,lng:-43.374400});
+municipios.push({nome:"Sete Lagoas",uf:"MG",lat:-19.456900,lng:-44.241300});
+municipios.push({nome:"Sete Quedas",uf:"MS",lat:-23.970500,lng:-55.039800});
+municipios.push({nome:"Setubinha",uf:"MG",lat:-17.600200,lng:-42.158700});
+municipios.push({nome:"Sidrolândia",uf:"MS",lat:-20.930200,lng:-54.969200});
+municipios.push({nome:"Silvânia",uf:"GO",lat:-16.660000,lng:-48.608300});
+municipios.push({nome:"Silvanópolis",uf:"TO",lat:-11.147100,lng:-48.169400});
+municipios.push({nome:"Silveirânia",uf:"MG",lat:-21.161500,lng:-43.212800});
+municipios.push({nome:"Silvianópolis",uf:"MG",lat:-22.027400,lng:-45.838500});
+municipios.push({nome:"Simão Pereira",uf:"MG",lat:-21.964000,lng:-43.308800});
+municipios.push({nome:"Simolândia",uf:"GO",lat:-14.464400,lng:-46.484700});
+municipios.push({nome:"Simonésia",uf:"MG",lat:-20.134100,lng:-42.009100});
+municipios.push({nome:"Sinop",uf:"MT",lat:-11.860400,lng:-55.509100});
+municipios.push({nome:"Sítio d Abadia",uf:"GO",lat:-14.799200,lng:-46.250600});
+municipios.push({nome:"Sítio Novo do Tocantins",uf:"TO",lat:-5.601200,lng:-47.638100});
+municipios.push({nome:"Sobrália",uf:"MG",lat:-19.234500,lng:-42.099800});
+municipios.push({nome:"Soledade de Minas",uf:"MG",lat:-22.055400,lng:-45.046400});
+municipios.push({nome:"Sonora",uf:"MS",lat:-17.569800,lng:-54.755100});
+municipios.push({nome:"Sorriso",uf:"MT",lat:-12.542500,lng:-55.721100});
+municipios.push({nome:"Sucupira",uf:"TO",lat:-11.993000,lng:-48.968500});
+municipios.push({nome:"Tabaporã",uf:"MT",lat:-11.300700,lng:-56.831200});
+municipios.push({nome:"Tabuleiro",uf:"MG",lat:-21.363200,lng:-43.238100});
+municipios.push({nome:"Tacuru",uf:"MS",lat:-23.636000,lng:-55.014100});
+municipios.push({nome:"Taguatinga",uf:"TO",lat:-12.402600,lng:-46.437000});
+municipios.push({nome:"Taiobeiras",uf:"MG",lat:-15.810600,lng:-42.225900});
+municipios.push({nome:"Taipas do Tocantins",uf:"TO",lat:-12.187300,lng:-46.979700});
+municipios.push({nome:"Talismã",uf:"TO",lat:-12.794900,lng:-49.089600});
+municipios.push({nome:"Tangará da Serra",uf:"MT",lat:-14.622900,lng:-57.493300});
+municipios.push({nome:"Taparuba",uf:"MG",lat:-19.762100,lng:-41.608000});
+municipios.push({nome:"Tapira",uf:"MG",lat:-19.916600,lng:-46.826400});
+municipios.push({nome:"Tapiraí",uf:"MG",lat:-19.893600,lng:-46.022100});
+municipios.push({nome:"Tapurah",uf:"MT",lat:-12.695000,lng:-56.517800});
+municipios.push({nome:"Taquaraçu de Minas",uf:"MG",lat:-19.665200,lng:-43.692200});
+municipios.push({nome:"Taquaral de Goiás",uf:"GO",lat:-16.052100,lng:-49.603900});
+municipios.push({nome:"Taquarussu",uf:"MS",lat:-22.489800,lng:-53.351900});
+municipios.push({nome:"Tarumirim",uf:"MG",lat:-19.283500,lng:-42.009700});
+municipios.push({nome:"Teixeiras",uf:"MG",lat:-20.656100,lng:-42.856400});
+municipios.push({nome:"Teófilo Otoni",uf:"MG",lat:-17.859500,lng:-41.508700});
+municipios.push({nome:"Terenos",uf:"MS",lat:-20.437800,lng:-54.864700});
+municipios.push({nome:"Teresina de Goiás",uf:"GO",lat:-13.780100,lng:-47.265900});
+municipios.push({nome:"Terezópolis de Goiás",uf:"GO",lat:-16.394500,lng:-49.079700});
+municipios.push({nome:"Terra Nova do Norte",uf:"MT",lat:-10.517000,lng:-55.231000});
+municipios.push({nome:"Tesouro",uf:"MT",lat:-16.080900,lng:-53.559000});
+municipios.push({nome:"Timóteo",uf:"MG",lat:-19.581100,lng:-42.647100});
+municipios.push({nome:"Tiradentes",uf:"MG",lat:-21.110200,lng:-44.174400});
+municipios.push({nome:"Tiros",uf:"MG",lat:-19.003700,lng:-45.962600});
+municipios.push({nome:"Tocantínia",uf:"TO",lat:-9.563200,lng:-48.374100});
+municipios.push({nome:"Tocantinópolis",uf:"TO",lat:-6.324470,lng:-47.422400});
+municipios.push({nome:"Tocantins",uf:"MG",lat:-21.177400,lng:-43.012700});
+municipios.push({nome:"Tocos do Moji",uf:"MG",lat:-22.369800,lng:-46.097100});
+municipios.push({nome:"Toledo",uf:"MG",lat:-22.742100,lng:-46.372800});
+municipios.push({nome:"Tombos",uf:"MG",lat:-20.908600,lng:-42.022800});
+municipios.push({nome:"Torixoréu",uf:"MT",lat:-16.200600,lng:-52.557100});
+municipios.push({nome:"Três Corações",uf:"MG",lat:-21.692100,lng:-45.251100});
+municipios.push({nome:"Três Lagoas",uf:"MS",lat:-20.784900,lng:-51.700700});
+municipios.push({nome:"Três Marias",uf:"MG",lat:-18.204800,lng:-45.247300});
+municipios.push({nome:"Três Pontas",uf:"MG",lat:-21.369400,lng:-45.510900});
+municipios.push({nome:"Três Ranchos",uf:"GO",lat:-18.353900,lng:-47.776000});
+municipios.push({nome:"Trindade",uf:"GO",lat:-16.651700,lng:-49.492700});
+municipios.push({nome:"Trombas",uf:"GO",lat:-13.507900,lng:-48.741700});
+municipios.push({nome:"Tumiritinga",uf:"MG",lat:-18.984400,lng:-41.652700});
+municipios.push({nome:"Tupaciguara",uf:"MG",lat:-18.586600,lng:-48.698500});
+municipios.push({nome:"Tupirama",uf:"TO",lat:-8.971680,lng:-48.188300});
+municipios.push({nome:"Tupiratins",uf:"TO",lat:-8.393880,lng:-48.127700});
+municipios.push({nome:"Turmalina",uf:"MG",lat:-17.282800,lng:-42.728500});
+municipios.push({nome:"Turvânia",uf:"GO",lat:-16.612500,lng:-50.136900});
+municipios.push({nome:"Turvelândia",uf:"GO",lat:-17.850200,lng:-50.302400});
+municipios.push({nome:"Turvolândia",uf:"MG",lat:-21.873300,lng:-45.785900});
+municipios.push({nome:"Ubá",uf:"MG",lat:-21.120400,lng:-42.935900});
+municipios.push({nome:"Ubaí",uf:"MG",lat:-16.288500,lng:-44.778300});
+municipios.push({nome:"Ubaporanga",uf:"MG",lat:-19.635100,lng:-42.105900});
+municipios.push({nome:"Uberaba",uf:"MG",lat:-19.747200,lng:-47.938100});
+municipios.push({nome:"Uberlândia",uf:"MG",lat:-18.914100,lng:-48.274900});
+municipios.push({nome:"Uirapuru",uf:"GO",lat:-14.283500,lng:-49.920100});
+municipios.push({nome:"Umburatiba",uf:"MG",lat:-17.254800,lng:-40.577900});
+municipios.push({nome:"Unaí",uf:"MG",lat:-16.359200,lng:-46.902200});
+municipios.push({nome:"União de Minas",uf:"MG",lat:-19.529900,lng:-50.338000});
+municipios.push({nome:"União do Sul",uf:"MT",lat:-11.530800,lng:-54.361600});
+municipios.push({nome:"Uruaçu",uf:"GO",lat:-14.523800,lng:-49.139600});
+municipios.push({nome:"Uruana",uf:"GO",lat:-15.499300,lng:-49.686100});
+municipios.push({nome:"Uruana de Minas",uf:"MG",lat:-16.063400,lng:-46.244300});
+municipios.push({nome:"Urucânia",uf:"MG",lat:-20.352100,lng:-42.737000});
+municipios.push({nome:"Urucuia",uf:"MG",lat:-16.124400,lng:-45.735200});
+municipios.push({nome:"Urutaí",uf:"GO",lat:-17.465100,lng:-48.201500});
+municipios.push({nome:"Vale de São Domingos",uf:"MT",lat:-15.286000,lng:-59.068300});
+municipios.push({nome:"Valparaíso de Goiás",uf:"GO",lat:-16.065100,lng:-47.975700});
+municipios.push({nome:"Vargem Alegre",uf:"MG",lat:-19.598800,lng:-42.294900});
+municipios.push({nome:"Vargem Bonita",uf:"MG",lat:-20.333300,lng:-46.368800});
+municipios.push({nome:"Vargem Grande do Rio Pardo",uf:"MG",lat:-15.398700,lng:-42.308500});
+municipios.push({nome:"Varginha",uf:"MG",lat:-21.555600,lng:-45.436400});
+municipios.push({nome:"Varjão",uf:"GO",lat:-17.047100,lng:-49.631200});
+municipios.push({nome:"Varjão de Minas",uf:"MG",lat:-18.374100,lng:-46.031300});
+municipios.push({nome:"Várzea da Palma",uf:"MG",lat:-17.594400,lng:-44.722600});
+municipios.push({nome:"Várzea Grande",uf:"MT",lat:-15.645800,lng:-56.132200});
+municipios.push({nome:"Varzelândia",uf:"MG",lat:-15.699200,lng:-44.027800});
+municipios.push({nome:"Vazante",uf:"MG",lat:-17.982700,lng:-46.908800});
+municipios.push({nome:"Vera",uf:"MT",lat:-12.301700,lng:-55.304500});
+municipios.push({nome:"Verdelândia",uf:"MG",lat:-15.584500,lng:-43.612100});
+municipios.push({nome:"Veredinha",uf:"MG",lat:-17.397400,lng:-42.730700});
+municipios.push({nome:"Veríssimo",uf:"MG",lat:-19.665700,lng:-48.311800});
+municipios.push({nome:"Vermelho Novo",uf:"MG",lat:-20.040600,lng:-42.268800});
+municipios.push({nome:"Vespasiano",uf:"MG",lat:-19.688300,lng:-43.923900});
+municipios.push({nome:"Vianópolis",uf:"GO",lat:-16.740500,lng:-48.515900});
+municipios.push({nome:"Vicentina",uf:"MS",lat:-22.409800,lng:-54.441500});
+municipios.push({nome:"Vicentinópolis",uf:"GO",lat:-17.732200,lng:-49.804700});
+municipios.push({nome:"Viçosa",uf:"MG",lat:-20.755900,lng:-42.874200});
+municipios.push({nome:"Vieiras",uf:"MG",lat:-20.867000,lng:-42.240100});
+municipios.push({nome:"Vila Bela da Santíssima Trindade",uf:"MT",lat:-15.006800,lng:-59.950400});
+municipios.push({nome:"Vila Boa",uf:"GO",lat:-15.038700,lng:-47.052000});
+municipios.push({nome:"Vila Propício",uf:"GO",lat:-15.454200,lng:-48.881900});
+municipios.push({nome:"Vila Rica",uf:"MT",lat:-10.013700,lng:-51.118600});
+municipios.push({nome:"Virgem da Lapa",uf:"MG",lat:-16.807000,lng:-42.343100});
+municipios.push({nome:"Virgínia",uf:"MG",lat:-22.326400,lng:-45.096500});
+municipios.push({nome:"Virginópolis",uf:"MG",lat:-18.815400,lng:-42.701500});
+municipios.push({nome:"Virgolândia",uf:"MG",lat:-18.473800,lng:-42.306700});
+municipios.push({nome:"Visconde do Rio Branco",uf:"MG",lat:-21.012700,lng:-42.836100});
+municipios.push({nome:"Volta Grande",uf:"MG",lat:-21.767100,lng:-42.537500});
+municipios.push({nome:"Wanderlândia",uf:"TO",lat:-6.852740,lng:-47.960100});
+municipios.push({nome:"Wenceslau Braz",uf:"MG",lat:-22.536800,lng:-45.362600});
+municipios.push({nome:"Xambioá",uf:"TO",lat:-6.414100,lng:-48.532000});
 var marker0 = L.marker([-15.755926, -48.264845], {icon: marcadorAzul}).addTo(map)
-.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Águas Lindas</h3><hr><b>Vendedora:</b> Jéssica<br><b>Cidade:</b> Águas Lindas - GO<br><b>Contato:</b> 62 9508-0037<br><b>CEPMG:</b> CEPMG Águas Lindas<br><b>Endereço:</b><br>Avenida 02 Qd 31 Lt 1B Conjunto A Sala 2 Setor 2 Parque da Barragem</div>`);
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Águas Lindas</h3><hr><b>Vendedora:</b> Jéssica teste<br><b>Cidade:</b> Águas Lindas - GO<br><b>Contato:</b> 62 9508-0037<br><b>CEPMG:</b> CEPMG Águas Lindas<br><b>Endereço:</b><br>Avenida 02 Qd 31 Lt 1B Conjunto A Sala 2 Setor 2 Parque da Barragem</div>`);
 marcadores.push({
     nome: 'Águas Lindas',
     cidade: 'Águas Lindas',
     estado: 'GO',
     cepmg: 'CEPMG Águas Lindas',
+lat: -15.755926,
+lng: -48.264845,
     marker: marker0
 });
 var marker1 = L.marker([-16.081361, -48.509590], {icon: marcadorAzul}).addTo(map)
@@ -187,6 +1652,8 @@ marcadores.push({
     cidade: 'Alexânia',
     estado: 'GO',
     cepmg: 'CEPMG 13 de Maio',
+lat: -16.081361,
+lng: -48.509590,
     marker: marker1
 });
 var marker2 = L.marker([-16.463416, -49.953666], {icon: marcadorAzul}).addTo(map)
@@ -196,6 +1663,8 @@ marcadores.push({
     cidade: 'Anicuns',
     estado: 'GO',
     cepmg: 'CEPMG Rosa Turisco de Araújo',
+lat: -16.463416,
+lng: -49.953666,
     marker: marker2
 });
 var marker3 = L.marker([-16.304258, -48.946029], {icon: marcadorAzul}).addTo(map)
@@ -205,6 +1674,8 @@ marcadores.push({
     cidade: 'Anápolis',
     estado: 'GO',
     cepmg: 'CEPMG Arlindo Costa',
+lat: -16.304258,
+lng: -48.946029,
     marker: marker3
 });
 var marker4 = L.marker([-16.606944, -49.334424], {icon: marcadorAzul}).addTo(map)
@@ -214,6 +1685,8 @@ marcadores.push({
     cidade: 'Goiânia',
     estado: 'GO',
     cepmg: 'CEPMG Ayrton Senna',
+lat: -16.606944,
+lng: -49.334424,
     marker: marker4
 });
 var marker5 = L.marker([-16.348011, -48.920111], {icon: marcadorAzul}).addTo(map)
@@ -223,6 +1696,8 @@ marcadores.push({
     cidade: 'Anápolis',
     estado: 'GO',
     cepmg: 'CEPMG Onofre Quinan',
+lat: -16.348011,
+lng: -48.920111,
     marker: marker5
 });
 var marker6 = L.marker([-16.968751, -48.952085], {icon: marcadorAzul}).addTo(map)
@@ -232,6 +1707,8 @@ marcadores.push({
     cidade: 'Bela Vista',
     estado: 'GO',
     cepmg: 'CEPMG Doutor Belém',
+lat: -16.968751,
+lng: -48.952085,
     marker: marker6
 });
 var marker7 = L.marker([-18.164853, -47.941490], {icon: marcadorAzul}).addTo(map)
@@ -241,6 +1718,8 @@ marcadores.push({
     cidade: 'Catalão',
     estado: 'GO',
     cepmg: 'CEPMG Iris Rezende Machado',
+lat: -18.164853,
+lng: -47.941490,
     marker: marker7
 });
 var marker8 = L.marker([-18.175760, -47.942669], {icon: marcadorAzul}).addTo(map)
@@ -250,6 +1729,8 @@ marcadores.push({
     cidade: 'Catalão',
     estado: 'GO',
     cepmg: 'CEPMG Tharsis Campos',
+lat: -18.175760,
+lng: -47.942669,
     marker: marker8
 });
 var marker9 = L.marker([-15.309142, -49.601284], {icon: marcadorAzul}).addTo(map)
@@ -259,6 +1740,8 @@ marcadores.push({
     cidade: 'Ceres',
     estado: 'GO',
     cepmg: 'CEPMG Hélio Veloso',
+lat: -15.309142,
+lng: -49.601284,
     marker: marker9
 });
 var marker10 = L.marker([-16.293893, -48.960930], {icon: marcadorAzul}).addTo(map)
@@ -268,6 +1751,8 @@ marcadores.push({
     cidade: 'Anápolis',
     estado: 'GO',
     cepmg: 'CEPMG Cesar Toledo',
+lat: -16.293893,
+lng: -48.960930,
     marker: marker10
 });
 var marker11 = L.marker([-16.107435, -47.928345], {icon: marcadorAzul}).addTo(map)
@@ -277,6 +1762,8 @@ marcadores.push({
     cidade: 'Cidade Ocidental',
     estado: 'GO',
     cepmg: 'CEPMG Cidade Ocidental',
+lat: -16.107435,
+lng: -47.928345,
     marker: marker11
 });
 var marker12 = L.marker([-15.777246, -48.766508], {icon: marcadorAzul}).addTo(map)
@@ -286,6 +1773,8 @@ marcadores.push({
     cidade: 'Cocalzinho',
     estado: 'GO',
     cepmg: 'CEPMG José Ermírio de Moraes',
+lat: -15.777246,
+lng: -48.766508,
     marker: marker12
 });
 var marker13 = L.marker([-16.827108, -49.292737], {icon: marcadorAzul}).addTo(map)
@@ -295,6 +1784,8 @@ marcadores.push({
     cidade: 'Aparecida de Goiânia',
     estado: 'GO',
     cepmg: 'CEPMG Colina Azul',
+lat: -16.827108,
+lng: -49.292737,
     marker: marker13
 });
 var marker14 = L.marker([-16.769144, -47.611969], {icon: marcadorAzul}).addTo(map)
@@ -304,6 +1795,8 @@ marcadores.push({
     cidade: 'Cristalina',
     estado: 'GO',
     cepmg: 'CEPMG Olga Aguiar Mohn',
+lat: -16.769144,
+lng: -47.611969,
     marker: marker14
 });
 var marker15 = L.marker([-14.546939, -49.968963], {icon: marcadorAzul}).addTo(map)
@@ -313,6 +1806,8 @@ marcadores.push({
     cidade: 'Crixás',
     estado: 'GO',
     cepmg: 'CEPMG Prudêncio Ferreira',
+lat: -14.546939,
+lng: -49.968963,
     marker: marker15
 });
 var marker16 = L.marker([-16.724611, -49.229682], {icon: marcadorAzul}).addTo(map)
@@ -322,6 +1817,8 @@ marcadores.push({
     cidade: 'Goiânia',
     estado: 'GO',
     cepmg: 'CEPMG Naly Deusdará',
+lat: -16.724611,
+lng: -49.229682,
     marker: marker16
 });
 var marker17 = L.marker([-15.544546, -47.355160], {icon: marcadorAzul}).addTo(map)
@@ -331,24 +1828,30 @@ marcadores.push({
     cidade: 'Formosa',
     estado: 'GO',
     cepmg: 'CEPMG Domingos de Oliveira',
+lat: -15.544546,
+lng: -47.355160,
     marker: marker17
 });
 var marker18 = L.marker([-16.346444, -48.958380], {icon: marcadorAzul}).addTo(map)
-.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Gabriel Issa</h3><hr><b>Vendedora:</b> Francielly<br><b>Cidade:</b> Anápolis - GO<br><b>Contato:</b> 62 9241-2947<br><b>CEPMG:</b> CEPMG Gabriel Issa<br><b>Endereço:</b><br>Rua Belém Qd J Lt 03 Nº 15 Casa 02 Jardim Gonçalves</div>`);
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Gabriel Issa</h3><hr><b>Vendedora:</b> Yasmin<br><b>Cidade:</b> Anápolis - GO<br><b>Contato:</b> 62 9241-2947<br><b>CEPMG:</b> CEPMG Gabriel Issa<br><b>Endereço:</b><br>Rua Belém Qd J Lt 03 Nº 15 Casa 02 Jardim Gonçalves</div>`);
 marcadores.push({
     nome: 'Gabriel Issa',
     cidade: 'Anápolis',
     estado: 'GO',
     cepmg: 'CEPMG Gabriel Issa',
+lat: -16.346444,
+lng: -48.958380,
     marker: marker18
 });
 var marker19 = L.marker([-16.505489, -49.020396], {icon: marcadorAzul}).addTo(map)
-.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goianápolis</h3><hr><b>Vendedora:</b> Maria Laura<br><b>Cidade:</b> Goianápolis - GO<br><b>Contato:</b> 62 9295-0830<br><b>CEPMG:</b> CEPMG Benedita Brito de Andrade<br><b>Endereço:</b><br>Rua Modesto C. da Silva Qd R NR. 182 Sala 03 Vila Nossa Senhora de Fátima</div>`);
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goianápolis</h3><hr><b>Vendedora:</b> Monique<br><b>Cidade:</b> Goianápolis - GO<br><b>Contato:</b> 62 9295-0830<br><b>CEPMG:</b> CEPMG Benedita Brito de Andrade<br><b>Endereço:</b><br>Rua Modesto C. da Silva Qd R NR. 182 Sala 03 Vila Nossa Senhora de Fátima</div>`);
 marcadores.push({
     nome: 'Goianápolis',
     cidade: 'Goianápolis',
     estado: 'GO',
     cepmg: 'CEPMG Benedita Brito de Andrade',
+lat: -16.505489,
+lng: -49.020396,
     marker: marker19
 });
 var marker20 = L.marker([-15.319004, -49.119446], {icon: marcadorAzul}).addTo(map)
@@ -358,15 +1861,19 @@ marcadores.push({
     cidade: 'Goianésia',
     estado: 'GO',
     cepmg: 'CEPMG José Carrilho',
+lat: -15.319004,
+lng: -49.119446,
     marker: marker20
 });
 var marker21 = L.marker([-16.577180, -49.383034], {icon: marcadorAzul}).addTo(map)
-.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goianira 1</h3><hr><b>Vendedora:</b> Lucia<br><b>Cidade:</b> Goianira - GO<br><b>Contato:</b> 62 9405-7710<br><b>CEPMG:</b> CEPMG José Silva<br><b>Endereço:</b><br>Rua 20 Qd 69 Lt 12 Residencial Triunfo</div>`);
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Goianira 1</h3><hr><b>Vendedora:</b> Lucilene<br><b>Cidade:</b> Goianira - GO<br><b>Contato:</b> 62 9405-7710<br><b>CEPMG:</b> CEPMG José Silva<br><b>Endereço:</b><br>Rua 20 Qd 69 Lt 12 Residencial Triunfo</div>`);
 marcadores.push({
     nome: 'Goianira 1',
     cidade: 'Goianira',
     estado: 'GO',
     cepmg: 'CEPMG José Silva',
+lat: -16.577180,
+lng: -49.383034,
     marker: marker21
 });
 var marker22 = L.marker([-16.519281, -49.421290], {icon: marcadorAzul}).addTo(map)
@@ -376,6 +1883,8 @@ marcadores.push({
     cidade: 'Goianira',
     estado: 'GO',
     cepmg: 'CEPMG Padre Pelágio',
+lat: -16.519281,
+lng: -49.421290,
     marker: marker22
 });
 var marker23 = L.marker([-15.941994, -50.144079], {icon: marcadorAzul}).addTo(map)
@@ -385,15 +1894,19 @@ marcadores.push({
     cidade: 'Goiás',
     estado: 'GO',
     cepmg: 'CEPMG Francisco Antônio',
+lat: -15.941994,
+lng: -50.144079,
     marker: marker23
 });
 var marker24 = L.marker([-16.617246, -49.217179], {icon: marcadorAzul}).addTo(map)
-.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Jardim Guanabara</h3><hr><b>Vendedora:</b> Anodilha<br><b>Cidade:</b> Goiânia - GO<br><b>Contato:</b> 62 9140-6331<br><b>CEPMG:</b> CEPMG Jardim Guanabara<br><b>Endereço:</b><br>Rua Minas Gerais Qd 152 Lt 05 Jardim Guanabara (Revisar endereço!)</div>`);
+.bindPopup(`<div style='min-width:280px;'><h3 style='margin:0;color:#7f1d1d;'>Jardim Guanabara</h3><hr><b>Vendedora:</b> Anodilha<br><b>Cidade:</b> Goiânia - GO<br><b>Contato:</b> 62 9140-6331<br><b>CEPMG:</b> CEPMG José de Ribamar Souza Cirqueira<br><b>Endereço:</b><br>Rua Minas Gerais Qd 152 Lt 05 Jardim Guanabara</div>`);
 marcadores.push({
     nome: 'Jardim Guanabara',
     cidade: 'Goiânia',
     estado: 'GO',
-    cepmg: 'CEPMG Jardim Guanabara',
+    cepmg: 'CEPMG José de Ribamar Souza Cirqueira',
+lat: -16.617246,
+lng: -49.217179,
     marker: marker24
 });
 var marker25 = L.marker([-16.358967, -49.506803], {icon: marcadorAzul}).addTo(map)
@@ -403,6 +1916,8 @@ marcadores.push({
     cidade: 'Inhumas',
     estado: 'GO',
     cepmg: 'CEPMG Manoel Vilaverde',
+lat: -16.358967,
+lng: -49.506803,
     marker: marker25
 });
 var marker26 = L.marker([-16.441446, -51.115258], {icon: marcadorAzul}).addTo(map)
@@ -412,6 +1927,8 @@ marcadores.push({
     cidade: 'Iporá',
     estado: 'GO',
     cepmg: 'CEPMG Aristo Gomes da Silva',
+lat: -16.441446,
+lng: -51.115258,
     marker: marker26
 });
 var marker27 = L.marker([-14.954841, -49.553194], {icon: marcadorAzul}).addTo(map)
@@ -421,6 +1938,8 @@ marcadores.push({
     cidade: 'Itapaci',
     estado: 'GO',
     cepmg: 'CEPMG Geraldo Andrade Martins',
+lat: -14.954841,
+lng: -49.553194,
     marker: marker27
 });
 var marker28 = L.marker([-16.603123, -49.254904], {icon: marcadorAzul}).addTo(map)
@@ -430,6 +1949,8 @@ marcadores.push({
     cidade: 'Goiânia',
     estado: 'GO',
     cepmg: 'CEPMG Valdemar Mundim',
+lat: -16.603123,
+lng: -49.254904,
     marker: marker28
 });
 var marker29 = L.marker([-15.753854, -49.333923], {icon: marcadorAzul}).addTo(map)
@@ -439,6 +1960,8 @@ marcadores.push({
     cidade: 'Jaraguá',
     estado: 'GO',
     cepmg: 'CEPMG Silvio de Castro Ribeiro',
+lat: -15.753854,
+lng: -49.333923,
     marker: marker29
 });
 var marker30 = L.marker([-15.881725, -50.876411], {icon: marcadorAzul}).addTo(map)
@@ -448,6 +1971,8 @@ marcadores.push({
     cidade: 'Jussara',
     estado: 'GO',
     cepmg: 'CEPMG Maria Tereza Garcia',
+lat: -15.881725,
+lng: -50.876411,
     marker: marker30
 });
 var marker31 = L.marker([-16.645297, -49.189168], {icon: marcadorAzul}).addTo(map)
@@ -457,6 +1982,8 @@ marcadores.push({
     cidade: 'Goiânia',
     estado: 'GO',
     cepmg: 'CEPMG Mirian Bechimol Ferreira',
+lat: -16.645297,
+lng: -49.189168,
     marker: marker31
 });
 var marker32 = L.marker([-16.249242, -47.895360], {icon: marcadorAzul}).addTo(map)
@@ -466,6 +1993,8 @@ marcadores.push({
     cidade: 'Luziânia',
     estado: 'GO',
     cepmg: 'CEPMG Eli da Silva Braz',
+lat: -16.249242,
+lng: -47.895360,
     marker: marker32
 });
 var marker33 = L.marker([-16.141839, -47.930673], {icon: marcadorAzul}).addTo(map)
@@ -475,6 +2004,8 @@ marcadores.push({
     cidade: 'Luziânia',
     estado: 'GO',
     cepmg: 'CEPMG CEP Shinohara',
+lat: -16.141839,
+lng: -47.930673,
     marker: marker33
 });
 var marker34 = L.marker([-16.822095, -49.373313], {icon: marcadorAzul}).addTo(map)
@@ -484,6 +2015,8 @@ marcadores.push({
     cidade: 'Goiânia',
     estado: 'GO',
     cepmg: 'CEPMG Madre Germana',
+lat: -16.822095,
+lng: -49.373313,
     marker: marker34
 });
 var marker35 = L.marker([-16.777154, -49.281191], {icon: marcadorAzul}).addTo(map)
@@ -493,6 +2026,8 @@ marcadores.push({
     cidade: 'Aparecida de Goiânia',
     estado: 'GO',
     cepmg: 'CEPMG Mansões Paraíso',
+lat: -16.777154,
+lng: -49.281191,
     marker: marker35
 });
 var marker36 = L.marker([-17.734769, -49.115465], {icon: marcadorAzul}).addTo(map)
@@ -502,6 +2037,8 @@ marcadores.push({
     cidade: 'Morrinhos',
     estado: 'GO',
     cepmg: 'CEPMG Xavier de Almeida',
+lat: -17.734769,
+lng: -49.115465,
     marker: marker36
 });
 var marker37 = L.marker([-16.407281, -49.220764], {icon: marcadorAzul}).addTo(map)
@@ -511,6 +2048,8 @@ marcadores.push({
     cidade: 'Nerópolis',
     estado: 'GO',
     cepmg: 'CEPMG Doutor Negreiro',
+lat: -16.407281,
+lng: -49.220764,
     marker: marker37
 });
 var marker38 = L.marker([-14.466640, -48.455001], {icon: marcadorAzul}).addTo(map)
@@ -520,6 +2059,8 @@ marcadores.push({
     cidade: 'Niquelândia',
     estado: 'GO',
     cepmg: 'CEPMG Paulo Francisco da Silva',
+lat: -14.466640,
+lng: -48.455001,
     marker: marker38
 });
 var marker39 = L.marker([-16.081059, -48.063626], {icon: marcadorAzul}).addTo(map)
@@ -529,6 +2070,8 @@ marcadores.push({
     cidade: 'Novo Gama',
     estado: 'GO',
     cepmg: 'CEPMG José de Alencar',
+lat: -16.081059,
+lng: -48.063626,
     marker: marker39
 });
 var marker40 = L.marker([-15.166434, -48.284862], {icon: marcadorAzul}).addTo(map)
@@ -538,6 +2081,8 @@ marcadores.push({
     cidade: 'Padre Bernardo',
     estado: 'GO',
     cepmg: 'CEPMG José Monteiro de Lima',
+lat: -15.166434,
+lng: -48.284862,
     marker: marker40
 });
 var marker41 = L.marker([-15.857629, -48.958117], {icon: marcadorAzul}).addTo(map)
@@ -547,6 +2092,8 @@ marcadores.push({
     cidade: 'Pirenópolis',
     estado: 'GO',
     cepmg: 'CEPMG Comendador Christovam de Oliveira',
+lat: -15.857629,
+lng: -48.958117,
     marker: marker41
 });
 var marker42 = L.marker([-17.303180, -48.281996], {icon: marcadorAzul}).addTo(map)
@@ -556,6 +2103,8 @@ marcadores.push({
     cidade: 'Pires do Rio',
     estado: 'GO',
     cepmg: 'CEPMG Profº Ivan Ferreira',
+lat: -17.303180,
+lng: -48.281996,
     marker: marker42
 });
 var marker43 = L.marker([-15.475425, -47.602565], {icon: marcadorAzul}).addTo(map)
@@ -565,6 +2114,8 @@ marcadores.push({
     cidade: 'Planaltina',
     estado: 'GO',
     cepmg: 'CEPMG Profª Lourdete de Fátima de Paiva Sutir',
+lat: -15.475425,
+lng: -47.602565,
     marker: marker43
 });
 var marker44 = L.marker([-16.804174, -49.295344], {icon: marcadorAzul}).addTo(map)
@@ -574,6 +2125,8 @@ marcadores.push({
     cidade: 'Pontal Sul',
     estado: 'GO',
     cepmg: 'CEPMG Nader Alves dos Santos',
+lat: -16.804174,
+lng: -49.295344,
     marker: marker44
 });
 var marker45 = L.marker([-16.321473, -48.954491], {icon: marcadorAzul}).addTo(map)
@@ -583,6 +2136,8 @@ marcadores.push({
     cidade: 'Anápolis',
     estado: 'GO',
     cepmg: 'CEPMG de Anápolis',
+lat: -16.321473,
+lng: -48.954491,
     marker: marker45
 });
 var marker46 = L.marker([-15.946602, -48.312251], {icon: marcadorAzul}).addTo(map)
@@ -592,6 +2147,8 @@ marcadores.push({
     cidade: 'Santo Antônio do Descoberto',
     estado: 'GO',
     cepmg: 'CEPMG José Elias de Azevedo',
+lat: -15.946602,
+lng: -48.312251,
     marker: marker46
 });
 var marker47 = L.marker([-16.705536, -49.091849], {icon: marcadorAzul}).addTo(map)
@@ -601,6 +2158,8 @@ marcadores.push({
     cidade: 'Senador Canedo',
     estado: 'GO',
     cepmg: 'CEPMG Pedro Xavier',
+lat: -16.705536,
+lng: -49.091849,
     marker: marker47
 });
 var marker48 = L.marker([-16.662500, -48.608616], {icon: marcadorAzul}).addTo(map)
@@ -610,6 +2169,8 @@ marcadores.push({
     cidade: 'Silvânia',
     estado: 'GO',
     cepmg: 'CEPMG Moisés Santana',
+lat: -16.662500,
+lng: -48.608616,
     marker: marker48
 });
 var marker49 = L.marker([-16.649830, -49.492085], {icon: marcadorAzul}).addTo(map)
@@ -619,6 +2180,8 @@ marcadores.push({
     cidade: 'Trindade',
     estado: 'GO',
     cepmg: 'CEPMG Divino Pai Eterno',
+lat: -16.649830,
+lng: -49.492085,
     marker: marker49
 });
 var marker50 = L.marker([-16.631655, -49.403032], {icon: marcadorAzul}).addTo(map)
@@ -628,6 +2191,8 @@ marcadores.push({
     cidade: 'Trindade',
     estado: 'GO',
     cepmg: 'CEPMG José dos Reis',
+lat: -16.631655,
+lng: -49.403032,
     marker: marker50
 });
 var marker51 = L.marker([-16.058573, -48.001386], {icon: marcadorAzul}).addTo(map)
@@ -637,6 +2202,8 @@ marcadores.push({
     cidade: 'Valparaíso',
     estado: 'GO',
     cepmg: 'CEPMG Fernando Pessoa',
+lat: -16.058573,
+lng: -48.001386,
     marker: marker51
 });
 var marker52 = L.marker([-16.054657, -48.015398], {icon: marcadorAzul}).addTo(map)
@@ -646,6 +2213,8 @@ marcadores.push({
     cidade: 'Valparaíso',
     estado: 'GO',
     cepmg: 'CEPMG Céu Azul',
+lat: -16.054657,
+lng: -48.015398,
     marker: marker52
 });
 var marker53 = L.marker([-16.744930, -48.518636], {icon: marcadorAzul}).addTo(map)
@@ -655,6 +2224,8 @@ marcadores.push({
     cidade: 'Vianópolis',
     estado: 'GO',
     cepmg: 'CEPMG Americano do Brasil',
+lat: -16.744930,
+lng: -48.518636,
     marker: marker53
 });
 if (lojasSemCoordenadas.length > 0) {document.getElementById('painel').style.display = 'block';let lista = document.getElementById('listaSemCoordenadas');for (let i = 0; i < lojasSemCoordenadas.length; i++) {let item =  document.createElement('li');item.innerText = lojasSemCoordenadas[i];lista.appendChild(item);}}function fecharResultados() {
@@ -666,11 +2237,40 @@ function normalizarTexto(texto) {
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '');
 }
+function distancia(lat1, lon1, lat2, lon2)
+{
+let R = 6371;
+let dLat =
+(lat2-lat1) * Math.PI / 180;
+ let dLon =
+ (lon2-lon1) * Math.PI / 180;
+ let a =
+  Math.sin(dLat/2) *
+  Math.sin(dLat/2) +
+  Math.cos(lat1*Math.PI/180) *
+ Math.cos(lat2*Math.PI/180) *
+  Math.sin(dLon/2) *
+ Math.sin(dLon/2);
+ let c =
+ 2 *
+ Math.atan2(
+    Math.sqrt(a),
+   Math.sqrt(1-a)
+ );
+ return R * c;
+}
   function buscarLoja() {
  var texto = normalizarTexto(
   document.getElementById('pesquisa').value
     );
- if (texto.trim() === '') {  for (let i = 0; i < marcadores.length; i++) {   marcadores[i].marker.setIcon(marcadorAzul); } document.getElementById('resultadoBusca').style.display = 'none';  return; }    let encontrados = 0;
+camadaMunicipios.clearLayers();
+ if (texto.trim() === '') {camadaMunicipios.clearLayers();
+  for (let i = 0; i < marcadores.length; i++) {   marcadores[i].marker.setIcon(marcadorAzul); }if (encontrados == 0)
+{
+ document.getElementById('resultadoBusca').style.display = 'none';}
+  return;
+ }
+    let encontrados = 0;
     let grupo = [];
     let listaResultados = document.getElementById('listaResultados');
     listaResultados.innerHTML = '';
@@ -719,15 +2319,138 @@ function normalizarTexto(texto) {
             listaResultados.appendChild(item);
         }
     }
-    if (grupo.length > 0) {
-        var bounds = L.featureGroup(grupo).getBounds();
-        map.fitBounds(bounds, {padding:[50,50]});
-        document.getElementById('resultadoBusca').style.display = 'block';
-    }
-    if (encontrados == 0) {
-        alert('Nenhuma loja encontrada!');
+if (grupo.length > 0)
+{
+ var bounds =
+   L.featureGroup(grupo)
+  .getBounds();
+ map.fitBounds(
+   bounds,
+   {padding:[50,50]}
+  );
+ document.getElementById(
+   'resultadoBusca'
+).style.display = 'block';
+return;
+}
+if (encontrados == 0 &&
+tipoBuscaAtual == 'cidade')
+{
+let municipioEncontrado = false;
+for (
+ let i = 0;
+  i < municipios.length;
+ i++
+ )
+{
+ let nome =
+ normalizarTexto(
+municipios[i].nome
+);
+ if (
+ nome.includes(texto)
+)
+ {
+municipioEncontrado = true
+let lojasMaisProximas = [];
+let marcador =
+   L.circleMarker(
+ [
+municipios[i].lat,
+municipios[i].lng
+ ],
+ {
+  radius: 8
+   }
+ )
+.addTo(
+ camadaMunicipios
+ )
+  .bindPopup(
+  municipios[i].nome +
+ ' - ' + 
+ municipios[i].uf
+  );
+   map.setView(
+ [
+ municipios[i].lat,
+ municipios[i].lng
+ ],
+   10
+);
+ marcador.openPopup();
+for (let j = 0; j < marcadores.length; j++)
+{
+let dist = distancia(
+municipios[i].lat,
+municipios[i].lng,
+marcadores[j].lat,
+marcadores[j].lng
+);
+lojasMaisProximas.push({
+loja: marcadores[j],
+ distancia: dist
+ });
+}
+ lojasMaisProximas.sort(
+ (a,b) =>
+ a.distancia - b.distancia
+);
+listaResultados.innerHTML = '';
+for (
+ let k = 0;
+k < 5 &&
+ k < lojasMaisProximas.length;
+ k++
+)
+{
+ let loja =
+  lojasMaisProximas[k].loja;
+ loja.marker.setIcon(
+    marcadorVermelho
+ );
+  let item =
+     document.createElement(
+         'button'
+     );
+   item.innerText =
+ loja.nome +
+   ' (' +
+   lojasMaisProximas[k]
+      .distancia
+      .toFixed(1)
+   + ' km)';
+  item.style.width='100%';
+  item.style.marginBottom='8px';
+  item.onclick = function()
+  {
+ map.setView(
+    loja.marker.getLatLng(),
+   15
+  );
+  loja.marker.openPopup();
+   };
+  listaResultados.appendChild(
+    item
+  );
+}
+document.getElementById(
+'resultadoBusca'
+).style.display = 'block';
+return;
+ }
+ }
+if (!municipioEncontrado)
+{
+alert(
+ 'Município não encontrado!'
+);
+}
+}
+if (encontrados == 0)
+{
         document.getElementById('resultadoBusca').style.display = 'none';
-    }
+}
 }
 document.getElementById('pesquisa').addEventListener('input', function() {
     buscarLoja();

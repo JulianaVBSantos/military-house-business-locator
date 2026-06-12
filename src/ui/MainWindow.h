@@ -5,6 +5,7 @@
 #include <QTableWidget>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QVector>
 
 class MainWindow : public QMainWindow
 {
@@ -26,8 +27,11 @@ private:
     QLineEdit *campoBusca;
     QComboBox *tipoBusca;
     QString tipoSelecionado = "Nome";
+
     void onTabelaContextMenu(const QPoint &pos);
+
     void atualizarTabela();
+
     bool administrador;
 };
 

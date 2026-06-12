@@ -25,15 +25,26 @@
 #include <QCoreApplication>
 #include <QMenu>
 #include <QAction>
+#include <QStandardPaths>
+#include <QDir>
 
 extern "C"
 {
 #include "../backend/lojas.h"
 }
 
+#include <QStandardPaths>
+#include <QDir>
+
 static QString caminhoDados()
 {
-    return QCoreApplication::applicationDirPath() + "/data/dados.json";
+    QString pasta =
+        QStandardPaths::writableLocation(
+            QStandardPaths::AppDataLocation);
+
+    QDir().mkpath(pasta);
+
+    return pasta + "/dados.json";
 }
 
 static QString caminhoBackup()
@@ -116,6 +127,7 @@ void MainWindow::restaurarDados()
 
     carregarLojas(
         caminhoBackup().toStdString().c_str());
+    ::carregarMunicipios();
 
     salvarLojas(
         caminhoDados().toStdString().c_str());
@@ -213,6 +225,14 @@ void MainWindow::buscarLoja()
             buscarLojasPorLocal(
                 texto.toStdString().c_str(),
                 resultados);
+
+        if (encontrados == 0)
+        {
+            encontrados =
+                buscarLojaMaisProximaPorMunicipio(
+                    texto.toStdString().c_str(),
+                    resultados);
+        }
     }
 
     tabela->setRowCount(encontrados);
@@ -686,6 +706,7 @@ void MainWindow::editarLojaQt()
 
     salvarLojas(
         caminhoDados().toStdString().c_str());
+
     atualizarTabela();
 
     tabela->clearSelection();
@@ -700,12 +721,6 @@ void MainWindow::editarLojaQt()
 MainWindow::MainWindow() // construtor
 {
     QString pastaApp = QCoreApplication::applicationDirPath();
-
-    QString arquivoDados =
-        pastaApp + "/data/dados.json";
-
-    QString arquivoBackup =
-        pastaApp + "/data/dados_backup.json";
 
     administrador = false;
 
@@ -1079,7 +1094,7 @@ MainWindow::MainWindow() // construtor
         new QLineEdit();
 
     campoBusca->setPlaceholderText(
-        "Digite sua pesquisa...");
+        "Digite uma cidade, loja ou CEPMG...");
 
     campoBusca->setMinimumHeight(45);
 
@@ -1119,6 +1134,26 @@ MainWindow::MainWindow() // construtor
 
     tabela->setSelectionBehavior(
         QAbstractItemView::SelectRows);
+    tabela->setSelectionMode(
+        QAbstractItemView::SingleSelection);
+
+    tabela->setStyleSheet(
+
+        "QTableWidget {"
+        "background: white;"
+        "selection-background-color: #991b1b;"
+        "selection-color: white;"
+        "}"
+
+        "QTableWidget::item:selected {"
+        "background: #991b1b;"
+        "color: white;"
+        "}"
+
+        "QTableWidget::item:hover {"
+        "background: #991b1b;"
+        "color: white;"
+        "}");
 
     tabela->verticalHeader()
         ->setVisible(false);
@@ -1164,8 +1199,63 @@ MainWindow::MainWindow() // construtor
     conteudoLayout->addWidget(
         tabela);
 
+    connect(
+        tabela,
+        &QTableWidget::cellDoubleClicked,
+        this,
+        [this](int row, int)
+        {
+            QString texto;
+
+            texto += "Nome: " + tabela->item(row, 0)->text() + "\n\n";
+
+            texto += "Contato: " + tabela->item(row, 1)->text() + "\n\n";
+
+            texto += "Vendedora: " + tabela->item(row, 2)->text() + "\n\n";
+
+            texto += "Cidade: " + tabela->item(row, 3)->text() + "\n\n";
+
+            texto += "Estado: " + tabela->item(row, 4)->text() + "\n\n";
+
+            texto += "CEPMG: " + tabela->item(row, 5)->text() + "\n\n";
+
+            texto += "CEP: " + tabela->item(row, 6)->text() + "\n\n";
+
+            texto += "Endereço: " + tabela->item(row, 7)->text();
+
+            QMessageBox msg(this);
+
+            msg.setWindowTitle(
+                "Detalhes da Loja");
+
+            msg.setText(texto);
+
+            msg.exec();
+        });
+
+    QString arquivoDados = caminhoDados();
+
+    if (!QFile::exists(arquivoDados))
+    {
+        QFile::copy(
+            caminhoBackup(),
+            arquivoDados);
+    }
+
     carregarLojas(
-        caminhoDados().toStdString().c_str());
+        arquivoDados.toStdString().c_str());
+
+    ::carregarMunicipios();
+
+    atualizarTabela();
+
+    tabela->clearSelection();
+
+    atualizarTabela();
+
+    tabela->clearSelection();
+
+    ::carregarMunicipios();
 
     atualizarTabela();
 

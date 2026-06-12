@@ -3,52 +3,76 @@
 
 #define MAX_LOJAS 100
 
-typedef struct
+#ifdef __cplusplus
+extern "C"
 {
-    char nome[100];
-    char contato[30];
-    char vendedora[50];
-    char endereco[150];
-    char cidade[60];
-    char estado[3]; // "GO" + '\0'
-    char cepmg[100];
-    char cep[10]; // "00000-000" + '\0'
-    double lat;
-    double lng;
-} Loja;
+#endif
 
-int buscarLojasPorNome(
-    const char *nomeBusca,
-    Loja resultados[]
-);
+    typedef struct
+    {
+        char nome[100];
+        char contato[30];
+        char vendedora[50];
+        char endereco[150];
+        char cidade[60];
+        char estado[3];
+        char cepmg[100];
+        char cep[10];
+        double lat;
+        double lng;
+    } Loja;
 
-int buscarLojasPorCEPMG(
-    const char *cepmgBusca,
-    Loja resultados[]
-);
+    typedef struct
+    {
+        char nome[100];
+        char uf[3];
+        double latitude;
+        double longitude;
+    } Municipio;
 
-int buscarLojasPorLocal(
-    const char *localBusca,
-    Loja resultados[]
-);
+    int buscarLojasPorNome(
+        const char *nomeBusca,
+        Loja resultados[]);
 
-extern Loja lojas[MAX_LOJAS];
-extern int totalLojas;
+    int buscarLojasPorCEPMG(
+        const char *cepmgBusca,
+        Loja resultados[]);
 
-void carregarLojas(const char *arquivo);
-void salvarLojas(const char *arquivo);
-void paraMinusculo(char *str);               // case-insensitive (maiúscula/minúscula)
-void removerAcentos(char *str);              // caso de acentos
-void buscarPorNome(const char *nomeBusca);   // RF02
-void buscarPorCEPMG(const char *cepmgBusca); // RF03
-void listarLojas();                          // RF04
-void buscarPorLocal(const char *localBusca); // RF05
-void adicionarLoja();                        // RF06
-void removerLoja();                          // RF06
-void editarLoja();                           // RF06
-void lerCampoObrigatorio(char *campo, int tamanho, const char *mensagem);
-void limparBuffer();
-void gerarMapa();
-static void copiarStringSeguro(char *destino, const char *origem, size_t tamanho);
+    int buscarLojasPorLocal(
+        const char *localBusca,
+        Loja resultados[]);
+
+    int buscarLojaMaisProximaPorMunicipio(
+        const char *cidade,
+        Loja resultado[]);
+
+    void carregarMunicipios();
+    
+    int getTotalMunicipios();
+    const Municipio *getMunicipio(
+        int indice);
+
+    extern Loja lojas[MAX_LOJAS];
+    extern int totalLojas;
+
+    void carregarLojas(const char *arquivo);
+    void salvarLojas(const char *arquivo);
+    void paraMinusculo(char *str);
+    void removerAcentos(char *str);
+    void buscarPorNome(const char *nomeBusca);
+    void buscarPorCEPMG(const char *cepmgBusca);
+    void listarLojas();
+    void buscarPorLocal(const char *localBusca);
+    void adicionarLoja();
+    void removerLoja();
+    void editarLoja();
+    void lerCampoObrigatorio(char *campo, int tamanho, const char *mensagem);
+    void limparBuffer();
+    void gerarMapa();
+    static void copiarStringSeguro(char *destino, const char *origem, size_t tamanho);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

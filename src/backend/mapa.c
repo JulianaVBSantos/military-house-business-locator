@@ -234,8 +234,34 @@ void gerarMapa()
             "var marcadores = [];\n"
 
             "var lojasSemCoordenadas = [];\n"
+            "var camadaMunicipios =\n"
+            "L.layerGroup().addTo(map);\n");
 
-    );
+    fprintf(html,
+            "var municipios = [];\n");
+
+    for (int i = 0; i < getTotalMunicipios(); i++)
+    {
+        const Municipio *m =
+            getMunicipio(i);
+
+        if (!m)
+            continue;
+
+        fprintf(html,
+
+                "municipios.push({"
+                "nome:\"%s\","
+                "uf:\"%s\","
+                "lat:%lf,"
+                "lng:%lf"
+                "});\n",
+
+                m->nome,
+                m->uf,
+                m->latitude,
+                m->longitude);
+    }
 
     for (int i = 0; i < totalLojas; i++)
     {
@@ -288,6 +314,8 @@ void gerarMapa()
 
                 "    cepmg: '%s',\n"
 
+                "lat: %lf,\n"
+                "lng: %lf,\n"
                 "    marker: marker%d\n"
 
                 "});\n",
@@ -308,6 +336,9 @@ void gerarMapa()
                 lojas[i].cidade,
                 lojas[i].estado,
                 lojas[i].cepmg,
+
+                lojas[i].lat,
+                lojas[i].lng,
                 i);
     }
 
@@ -343,23 +374,52 @@ void gerarMapa()
             "        .normalize('NFD')\n"
             "        .replace(/[\\u0300-\\u036f]/g, '');\n"
             "}\n"
+            "function distancia(lat1, lon1, lat2, lon2)\n"
+            "{\n"
+            "let R = 6371;\n"
 
+            "let dLat =\n"
+            "(lat2-lat1) * Math.PI / 180;\n"
+
+            " let dLon =\n"
+            " (lon2-lon1) * Math.PI / 180;\n"
+
+            " let a =\n"
+            "  Math.sin(dLat/2) *\n"
+            "  Math.sin(dLat/2) +\n"
+
+            "  Math.cos(lat1*Math.PI/180) *\n"
+            " Math.cos(lat2*Math.PI/180) *\n"
+
+            "  Math.sin(dLon/2) *\n"
+            " Math.sin(dLon/2);\n"
+
+            " let c =\n"
+            " 2 *\n"
+            " Math.atan2(\n"
+            "    Math.sqrt(a),\n"
+            "   Math.sqrt(1-a)\n"
+            " );\n"
+
+            " return R * c;\n"
+            "}\n"
             "  function buscarLoja() {\n"
 
             " var texto = normalizarTexto(\n"
             "  document.getElementById('pesquisa').value\n"
             "    );\n"
-
+            "camadaMunicipios.clearLayers();\n"
             " if (texto.trim() === '') {"
-
+            "camadaMunicipios.clearLayers();\n"
             "  for (let i = 0; i < marcadores.length; i++) {"
             "   marcadores[i].marker.setIcon(marcadorAzul);"
             " }"
-
+            "if (encontrados == 0)\n"
+            "{\n"
             " document.getElementById('resultadoBusca').style.display = 'none';"
-
-            "  return;"
-            " }"
+            "}\n"
+            "  return;\n"
+            " }\n"
 
             "    let encontrados = 0;\n"
 
@@ -435,24 +495,157 @@ void gerarMapa()
 
             "    }\n"
 
-            "    if (grupo.length > 0) {\n"
+            "if (grupo.length > 0)\n"
+            "{\n"
+            " var bounds =\n"
+            "   L.featureGroup(grupo)\n"
+            "  .getBounds();\n"
 
-            "        var bounds = L.featureGroup(grupo).getBounds();\n"
+            " map.fitBounds(\n"
+            "   bounds,\n"
+            "   {padding:[50,50]}\n"
+            "  );\n"
+            " document.getElementById(\n"
+            "   'resultadoBusca'\n"
+            ").style.display = 'block';\n"
 
-            "        map.fitBounds(bounds, {padding:[50,50]});\n"
+            "return;\n"
+            "}\n"
 
-            "        document.getElementById('resultadoBusca').style.display = 'block';\n"
+            "if (encontrados == 0 &&\n"
+            "tipoBuscaAtual == 'cidade')\n"
+            "{\n"
+            "let municipioEncontrado = false;\n"
+            "for (\n"
+            " let i = 0;\n"
+            "  i < municipios.length;\n"
+            " i++\n"
+            " )\n"
+            "{\n"
+            " let nome =\n"
+            " normalizarTexto(\n"
+            "municipios[i].nome\n"
+            ");\n"
 
-            "    }\n"
+            " if (\n"
+            " nome.includes(texto)\n"
+            ")\n"
+            " {\n"
+            "municipioEncontrado = true\n"
+            "let lojasMaisProximas = [];\n"
+            "let marcador =\n"
+            "   L.circleMarker(\n"
+            " [\n"
+            "municipios[i].lat,\n"
+            "municipios[i].lng\n"
+            " ],\n"
+            " {\n"
+            "  radius: 8\n"
+            "   }\n"
+            " )\n"
+            ".addTo(\n"
+            " camadaMunicipios\n"
+            " )\n"
+            "  .bindPopup(\n"
+            "  municipios[i].nome +\n"
+            " ' - ' + \n"
+            " municipios[i].uf\n"
+            "  );\n"
 
-            "    if (encontrados == 0) {\n"
+            "   map.setView(\n"
+            " [\n"
+            " municipios[i].lat,\n"
+            " municipios[i].lng\n"
+            " ],\n"
+            "   10\n"
+            ");\n"
 
-            "        alert('Nenhuma loja encontrada!');\n"
+            " marcador.openPopup();\n"
+            "for (let j = 0; j < marcadores.length; j++)\n"
+            "{\n"
+            "let dist = distancia(\n"
+            "municipios[i].lat,\n"
+            "municipios[i].lng,\n"
+            "marcadores[j].lat,\n"
+            "marcadores[j].lng\n"
+            ");\n"
 
+            "lojasMaisProximas.push({\n"
+            "loja: marcadores[j],\n"
+            " distancia: dist\n"
+            " });\n"
+            "}\n"
+
+            " lojasMaisProximas.sort(\n"
+            " (a,b) =>\n"
+            " a.distancia - b.distancia\n"
+            ");\n"
+
+            "listaResultados.innerHTML = '';\n"
+
+            "for (\n"
+            " let k = 0;\n"
+            "k < 5 &&\n"
+            " k < lojasMaisProximas.length;\n"
+            " k++\n"
+            ")\n"
+            "{\n"
+            " let loja =\n"
+            "  lojasMaisProximas[k].loja;\n"
+
+            " loja.marker.setIcon(\n"
+            "    marcadorVermelho\n"
+            " );\n"
+
+            "  let item =\n"
+            "     document.createElement(\n"
+            "         'button'\n"
+            "     );\n"
+
+            "   item.innerText =\n"
+            " loja.nome +\n"
+            "   ' (' +\n"
+            "   lojasMaisProximas[k]\n"
+            "      .distancia\n"
+            "      .toFixed(1)\n"
+            "   + ' km)';\n"
+
+            "  item.style.width='100%';\n"
+            "  item.style.marginBottom='8px';\n"
+
+            "  item.onclick = function()\n"
+            "  {\n"
+            " map.setView(\n"
+            "    loja.marker.getLatLng(),\n"
+            "   15\n"
+            "  );\n"
+
+            "  loja.marker.openPopup();\n"
+            "   };\n"
+
+            "  listaResultados.appendChild(\n"
+            "    item\n"
+            "  );\n"
+            "}\n"
+
+            "document.getElementById(\n"
+            "'resultadoBusca'\n"
+            ").style.display = 'block';\n"
+            "return;\n"
+            " }\n"
+            " }\n"
+
+            "if (!municipioEncontrado)\n"
+            "{\n"
+            "alert(\n"
+            " 'Município não encontrado!'\n"
+            ");\n"
+            "}\n"
+            "}\n"
+            "if (encontrados == 0)\n"
+            "{\n"
             "        document.getElementById('resultadoBusca').style.display = 'none';\n"
-
-            "    }\n"
-
+            "}\n"
             "}\n"
             "document.getElementById('pesquisa').addEventListener('input', function() {\n"
             "    buscarLoja();\n"
@@ -476,5 +669,4 @@ void gerarMapa()
     );
 
     fclose(html);
-
 }

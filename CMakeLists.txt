@@ -20,6 +20,7 @@ qt6_add_resources(RESOURCES
 set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/logo.ico")
 
 # Criar executável
+# add_executable( LocalizadorComercialCasaDoMilitar # Para o cmd abrir junto
 add_executable(LocalizadorComercialCasaDoMilitar WIN32 # Para o CMD n abrir junto
     
     src/main.cpp # Main
@@ -34,6 +35,7 @@ add_executable(LocalizadorComercialCasaDoMilitar WIN32 # Para o CMD n abrir junt
     src/backend/mapa.c
     src/backend/utils.c
     src/backend/cJSON.c
+    src/backend/municipios.cpp
 
     # Recursos
     ${RESOURCES}
