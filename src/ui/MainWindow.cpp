@@ -818,7 +818,7 @@ MainWindow::MainWindow() // construtor
             continue;
         }
 
-        if (senha == "admin123")
+        if (senha == "senha_fake")
         {
             administrador = true;
             break;
